@@ -10,6 +10,7 @@ import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import logo from "./assets/logo.png";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
@@ -39,7 +40,10 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
+    width: 100,
+    height: 100,
+
+    // backgroundColor: theme.pa  lette.secondary.main,
   },
   form: {
     width: "100%", // Fix IE 11 issue.
@@ -76,9 +80,8 @@ export default function SignIn() {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
+        <img width={100} height={100} src={logo} />
+
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
