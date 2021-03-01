@@ -15,6 +15,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { APP } from "./firebase/firebaseConfig";
+import { AuthContext } from "./firebase/firebase";
 
 var provider = new firebase.auth.GoogleAuthProvider();
 
@@ -55,6 +56,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignIn() {
+    const { currentUser } = React.useContext(AuthContext);
+
+    console.log(currentUser);   
   const classes = useStyles();
 
   const handleGoogleSignIN = () => {
