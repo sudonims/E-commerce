@@ -14,6 +14,7 @@ import AccountCircle from "@material-ui/icons/AccountCircle";
 import MailIcon from "@material-ui/icons/Mail";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
+import Logo from './assets/logo.png';
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -106,95 +107,18 @@ export default function Header({ rightlinks, leftlinks }) {
 
   return (
     <header class="header_area bg-img background-overlay-white">
-      <div class="top_header_area">
-        <div class="container h-100">
-          <div class="row h-100 align-items-center justify-content-end">
-            <div class="col-12 col-lg-7">
-              <div class="top_single_area d-flex align-items-center">
-                <div class="top_logo">
+      <div class="top_header_area flex flex-row m-2">
+        <div class="top_logo">
                   <a href="#">
-                    <img src="img/core-img/logo.png" alt="" />
+                    <img src={Logo} alt="" height='150' width='150' style={{}} />
                   </a>
-                </div>
-                <div class="header-cart-menu d-flex align-items-center ml-auto">
-                  <div class="cart">
-                    <a href="#" id="header-cart-btn" target="_blank">
-                      <span class="cart_quantity">2</span>{" "}
-                      <i class="ti-bag"></i> Your Bag $20
-                    </a>
-
-                    <ul class="cart-list">
-                      <li>
-                        <a href="#" class="image">
-                          <img
-                            src="img/product-img/product-10.jpg"
-                            class="cart-thumb"
-                            alt=""
-                          />
-                        </a>
-                        <div class="cart-item-desc">
-                          <h6>
-                            <a href="#">Women's Fashion</a>
-                          </h6>
-                          <p>
-                            1x - <span class="price">$10</span>
-                          </p>
-                        </div>
-                        <span class="dropdown-product-remove">
-                          <i class="icon-cross"></i>
-                        </span>
-                      </li>
-                      <li>
-                        <a href="#" class="image">
-                          <img
-                            src="img/product-img/product-11.jpg"
-                            class="cart-thumb"
-                            alt=""
-                          />
-                        </a>
-                        <div class="cart-item-desc">
-                          <h6>
-                            <a href="#">Women's Fashion</a>
-                          </h6>
-                          <p>
-                            1x - <span class="price">$10</span>
-                          </p>
-                        </div>
-                        <span class="dropdown-product-remove">
-                          <i class="icon-cross"></i>
-                        </span>
-                      </li>
-                      <li class="total">
-                        <span class="pull-right">Total: $20.00</span>
-                        <a href="cart.html" class="btn btn-sm btn-cart">
-                          Cart
-                        </a>
-                        <a
-                          href="checkout-1.html"
-                          class="btn btn-sm btn-checkout"
-                        >
-                          Checkout
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
-                  <div class="header-right-side-menu ml-15">
-                    <a href="#" id="sideMenuBtn">
-                      <i class="ti-menu" aria-hidden="true"></i>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
-      </div>
-
-      <div class="main_header_area">
-        <div class="container h-100">
+        <div className="flex-1" />
+        <div style={{marginLeft: -200}} className="main_header_area mt-8">
           <div class="row h-100">
             <div class="col-12 d-md-flex justify-content-between">
-              <div class="header-social-area">
+              <div class="header-social-area content-center">
+              
                 <a href="#">
                   <span class="karl-level">Share</span>{" "}
                   <i class="fa fa-pinterest" aria-hidden="true"></i>
@@ -209,6 +133,7 @@ export default function Header({ rightlinks, leftlinks }) {
                   <i class="fa fa-linkedin" aria-hidden="true"></i>
                 </a>
               </div>
+              <div className='flex-grow'></div>
               <div class="main-menu-area">
                 <nav class="navbar navbar-expand-lg align-items-start">
                   <button
@@ -287,14 +212,11 @@ export default function Header({ rightlinks, leftlinks }) {
                   </div>
                 </nav>
               </div>
-              <div class="help-line">
-                <a href="tel:+346573556778">
-                  <i class="ti-headphone-alt"></i> +34 657 3556 778
-                </a>
-              </div>
+              <div className='flex-grow'></div>
             </div>
           </div>
         </div>
+        <div className="flex-1" />
       </div>
     </header>
   );
