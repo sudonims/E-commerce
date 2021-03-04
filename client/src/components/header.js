@@ -116,7 +116,7 @@ export default function Header({ rightlinks, leftlinks }) {
                         </a>
                       </li>
                       <li className="nav-item">
-                        <a className="nav-link" href="#">
+                        <a className="nav-link" href="/contactus">
                           Contact Us
                         </a>
                       </li>

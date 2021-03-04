@@ -15,6 +15,7 @@ import "./components/css/owl.carousel.css";
 import "./components/css/responsive.css";
 import "./components/css/themify-icons.css";
 import Cart from './components/cart/cart.js';
+import ContactUs from './components/homepage/contactus.js';
 
 const App = () => {
   return (
@@ -25,7 +26,7 @@ const App = () => {
           <Route path="/signup" component={() => <SignUp />} />
           <Route exact path="/" component={() => <HomePage />} />
           <Route path="/cart" component={() => <Cart />} />
-          
+          <Route path="/contactus" component={() => <ContactUs />} />
         </Router>
       </AuthProvider>
     </>
