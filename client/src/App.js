@@ -22,7 +22,7 @@ const App = () => {
         <Router>
           <Route path="/login" component={() => <SignIn />} />
           <Route path="/signup" component={() => <SignUp />} />
-          <Route path="/" component={() => <HomePage />} />
+          <Route exact path="/" component={() => <HomePage />} />
         </Router>
       </AuthProvider>
     </>
