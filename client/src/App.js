@@ -14,6 +14,7 @@ import "./components/css/nouislider.css";
 import "./components/css/owl.carousel.css";
 import "./components/css/responsive.css";
 import "./components/css/themify-icons.css";
+import Cart from './components/cart/cart.js';
 
 const App = () => {
   return (
@@ -23,6 +24,8 @@ const App = () => {
           <Route path="/login" component={() => <SignIn />} />
           <Route path="/signup" component={() => <SignUp />} />
           <Route exact path="/" component={() => <HomePage />} />
+          <Route path="/cart" component={() => <Cart />} />
+          
         </Router>
       </AuthProvider>
     </>
