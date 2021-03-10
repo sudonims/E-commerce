@@ -1,4 +1,4 @@
-import prod1 from '../img/product-img/product-1.jpg'
+import prod1 from '../../img/product-img/product-1.jpg'
 
 const info =[
 
