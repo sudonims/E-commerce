@@ -64,6 +64,7 @@ export default function SignUp() {
       })
       .then((res) => {
         alert("User created");
+        window.location.href='/';
       })
       .catch((err) => console.log(err));
   };

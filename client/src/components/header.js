@@ -1,201 +1,170 @@
 import React from "react";
-import { fade, makeStyles } from "@material-ui/core/styles";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
+import { makeStyles } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
-import Typography from "@material-ui/core/Typography";
-import InputBase from "@material-ui/core/InputBase";
-import Badge from "@material-ui/core/Badge";
-import MenuItem from "@material-ui/core/MenuItem";
-import Menu from "@material-ui/core/Menu";
-import MenuIcon from "@material-ui/icons/Menu";
-import SearchIcon from "@material-ui/icons/Search";
-import AccountCircle from "@material-ui/icons/AccountCircle";
-import MailIcon from "@material-ui/icons/Mail";
-import NotificationsIcon from "@material-ui/icons/Notifications";
-import MoreIcon from "@material-ui/icons/MoreVert";
-import Logo from './assets/logo.png';
+import Logo from "./assets/logo.png";
+import { Button, Drawer, Hidden } from "@material-ui/core";
+import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 
 const useStyles = makeStyles((theme) => ({
-  grow: {
-    flexGrow: 1,
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
   title: {
-    display: "none",
-    [theme.breakpoints.up("sm")]: {
-      display: "block",
-    },
-  },
-  search: {
-    position: "relative",
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: fade(theme.palette.common.white, 0.15),
-    "&:hover": {
-      backgroundColor: fade(theme.palette.common.white, 0.25),
-    },
-    marginRight: theme.spacing(2),
-    marginLeft: 0,
-    width: "100%",
-    [theme.breakpoints.up("sm")]: {
-      marginLeft: theme.spacing(3),
-      width: "auto",
-    },
-  },
-  searchIcon: {
-    padding: theme.spacing(0, 2),
-    height: "100%",
-    position: "absolute",
-    pointerEvents: "none",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  inputRoot: {
-    color: "inherit",
-  },
-  inputInput: {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-    transition: theme.transitions.create("width"),
-    width: "100%",
-    [theme.breakpoints.up("md")]: {
-      width: "20ch",
-    },
-  },
-  sectionDesktop: {
-    display: "none",
-    [theme.breakpoints.up("md")]: {
-      display: "flex",
-    },
-  },
-  sectionMobile: {
-    display: "flex",
-    [theme.breakpoints.up("md")]: {
-      display: "none",
+    justifyContent: "left",
+    [theme.breakpoints.down("md")]: {
+      justifyContent: "center",
     },
   },
 }));
 
 export default function Header({ rightlinks, leftlinks }) {
   const classes = useStyles();
+  const [open, setOpen] = React.useState(false);
+  const [width, setWidth] = React.useState(window.innerWidth);
+
+  React.useEffect(
+    (width) => {
+      window.addEventListener("resize", () => {
+        setWidth(window.innerWidth);
+      });
+    },
+    [width]
+  );
 
   return (
-    <header class="header_area bg-img background-overlay-white">
-      <div class="top_header_area flex flex-row m-2">
-        <div class="top_logo">
-                  <a href="#">
-                    <img src={Logo} alt="" height='150' width='150' style={{}} />
-                  </a>
-        </div>
-        <div className="flex-1" />
-        <div style={{marginLeft: -200}} className="main_header_area mt-8">
-          <div class="row h-100">
-            <div class="col-12 d-md-flex justify-content-between">
-              <div class="header-social-area content-center">
-              
-                <a href="#">
-                  <span class="karl-level">Share</span>{" "}
-                  <i class="fa fa-pinterest" aria-hidden="true"></i>
-                </a>
-                <a href="#">
-                  <i class="fa fa-facebook" aria-hidden="true"></i>
-                </a>
-                <a href="#">
-                  <i class="fa fa-twitter" aria-hidden="true"></i>
-                </a>
-                <a href="#">
-                  <i class="fa fa-linkedin" aria-hidden="true"></i>
-                </a>
-              </div>
-              <div className='flex-grow'></div>
-              <div class="main-menu-area">
-                <nav class="navbar navbar-expand-lg align-items-start">
-                  <button
-                    class="navbar-toggler"
-                    type="button"
-                    data-toggle="collapse"
-                    data-target="#karl-navbar"
-                    aria-controls="karl-navbar"
-                    aria-expanded="false"
-                    aria-label="Toggle navigation"
-                  >
-                    <span class="navbar-toggler-icon">
-                      <i class="ti-menu"></i>
-                    </span>
-                  </button>
-
-                  <div
-                    class="collapse navbar-collapse align-items-start collapse"
-                    id="karl-navbar"
-                  >
-                    <ul class="navbar-nav animated" id="nav">
-                      <li class="nav-item active">
-                        <a class="nav-link" href="index.html">
-                          Home
-                        </a>
-                      </li>
-                      <li class="nav-item dropdown">
-                        <a
-                          class="nav-link dropdown-toggle"
-                          href="#"
-                          id="karlDropdown"
-                          role="button"
-                          data-toggle="dropdown"
-                          aria-haspopup="true"
-                          aria-expanded="false"
-                        >
-                          Pages
-                        </a>
-                        <div
-                          class="dropdown-menu"
-                          aria-labelledby="karlDropdown"
-                        >
-                          <a class="dropdown-item" href="index.html">
+    <>
+      <Drawer anchor="right" open={open} onClose={() => setOpen(!open)}>
+        <>Some Shit</>
+      </Drawer>
+      <header className="header_area bg-img background-overlay-white">
+        <div className="top_header_area flex flex-row m-2 justify-between">
+          <div className="">
+            <a href="#">
+              <img
+                src={Logo}
+                alt=""
+                height={width > 1200 ? width * 0.1 : "100"}
+                width={width > 1200 ? width * 0.1 : "100"}
+                style={{}}
+              />
+            </a>
+          </div>
+          <div className="main_header_area mt-8">
+            <div className="row h-100">
+              <div className="col-12 d-md-flex justify-content-between">
+                <div className="main-menu-area">
+                  <nav className="navbar navbar-expand-lg align-items-start">
+                    <button
+                      onClick={() => setOpen(!open)}
+                      style={{ paddingLeft: -20 }}
+                      className="navbar-toggler"
+                      type="button"
+                      data-toggle="collapse"
+                      data-target="#karl-navbar"
+                      aria-controls="karl-navbar"
+                      aria-expanded="false"
+                      aria-label="Toggle navigation"
+                    >
+                      <span className="navbar-toggler-icon">
+                        <i className="ti-menu"></i>
+                      </span>
+                    </button>
+                    <Hidden mdDown>
+                      <ul className="navbar-nav animated" id="nav">
+                        <li className="nav-item active">
+                          <a className="nav-link" href="/">
                             Home
                           </a>
-                          <a class="dropdown-item" href="shop.html">
-                            Shop
+                        </li>
+                        <li className="nav-item dropdown">
+                          <a
+                            className="nav-link dropdown-toggle"
+                            href="#"
+                            id="karlDropdown"
+                            role="button"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                          >
+                            Pages
                           </a>
-                          <a class="dropdown-item" href="product-details.html">
-                            Product Details
+                          <div
+                            className="dropdown-menu"
+                            aria-labelledby="karlDropdown"
+                          >
+                            <a className="dropdown-item" href="index.html">
+                              Home
+                            </a>
+                            <a className="dropdown-item" href="shop.html">
+                              Shop
+                            </a>
+                            <a
+                              className="dropdown-item"
+                              href="product-details.html"
+                            >
+                              Product Details
+                            </a>
+                            <a className="dropdown-item" href="cart.html">
+                              Cart
+                            </a>
+                            <a className="dropdown-item" href="checkout.html">
+                              Checkout
+                            </a>
+                          </div>
+                        </li>
+                        <li className="nav-item">
+                          <a className="nav-link" href="/aboutus">
+                            About Us
                           </a>
-                          <a class="dropdown-item" href="cart.html">
-                            Cart
+                        </li>
+                        <li className="nav-item">
+                          <a className="nav-link" href="/contactus">
+                            Contact Us
                           </a>
-                          <a class="dropdown-item" href="checkout.html">
-                            Checkout
-                          </a>
-                        </div>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" href="#">
-                          Dresses
-                        </a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" href="#">
-                          <span class="karl-level">hot</span> Shoes
-                        </a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" href="#">
-                          Contact
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
-                </nav>
+                        </li>
+                      </ul>
+                    </Hidden>
+                  </nav>
+                </div>
               </div>
-              <div className='flex-grow'></div>
             </div>
           </div>
+          <Hidden mdDown>
+            <div className="flex flex-row mt-8">
+              <ul
+                className="navbar-nav animated flex flex-row mt-8 mr-8 hidden md:block"
+                id="nav"
+              >
+                <li className="nav-item">
+                  <Button
+                    href="/signup"
+                    style={{
+                      backgroundColor: "#ff084e",
+                      color: "white",
+                      fontWeight: 900,
+                    }}
+                  >
+                    Join Us
+                  </Button>
+                </li>
+                <li className="nav-item">
+                  <IconButton
+                    href="/cart"
+                    style={{
+                      backgroundColor: "#ff084e",
+                      color: "white",
+                      fontWeight: 900,
+                      marginTop: -10,
+                      marginLeft: 10,
+                    }}
+                  >
+                    <ShoppingCartIcon />
+                  </IconButton>
+                </li>
+              </ul>
+            </div>
+          </Hidden>
         </div>
-        <div className="flex-1" />
-      </div>
-    </header>
+      </header>
+    </>
   );
 }
+
+// <ul className="navbar-nav animated" id="nav">

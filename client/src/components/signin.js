@@ -77,6 +77,7 @@ export default function SignIn() {
       .signInWithEmailAndPassword(email.value, password.value)
       .then((res) => {
         alert("Signed IN");
+        window.location.href='/';
       })
       .catch((err) => console.log(err));
   };
