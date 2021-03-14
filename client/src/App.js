@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import SignIn from "./components/signin.js";
 import SignUp from "./components/signup.js";
 import { AuthProvider } from "./components/firebase/firebase";
@@ -15,9 +15,10 @@ import "./components/css/owl.carousel.css";
 import "./components/css/responsive.css";
 import "./components/css/themify-icons.css";
 import "./components/css/styles.css";
-import Cart from './components/cart/cart.js';
-import ContactUs from './components/homepage/Contact/contactus.js';
+import Cart from "./components/cart/cart.js";
+import ContactUs from "./components/homepage/Contact/contactus.js";
 import AboutUs from "./components/homepage/AboutUs/AboutUs.js";
+import Product from "./components/product/product.js";
 
 const App = () => {
   return (
@@ -30,7 +31,10 @@ const App = () => {
           <Route path="/cart" component={() => <Cart />} />
           <Route path="/contactus" component={() => <ContactUs />} />
           <Route path="/aboutus" component={() => <AboutUs />} />
-          
+          <Route
+            path="/product/:id"
+            component={(props) => <Product prodId={props.match.params.id} />}
+          />
         </Router>
       </AuthProvider>
     </>
