@@ -12,6 +12,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { APP } from "./firebase/firebaseConfig";
 import logo from "./assets/logo.png";
+import Footer from './footer';
 
 function Copyright() {
   return (
@@ -69,6 +70,7 @@ export default function SignUp() {
       .catch((err) => console.log(err));
   };
   return (
+    <>
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
@@ -127,7 +129,7 @@ export default function SignUp() {
             <Grid item xs={12}>
               <FormControlLabel
                 control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label="I want to receive inspiration, marketing promotions and updates via email."
+                label="Provide all updates via mail"
               />
             </Grid>
           </Grid>
@@ -142,16 +144,15 @@ export default function SignUp() {
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
-              <Link href="/login" variant="body2">
+              <Link href="/signin" variant="body2">
                 Already have an account? Sign in
               </Link>
             </Grid>
           </Grid>
         </form>
       </div>
-      <Box mt={5}>
-        <Copyright />
-      </Box>
     </Container>
+    <Footer />
+    </>
   );
 }

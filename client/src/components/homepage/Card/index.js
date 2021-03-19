@@ -9,7 +9,7 @@ import Info from "./infoforcard.js";
 const createCard = (info) => {
   return (
     <>
-      <Card img={info.img} price={info.price} description={info.description} />
+      <Card id={info.id} img={info.img} price={info.price} description={info.description} />
     </>
   );
 };

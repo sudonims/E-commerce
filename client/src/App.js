@@ -26,7 +26,7 @@ const App = () => {
     <>
       <AuthProvider>
         <Router>
-          <Route path="/login" component={() => <SignIn />} />
+          <Route path="/signin" component={() => <SignIn />} />
           <Route path="/signup" component={() => <SignUp />} />
           <Route exact path="/" component={() => <HomePage />} />
           <Route path="/cart" component={() => <Cart />} />

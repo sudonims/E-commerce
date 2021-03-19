@@ -3,6 +3,11 @@ import firebase from "firebase";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from "@material-ui/core/TextField";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
@@ -16,6 +21,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { APP } from "./firebase/firebaseConfig";
 import { AuthContext } from "./firebase/firebase";
+import App from "../App";
+import Footer from './footer';
+import Google from './google1.png'
 
 var provider = new firebase.auth.GoogleAuthProvider();
 
@@ -55,8 +63,72 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
+
+function FormDialog({ open, setOpen }) {
+
+  const submit = () => {
+    var a = document.getElementById('name___').value;
+
+    APP.auth().sendPasswordResetEmail(a).then(() => {
+      alert("Email sent. Check your Email for reset");
+    });
+
+    setOpen();
+
+  }
+  return (
+    <div>
+      <Dialog open={open} onClose={setOpen} aria-labelledby="form-dialog-title">
+        <DialogTitle id="form-dialog-title">Reset</DialogTitle>
+        <DialogContent>
+          <TextField
+            autoFocus
+            margin="dense"
+            id="name___"
+            label="Email Address"
+            type="email"
+            fullWidth
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button style={{
+            color: "black"
+          }} onClick={setOpen} color="primary">
+            Cancel
+          </Button>
+          <Button style={{
+            color: "black"
+          }} onClick={submit} color="primary">
+            Reset
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </div>
+  );
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 export default function SignIn() {
     const { currentUser } = React.useContext(AuthContext);
+    const [open, setopen] = React.useState(false);
+
+    const changeopen = () => {
+      setopen(!open);
+    }
+
 
     console.log(currentUser);   
   const classes = useStyles();
@@ -82,6 +154,8 @@ export default function SignIn() {
       .catch((err) => console.log(err));
   };
   return (
+    <>
+    <FormDialog open={open} setOpen={changeopen} />
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
@@ -128,22 +202,31 @@ export default function SignIn() {
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link href="#" variant="body2">
+              <Link onClick={() => changeopen()} variant="body2">
                 Forgot password?
               </Link>
             </Grid>
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link href="/signup" variant="body2">
                 {"Don't have an account? Sign Up"}
               </Link>
             </Grid>
           </Grid>
         </form>
-        <Button onClick={handleGoogleSignIN}>Google</Button>
+        <p> OR </p>
+        <button className="flex flex-row bg-white" onClick={handleGoogleSignIN}>
+          <Avatar style={{backgroundColor: "rgba(0, 0, 0, 0)"}}>
+            <img className="content-center" height={24} width={24} src={Google}  />
+          </Avatar>
+          <p className="ml-2">Google</p>
+        </button>
+       
       </div>
-      <Box mt={8}>
-        <Copyright />
-      </Box>
+      
     </Container>
+    <Footer />
+    </>
   );
 }
+
+
