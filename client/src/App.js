@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
+import Cookies from "js-cookie";
 import SignIn from "./components/signin.js";
 import SignUp from "./components/signup.js";
 import { AuthProvider } from "./components/firebase/firebase";
@@ -22,6 +23,13 @@ import AboutUs from "./components/homepage/AboutUs/AboutUs.js";
 import Product from "./components/product/product.js";
 
 const App = () => {
+  React.useEffect(() => {
+    var cart = { cart: [] };
+    if (!Cookies.get("cart")) {
+      Cookies.set("cart", cart);
+    }
+  }, []);
+
   return (
     <>
       <AuthProvider>

@@ -1,33 +1,21 @@
-import React from 'react';
-import { jsPDF } from 'jspdf';
-import Cookies from 'js-cookie';
-import 'jspdf-autotable';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Header from '../header.js';
+import React from "react";
+import { jsPDF } from "jspdf";
+import Cookies from "js-cookie";
+import "jspdf-autotable";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableContainer from "@material-ui/core/TableContainer";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
+import Header from "../header.js";
 
-
-import { Button } from '@material-ui/core';
-
+import { Button } from "@material-ui/core";
 
 export default function Cart() {
   // const { cart, updateCart } = React.useContext(CartContext);
-  const [cart, setCart] = React.useState(null);
-  // const cart = Cookies.getJSON('cart');
-  React.useEffect(() => {
-    setCart({cart :[
-        
-        {
-    id : 1,
-    name: 'levis',
-    price : '39.40$',
-
-    }]});
-  }, []);
+  // const [cart, setCart] = React.useState(null);
+  const cart = Cookies.getJSON("cart");
   const remove = (e) => {
     e.preventDefault();
     const { name } = e.target.elements;
@@ -36,13 +24,13 @@ export default function Cart() {
         return item.name !== name.value;
       }),
     };
-    Cookies.set('cart', cart_);
-    setCart(cart_);
+    Cookies.set("cart", cart_);
+    // setCart(cart_);
   };
 
   const pdf = () => {
     var doc = new jsPDF();
-    const tableColumn = ['Name', 'Price', 'Shop', 'Address'];
+    const tableColumn = ["Name", "Price", "Shop", "Address"];
     var sum = 0;
     const tableRows = cart.cart.map((item) => {
       sum += parseInt(item.price);
@@ -61,12 +49,12 @@ export default function Cart() {
       columns: tableColumn,
       body: tableRows,
     });
-    doc.save('list.pdf');
+    doc.save("list.pdf");
   };
 
   return cart ? (
     <>
-    <Header />
+      <Header />
       <div id="cart">
         <TableContainer>
           <Table>
@@ -110,6 +98,6 @@ export default function Cart() {
       </div>
     </>
   ) : (
-    <></> 
+    <></>
   );
 }
