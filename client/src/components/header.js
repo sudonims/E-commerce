@@ -2,8 +2,11 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
 import Logo from "./assets/logo.png";
-import { Button, Drawer, Hidden } from "@material-ui/core";
+import { Button, ButtonBase, Drawer, Hidden } from "@material-ui/core";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
+import { AuthContext } from "./firebase/firebase";
+import CustomDropdown from "./utils/CustomDropdown";
+import { APP } from "./firebase/firebaseConfig";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -15,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Header({ rightlinks, leftlinks }) {
+  const { currentUser } = React.useContext(AuthContext);
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [width, setWidth] = React.useState(window.innerWidth);
@@ -133,16 +137,56 @@ export default function Header({ rightlinks, leftlinks }) {
                 id="nav"
               >
                 <li className="nav-item">
-                  <Button
-                    href="/signup"
-                    style={{
-                      backgroundColor: "#ff084e",
-                      color: "white",
-                      fontWeight: 900,
-                    }}
-                  >
-                    Join Us
-                  </Button>
+                  {currentUser ? (
+                    <CustomDropdown
+                      caret
+                      buttonBase
+                      buttonText={"Account"}
+                      buttonProps={{
+                        style: {
+                          color: "black",
+                        },
+                      }}
+                      dropdownList={[
+                        <ButtonBase
+                          style={{
+                            padding: "8px 6px",
+                            textAlign: "left",
+                            width: "100%",
+                          }}
+                        >
+                          Profile
+                        </ButtonBase>,
+                        <ButtonBase
+                          style={{
+                            padding: "8px 6px",
+                            textAlign: "left",
+                            width: "100%",
+                          }}
+                          onClick={() => {
+                            APP.auth()
+                              .signOut()
+                              .then(() => {
+                                window.location.href = "/";
+                              });
+                          }}
+                        >
+                          Sign Out
+                        </ButtonBase>,
+                      ]}
+                    />
+                  ) : (
+                    <Button
+                      href="/signup"
+                      style={{
+                        backgroundColor: "#ff084e",
+                        color: "white",
+                        fontWeight: 900,
+                      }}
+                    >
+                      Join Us
+                    </Button>
+                  )}
                 </li>
                 <li className="nav-item">
                   <IconButton

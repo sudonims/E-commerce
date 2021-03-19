@@ -1,9 +1,23 @@
-import { Avatar, Container, Grid, Typography } from "@material-ui/core";
+import {
+  Avatar,
+  Button,
+  Container,
+  FormControlLabel,
+  Grid,
+  Radio,
+  RadioGroup,
+  Typography,
+} from "@material-ui/core";
 import React from "react";
+import { AuthContext } from "../firebase/firebase";
+import Footer from "../footer";
 import Header from "../header";
 
 export default function Product({ prodId }) {
+  const { currentUser } = React.useContext(AuthContext);
+
   const [prod, setProd] = React.useState({
+    id: "0xAAA",
     image: "",
     name: "demo",
     description: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing`,
@@ -24,6 +38,12 @@ export default function Product({ prodId }) {
     // });
   }, []);
 
+  const submit = (e) => {
+    e.preventDefault();
+  };
+
+  const addCart = (e) => {};
+
   return (
     prod && (
       <div className="flex flex-col">
@@ -34,7 +54,10 @@ export default function Product({ prodId }) {
               <img src={prod.image} alt="image" />
             </Grid>
             <Grid item xs={12} sm={12} md={8} lg={8} xl={8}>
-              <form>
+              <form onSubmit={submit}>
+                <input hidden type="text" value={currentUser.uid} name="user" />
+                <input hidden type="text" value={prodId} name="prodid" />
+
                 <div className="flex flex-col">
                   <Typography variant="h2" className="font-black">
                     {prod.name}
@@ -42,26 +65,68 @@ export default function Product({ prodId }) {
                   <Typography>{prod.description}</Typography>
                   <div className="flex flex-row mt-8">
                     <Typography variant="h5">Size</Typography>
-                    <div className="flex flex-row">
-                      {prod.sizes.map((size) => (
-                        <Avatar
-                          style={{
-                            backgroundColor: "pink",
-                            color: "black",
-                            marginLeft: 10,
-                          }}
-                        >
-                          {size}
-                        </Avatar>
-                      ))}
-                    </div>
+                    <RadioGroup
+                      defaultValue={prod.sizes[0]}
+                      aria-label="size"
+                      name="size"
+                    >
+                      <div className="flex flex-row">
+                        {prod.sizes.map((size) => (
+                          <FormControlLabel
+                            value={size}
+                            control={
+                              <Radio
+                                icon={
+                                  <Avatar
+                                    style={{
+                                      backgroundColor: "pink",
+                                      color: "black",
+                                      marginLeft: 10,
+                                    }}
+                                  >
+                                    {size}
+                                  </Avatar>
+                                }
+                              />
+                            }
+                          />
+                        ))}
+                      </div>
+                    </RadioGroup>
                   </div>
                   <div className="flex flex-row mt-8">
+                    <input
+                      hidden
+                      type="number"
+                      value={prod.price}
+                      name="price"
+                    />
                     <Typography variant="h4" style={{ marginRight: 20 }}>
                       Price
                     </Typography>
                     <Typography variant="h4">{prod.price}</Typography>
                   </div>
+                  <div
+                    style={{ justifyContent: "flex-start" }}
+                    className="mt-8 flex flex-row"
+                  >
+                    <Button
+                      style={{
+                        backgroundColor: "rgb(255, 8, 78)",
+                        marginRight: 10,
+                      }}
+                      type="submit"
+                    >
+                      Buy
+                    </Button>
+                    <Button
+                      style={{ backgroundColor: "rgb(255, 8, 78)" }}
+                      onClick={addCart}
+                    >
+                      Add to Cart
+                    </Button>
+                  </div>
+
                   <div className="mt-8">
                     <Typography variant="h4">
                       Try the product virtually!!!
@@ -77,6 +142,7 @@ export default function Product({ prodId }) {
             </Grid>
           </Grid>
         </Container>
+        <Footer />
       </div>
     )
   );
