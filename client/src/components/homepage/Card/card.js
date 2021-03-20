@@ -15,6 +15,7 @@ const Card = (props) => {
     });
     console.log(cart);
     Cookies.set("cart", cart);
+    alert("Added to cart");
   };
 
   return (

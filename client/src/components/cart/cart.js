@@ -13,19 +13,18 @@ import Header from "../header.js";
 import { Button } from "@material-ui/core";
 
 export default function Cart() {
-  // const { cart, updateCart } = React.useContext(CartContext);
-  // const [cart, setCart] = React.useState(null);
-  const cart = Cookies.getJSON("cart");
+  const [cart, setCart] = React.useState(Cookies.getJSON("cart"));
+
   const remove = (e) => {
     e.preventDefault();
-    const { name } = e.target.elements;
+    const { id } = e.target.elements;
     const cart_ = {
       cart: cart.cart.filter((item) => {
-        return item.name !== name.value;
+        return item.id != id.value;
       }),
     };
     Cookies.set("cart", cart_);
-    // setCart(cart_);
+    setCart(cart_);
   };
 
   const pdf = () => {
@@ -84,7 +83,7 @@ export default function Cart() {
                     <TableCell> {item.price} </TableCell>
                     <TableCell>
                       <form onSubmit={remove}>
-                        <input name="name" hidden value={item.name} />
+                        <input name="id" hidden value={item.id} />
                         <Button type="submit">Remove</Button>
                       </form>
                     </TableCell>
