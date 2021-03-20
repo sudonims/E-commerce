@@ -64,3 +64,9 @@
   margin: 20px 0;
   color : white;
 }
+a :active
+.currentLink {
+  color: #640200;
+  background-color: #000000;
+
+}

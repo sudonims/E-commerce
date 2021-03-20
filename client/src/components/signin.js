@@ -136,7 +136,9 @@ export default function SignIn() {
   const handleGoogleSignIN = () => {
     APP.auth()
       .signInWithPopup(provider)
-      .then((res) => {})
+      .then((res) => {alert("Signed IN");
+        window.location.href='/';
+    })
       .catch((err) => console.log(err));
   };
 

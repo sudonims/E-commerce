@@ -7,6 +7,7 @@ import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import { AuthContext } from "./firebase/firebase";
 import CustomDropdown from "./utils/CustomDropdown";
 import { APP } from "./firebase/firebaseConfig";
+import Feedback from './homepage/FeedBackForm/feedbackform';
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -20,8 +21,11 @@ const useStyles = makeStyles((theme) => ({
 export default function Header({ rightlinks, leftlinks }) {
   const { currentUser } = React.useContext(AuthContext);
   const classes = useStyles();
+  const [openFeed, setOpenFeed] = React.useState(false);
   const [open, setOpen] = React.useState(false);
   const [width, setWidth] = React.useState(window.innerWidth);
+
+  const feedChange = () => setOpenFeed(!openFeed);
 
   React.useEffect(
     (width) => {
@@ -73,55 +77,25 @@ export default function Header({ rightlinks, leftlinks }) {
                     <Hidden mdDown>
                       <ul className="navbar-nav animated" id="nav">
                         <li className="nav-item active">
-                          <a className="nav-link" href="/">
+                          <a className="nav-link currentLink" href="/">
                             Home
                           </a>
-                        </li>
-                        <li className="nav-item dropdown">
-                          <a
-                            className="nav-link dropdown-toggle"
-                            href="#"
-                            id="karlDropdown"
-                            role="button"
-                            data-toggle="dropdown"
-                            aria-haspopup="true"
-                            aria-expanded="false"
-                          >
-                            Pages
-                          </a>
-                          <div
-                            className="dropdown-menu"
-                            aria-labelledby="karlDropdown"
-                          >
-                            <a className="dropdown-item" href="index.html">
-                              Home
-                            </a>
-                            <a className="dropdown-item" href="shop.html">
-                              Shop
-                            </a>
-                            <a
-                              className="dropdown-item"
-                              href="product-details.html"
-                            >
-                              Product Details
-                            </a>
-                            <a className="dropdown-item" href="cart.html">
-                              Cart
-                            </a>
-                            <a className="dropdown-item" href="checkout.html">
-                              Checkout
-                            </a>
-                          </div>
-                        </li>
+                        </li>              
                         <li className="nav-item">
-                          <a className="nav-link" href="/aboutus">
+                          <a className="nav-link currentLink" href="/aboutus">
                             About Us
                           </a>
                         </li>
-                        <li className="nav-item">
-                          <a className="nav-link" href="/contactus">
+                        <li className="nav-item currentLink">
+                          <a className="nav-link currentLink" href="/contactus">
                             Contact Us
                           </a>
+                        </li>
+                        <li className="nav-item currentLink">
+                          <a onClick={feedChange} className="nav-link">
+                            Feed Back Form
+                          </a>
+                          <Feedback open={openFeed} setOpen={feedChange} />
                         </li>
                       </ul>
                     </Hidden>
