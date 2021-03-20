@@ -1,15 +1,17 @@
 import React from "react";
-import { Container, fade, InputBase, makeStyles } from "@material-ui/core";
-import SearchIcon from "@material-ui/icons/Search";
 import Header from "../../header.js";
 import Card from "./card.js";
-import prod1 from "../../img/product-img/product-1.jpg";
 import Info from "./infoforcard.js";
 
 const createCard = (info) => {
   return (
     <>
-      <Card id={info.id} img={info.img} price={info.price} description={info.description} />
+      <Card
+        id={info.id}
+        img={info.img}
+        price={info.price}
+        description={info.description}
+      />
     </>
   );
 };

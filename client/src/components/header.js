@@ -140,12 +140,9 @@ export default function Header({ rightlinks, leftlinks }) {
                   {currentUser ? (
                     <CustomDropdown
                       caret
-                      buttonBase
                       buttonText={"Account"}
                       buttonProps={{
-                        style: {
-                          color: "black",
-                        },
+                        variant: "primary",
                       }}
                       dropdownList={[
                         <ButtonBase
