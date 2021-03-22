@@ -45,10 +45,14 @@ export default function Feedback({ open, setOpen }) {
             
         </DialogContent>
         <DialogActions>
-          <Button onClick={setOpen} color="primary">
+          <Button 
+          style={{ backgroundColor: "#ff084e",
+                        color: "white"}}onClick={setOpen} >
             Cancel
           </Button>
-          <Button type="submit" onClick={setOpen} color="primary">
+          <Button 
+          style={{ backgroundColor: "#ff084e",
+                        color: "white",}}type="submit" onClick={setOpen}>
             Send Feedback
           </Button>
         </DialogActions>

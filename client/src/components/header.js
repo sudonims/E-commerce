@@ -111,42 +111,52 @@ export default function Header({ rightlinks, leftlinks }) {
                 id="nav"
               >
                 <li className="nav-item">
-                  {currentUser ? (
-                    <CustomDropdown
-                      caret
-                      buttonText={"Account"}
-                      buttonProps={{
-                        variant: "primary",
+                  {currentUser ? 
+                    [
+                      <Button
+                      onClick={()=>{
+
+                        APP.auth().signOut().then(()=>{
+                          alert("SignOut Successfull")
+                        });
                       }}
-                      dropdownList={[
-                        <ButtonBase
-                          style={{
-                            padding: "8px 6px",
-                            textAlign: "left",
-                            width: "100%",
-                          }}
-                        >
-                          Profile
-                        </ButtonBase>,
-                        <ButtonBase
-                          style={{
-                            padding: "8px 6px",
-                            textAlign: "left",
-                            width: "100%",
-                          }}
-                          onClick={() => {
-                            APP.auth()
-                              .signOut()
-                              .then(() => {
-                                window.location.href = "/";
-                              });
-                          }}
-                        >
-                          Sign Out
-                        </ButtonBase>,
-                      ]}
-                    />
-                  ) : (
+                      style={{
+                        backgroundColor: "#ff084e",
+                        color: "white",
+                        fontWeight: 900,
+                        marginRight:10
+                      }}
+                    >
+                      SIgnOut
+                    </Button>,
+                    <Button
+                      onClick={()=>{
+                        
+                      }}
+                      style={{
+                        backgroundColor: "#ff084e",
+                        color: "white",
+                        fontWeight: 900,
+                      }}
+                    >
+                      Your Profile
+                    </Button>,
+                    <IconButton
+                    href="/cart"
+                    style={{
+                      backgroundColor: "#ff084e",
+                      color: "white",
+                      fontWeight: 900,
+                      marginTop: -10,
+                      marginLeft: 10,
+                    }}
+                  >
+                    <ShoppingCartIcon />
+                  </IconButton>
+                    
+                    ]
+                    
+                   : (
                     <Button
                       href="/signup"
                       style={{
@@ -159,20 +169,7 @@ export default function Header({ rightlinks, leftlinks }) {
                     </Button>
                   )}
                 </li>
-                <li className="nav-item">
-                  <IconButton
-                    href="/cart"
-                    style={{
-                      backgroundColor: "#ff084e",
-                      color: "white",
-                      fontWeight: 900,
-                      marginTop: -10,
-                      marginLeft: 10,
-                    }}
-                  >
-                    <ShoppingCartIcon />
-                  </IconButton>
-                </li>
+                
               </ul>
             </div>
           </Hidden>

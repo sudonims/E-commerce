@@ -84,7 +84,8 @@ export default function Cart() {
                     <TableCell>
                       <form onSubmit={remove}>
                         <input name="id" hidden value={item.id} />
-                        <Button type="submit">Remove</Button>
+                        <Button style={{ backgroundColor: "#ff084e",
+                        color: "white",}}type="submit">Remove</Button>
                       </form>
                     </TableCell>
                   </TableRow>
@@ -93,7 +94,12 @@ export default function Cart() {
             </TableBody>
           </Table>
         </TableContainer>
-        <Button onClick={pdf}>Download pdf</Button>
+        <div className="flex flex-row">
+          <div className="flex-1" />
+        <Button style={{ backgroundColor: "#ff084e",
+                        color: "white",}} onClick={pdf}>Pay</Button>
+          <div className="flex-1" />
+        </div>
       </div>
     </>
   ) : (

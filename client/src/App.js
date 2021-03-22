@@ -45,7 +45,6 @@ const App = () => {
   return (
     <>
       <AuthProvider>
-        <ThemeProvider theme={theme} >
         <Router>
           <Route path="/signin" component={() => <SignIn />} />
           <Route path="/signup" component={() => <SignUp />} />
@@ -59,7 +58,6 @@ const App = () => {
             component={(props) => <Product prodId={props.match.params.id} />}
           />
         </Router>
-        </ThemeProvider>
       </AuthProvider>
     </>
   );
