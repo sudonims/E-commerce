@@ -294,4 +294,4 @@ export default function Header({ rightlinks, leftlinks }) {
   );
 }
 
-// <ul className="navbar-nav animated" id="nav">
+

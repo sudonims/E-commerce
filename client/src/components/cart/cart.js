@@ -9,12 +9,14 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Header from "../header.js";
+import Checkout from "./checkout/Checkout.js";
 
 import { Button } from "@material-ui/core";
+import { Route, Switch, useRouteMatch } from "react-router";
 
 export default function Cart() {
   const [cart, setCart] = React.useState(Cookies.getJSON("cart"));
-
+  const { url } = useRouteMatch();
   const remove = (e) => {
     e.preventDefault();
     const { id } = e.target.elements;
@@ -50,9 +52,10 @@ export default function Cart() {
     });
     doc.save("list.pdf");
   };
-
+  console.log(url)
   return cart ? (
-    <>
+    <Switch>
+      <Route exact path={`${url}`}>
       <Header />
       <div id="cart">
         <TableContainer>
@@ -96,12 +99,20 @@ export default function Cart() {
         </TableContainer>
         <div className="flex flex-row">
           <div className="flex-1" />
-        <Button style={{ backgroundColor: "#ff084e",
-                        color: "white",}} onClick={pdf}>Pay</Button>
+        <Button 
+        onClick={()=>{
+          window.location.href="/cart/checkout"
+        }}
+        style={{ backgroundColor: "#ff084e",
+                        color: "white",}} >Pay</Button>
           <div className="flex-1" />
         </div>
       </div>
-    </>
+      </Route>
+      <Route path={`${url}/checkout`}>
+        <Checkout />
+      </Route>
+    </Switch>
   ) : (
     <></>
   );
