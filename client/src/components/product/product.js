@@ -12,6 +12,7 @@ import React from "react";
 import { AuthContext } from "../firebase/firebase";
 import Footer from "../footer";
 import Header from "../header";
+import Cookies from "js-cookie";
 
 export default function Product({ prodId }) {
   const { currentUser } = React.useContext(AuthContext);
@@ -41,9 +42,20 @@ export default function Product({ prodId }) {
   const submit = (e) => {
     e.preventDefault();
   };
+  var cart = Cookies.getJSON("cart");
 
-  const addCart = (e) => {};
-
+  const addCart = (e) => {
+    e.preventDefault();
+    cart.cart.push({
+      id: prod.id,
+      name: "top",
+      price: prod.price,
+      image_link: prod.image,
+    });
+    console.log(cart);
+    Cookies.set("cart", cart);
+    alert("Added to cart");
+  };
   return (
     prod && (
       <div className="flex flex-col">
