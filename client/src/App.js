@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Cookies from "js-cookie";
 import SignIn from "./components/signin.js";
 import SignUp from "./components/signup.js";
@@ -46,6 +46,7 @@ const App = () => {
     <>
       <AuthProvider>
         <Router>
+        <Switch>
           <Route path="/signin" component={() => <SignIn />} />
           <Route path="/signup" component={() => <SignUp />} />
           <Route exact path="/" component={() => <HomePage />} />
@@ -57,6 +58,8 @@ const App = () => {
             path="/product/:id"
             component={(props) => <Product prodId={props.match.params.id} />}
           />
+
+        </Switch>
         </Router>
       </AuthProvider>
     </>
