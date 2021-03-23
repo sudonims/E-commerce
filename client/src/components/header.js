@@ -2,12 +2,140 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
 import Logo from "./assets/logo.png";
-import { Button, ButtonBase, Drawer, Hidden } from "@material-ui/core";
+import TextField from "@material-ui/core/TextField";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import {
+  Avatar,
+  Button,
+  ButtonBase,
+  Drawer,
+  Grid,
+  Hidden,
+} from "@material-ui/core";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import { AuthContext } from "./firebase/firebase";
 import CustomDropdown from "./utils/CustomDropdown";
 import { APP } from "./firebase/firebaseConfig";
-import Feedback from './homepage/FeedBackForm/feedbackform';
+import Feedback from "./homepage/FeedBackForm/feedbackform";
+
+const Profile = () => {
+  const { currentUser } = React.useContext(AuthContext);
+  const [open, setOpen] = React.useState(false);
+
+  const handleClick = () => {
+    setOpen(!open);
+  };
+
+  return (
+    <>
+      <Button
+        style={{
+          backgroundColor: "#ff084e",
+          color: "white",
+          fontWeight: 900,
+        }}
+        onClick={handleClick}
+      >
+        My Profile
+      </Button>
+      <Dialog
+        fullWidth={true}
+        maxWidth={"lg"}
+        open={open}
+        onClose={handleClick}
+        aria-labelledby="form-dialog-title"
+      >
+        <DialogTitle id="form-dialog-title">Profile</DialogTitle>
+        <DialogContent>
+          <Grid container>
+            <Grid style={{ margin: 15 }} item xs={6}>
+              <Grid container>
+                <Grid style={{ margin: 15 }} item xs={12}>
+                  <TextField
+                    autoFocus
+                    margin="dense"
+                    id="email"
+                    label="Email Address"
+                    type="email"
+                    name="email"
+                    fullWidth
+                    defaultValue={currentUser.email}
+                  />
+                </Grid>
+                <Grid style={{ margin: 15 }} item xs={12}>
+                  <TextField
+                    autoFocus
+                    margin="dense"
+                    id="name"
+                    name="name"
+                    label="Name"
+                    type="text"
+                    fullWidth
+                    defaultValue={currentUser.displayName}
+                  />
+                </Grid>
+                <Grid style={{ margin: 15 }} item xs={12}>
+                  <TextField
+                    autoFocus
+                    margin="dense"
+                    id="phone"
+                    name="phone"
+                    label="Number"
+                    type="text"
+                    fullWidth
+                    defaultValue={currentUser.phone}
+                  />
+                </Grid>
+                <Grid style={{ margin: 15 }} item xs={12}>
+                  {!currentUser.emailVerified && (
+                    <Button
+                      onClick={() =>
+                        APP.auth()
+                          .currentUser.sendEmailVerification()
+                          .then(() => {
+                            alert("Check your Email");
+                          })
+                      }
+                    >
+                      Verify Email
+                    </Button>
+                  )}
+                </Grid>
+              </Grid>
+            </Grid>
+            <Grid item xs={5}>
+              <Avatar
+                style={{
+                  marginLeft: 20,
+                  height: 400,
+                  width: 400,
+                }}
+              >
+                <img
+                  src="https://thumbor.forbes.com/thumbor/250x382/https://blogs-images.forbes.com/dorothypomerantz/files/2011/09/Spongebob-squarepants.jpg"
+                  height="100%"
+                  width="100%"
+                />
+              </Avatar>
+            </Grid>
+          </Grid>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClick} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={handleClick} color="primary">
+            Update
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </>
+  );
+};
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -80,7 +208,7 @@ export default function Header({ rightlinks, leftlinks }) {
                           <a className="nav-link currentLink" href="/">
                             Home
                           </a>
-                        </li>              
+                        </li>
                         <li className="nav-item">
                           <a className="nav-link currentLink" href="/aboutus">
                             About Us
@@ -111,52 +239,40 @@ export default function Header({ rightlinks, leftlinks }) {
                 id="nav"
               >
                 <li className="nav-item">
-                  {currentUser ? 
+                  {currentUser ? (
                     [
                       <Button
-                      onClick={()=>{
-
-                        APP.auth().signOut().then(()=>{
-                          alert("SignOut Successfull")
-                        });
-                      }}
-                      style={{
-                        backgroundColor: "#ff084e",
-                        color: "white",
-                        fontWeight: 900,
-                        marginRight:10
-                      }}
-                    >
-                      SIgnOut
-                    </Button>,
-                    <Button
-                      onClick={()=>{
-                        
-                      }}
-                      style={{
-                        backgroundColor: "#ff084e",
-                        color: "white",
-                        fontWeight: 900,
-                      }}
-                    >
-                      Your Profile
-                    </Button>,
-                    <IconButton
-                    href="/cart"
-                    style={{
-                      backgroundColor: "#ff084e",
-                      color: "white",
-                      fontWeight: 900,
-                      marginTop: -10,
-                      marginLeft: 10,
-                    }}
-                  >
-                    <ShoppingCartIcon />
-                  </IconButton>
-                    
+                        onClick={() => {
+                          APP.auth()
+                            .signOut()
+                            .then(() => {
+                              alert("SignOut Successfull");
+                            });
+                        }}
+                        style={{
+                          backgroundColor: "#ff084e",
+                          color: "white",
+                          fontWeight: 900,
+                          marginRight: 10,
+                        }}
+                      >
+                        SIgnOut
+                      </Button>,
+                      <Profile />,
+                      <IconButton
+                        href="/cart"
+                        style={{
+                          backgroundColor: "#ff084e",
+                          color: "white",
+                          fontWeight: 900,
+                          marginTop: -10,
+                          marginLeft: 10,
+                        }}
+                      >
+                        <ShoppingCartIcon />
+                      </IconButton>,
                     ]
-                    
-                   : (
+                  ) : (
                     <Button
                       href="/signup"
                       style={{
@@ -169,7 +285,6 @@ export default function Header({ rightlinks, leftlinks }) {
                     </Button>
                   )}
                 </li>
-                
               </ul>
             </div>
           </Hidden>

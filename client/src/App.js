@@ -17,23 +17,12 @@ import "./components/css/responsive.css";
 import "./components/css/themify-icons.css";
 import "./components/css/styles.css";
 import "./components/css/main1.css";
+import "./components/css/form.css";
 import Cart from "./components/cart/cart.js";
 import ContactUs from "./components/homepage/Contact/contactus.js";
 import AboutUs from "./components/homepage/AboutUs/AboutUs.js";
 import Product from "./components/product/product.js";
-import { ThemeProvider } from "@material-ui/styles";
-import { createMuiTheme } from "@material-ui/core";
-import Feedback from "./components/homepage/FeedBackForm/feedbackform.js";
-import './components/css/form.css';
-const theme = createMuiTheme({
-  palette: {
-    type: "dark",
-    background: {
-      paper: "#3a3a3a",
-      default: "#3a3a3a",
-    },
-  },
-});
+
 const App = () => {
   React.useEffect(() => {
     var cart = { cart: [] };
@@ -52,7 +41,7 @@ const App = () => {
           <Route path="/cart" component={() => <Cart />} />
           <Route path="/contactus" component={() => <ContactUs />} />
           <Route path="/aboutus" component={() => <AboutUs />} />
-          
+
           <Route
             path="/product/:id"
             component={(props) => <Product prodId={props.match.params.id} />}
