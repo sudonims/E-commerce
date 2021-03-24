@@ -1,5 +1,5 @@
 const express = require("express");
-
+const morgan = require("morgan");
 var cors = require("cors");
 const app = express();
 
@@ -13,6 +13,9 @@ app.use(
   express.urlencoded({
     extended: true,
   })
+);
+app.use(
+  morgan(":method :url :status :res[content-length] - :response-time ms")
 );
 
 app.use("/", index);
