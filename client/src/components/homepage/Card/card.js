@@ -1,12 +1,19 @@
 import React from "react";
 import prod1 from "../../img/product-img/product-1.jpg";
 import Cookies from "js-cookie";
+import { AuthContext } from "../../firebase/firebase";
+import { Button } from "@material-ui/core";
 
 const Card = (props) => {
   var cart = Cookies.getJSON("cart");
+  const { currentUser } = React.useContext(AuthContext);
 
   const addToCart = (e) => {
     e.preventDefault();
+    if (!currentUser) {
+      alert("Please Sign In");
+      return;
+    }
     cart.cart.push({
       id: props.id,
       name: "top",
@@ -43,7 +50,7 @@ const Card = (props) => {
           <p>{props.description}</p>
           {/* Add to Cart */}
           <form onSubmit={addToCart}>
-            <button
+            <Button
               type="submit"
               style={{
                 backgroundColor: "rgb(255, 8, 78)",
@@ -53,7 +60,7 @@ const Card = (props) => {
               className="add-to-cart-btn"
             >
               ADD TO CART
-            </button>
+            </Button>
           </form>
         </div>
       </div>
