@@ -126,13 +126,14 @@ export default function Product({ prodId }) {
                       style={{
                         backgroundColor: "rgb(255, 8, 78)",
                         marginRight: 10,
+                        color: "white"
                       }}
                       type="submit"
                     >
                       Buy
                     </Button>
                     <Button
-                      style={{ backgroundColor: "rgb(255, 8, 78)" }}
+                      style={{ backgroundColor: "rgb(255, 8, 78)" ,color: "white"}}
                       onClick={addCart}
                     >
                       Add to Cart

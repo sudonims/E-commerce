@@ -6,6 +6,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import Rating1 from './Rating1';
 
 export default function Feedback({ open, setOpen }) {
 
@@ -42,6 +43,7 @@ export default function Feedback({ open, setOpen }) {
               fullWidth
               required
             />
+            <Rating1 />
             
         </DialogContent>
         <DialogActions>

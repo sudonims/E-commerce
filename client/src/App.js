@@ -22,6 +22,7 @@ import Cart from "./components/cart/cart.js";
 import ContactUs from "./components/homepage/Contact/contactus.js";
 import AboutUs from "./components/homepage/AboutUs/AboutUs.js";
 import Product from "./components/product/product.js";
+import Myorders from "./components/Myorders/myorders.js";
 
 const App = () => {
   React.useEffect(() => {
@@ -42,6 +43,8 @@ const App = () => {
           <Route path="/cart" component={() => <Cart />} />
           <Route path="/contactus" component={() => <ContactUs />} />
           <Route path="/aboutus" component={() => <AboutUs />} />
+          <Route path="/myorders" component={() => <Myorders />} />
+          
 
           <Route
             path="/product/:id"
