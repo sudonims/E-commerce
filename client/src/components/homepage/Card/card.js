@@ -14,6 +14,10 @@ const Card = (props) => {
       alert("Please Sign In");
       return;
     }
+    if(!currentUser.emailVerified){
+      alert("Please Verify Your Mail Id\nFor that go to Your Profile");
+      return;
+    }
     cart.cart.push({
       id: props.id,
       name: "top",
@@ -58,6 +62,7 @@ const Card = (props) => {
                 fontWeight: 900,
               }}
               className="add-to-cart-btn"
+              
             >
               ADD TO CART
             </Button>

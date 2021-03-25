@@ -84,12 +84,22 @@ const Profile = () => {
                     margin="dense"
                     id="phone"
                     name="phone"
-                    label="Number"
+                    label="Phone Number"
                     type="text"
                     fullWidth
                     defaultValue={currentUser.phone}
                   />
                 </Grid>
+                <Grid style={{ margin: 15 }} item xs={12}>
+                <Button
+                      onClick={()=>{
+                        window.location.href = "/myorders"
+                      }}
+                    >
+                      View Your Orders
+                    </Button>
+                </Grid>
+                
                 <Grid style={{ margin: 15 }} item xs={12}>
                   {!currentUser.emailVerified && (
                     <Button
@@ -268,6 +278,7 @@ export default function Header({ rightlinks, leftlinks }) {
                           marginTop: -10,
                           marginLeft: 10,
                         }}
+                        disabled={!currentUser.emailVerified}
                       >
                         <ShoppingCartIcon />
                       </IconButton>,

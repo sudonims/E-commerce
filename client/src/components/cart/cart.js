@@ -104,7 +104,7 @@ export default function Cart() {
           window.location.href="/cart/checkout"
         }}
         style={{ backgroundColor: "#ff084e",
-                        color: "white",}} >Pay</Button>
+                        color: "white",}} disabled={cart.cart.length==0}>Pay</Button>
           <div className="flex-1" />
         </div>
       </div>
