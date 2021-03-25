@@ -19,7 +19,7 @@ app.use(
 );
 
 app.use("/", index);
-app.use("/api", securedRoutes);
+app.use("/api", verifyToken, securedRoutes);
 
 const PORT = process.env.PORT || 5000;
 

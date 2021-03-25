@@ -1,45 +1,46 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Paper from '@material-ui/core/Paper';
-import Stepper from '@material-ui/core/Stepper';
-import Step from '@material-ui/core/Step';
-import StepLabel from '@material-ui/core/StepLabel';
-import Button from '@material-ui/core/Button';
-import Link from '@material-ui/core/Link';
-import Typography from '@material-ui/core/Typography';
-import AddressForm from './AddressForm';
-import Review from './Review';
-import Header from '../../header';
-import Footer from '../../footer';
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import Paper from "@material-ui/core/Paper";
+import Stepper from "@material-ui/core/Stepper";
+import Step from "@material-ui/core/Step";
+import StepLabel from "@material-ui/core/StepLabel";
+import Button from "@material-ui/core/Button";
+import Link from "@material-ui/core/Link";
+import Typography from "@material-ui/core/Typography";
+import AddressForm from "./AddressForm";
+import Review from "./Review";
+import Header from "../../header";
+import Footer from "../../footer";
+import StepOrderContext from "./stepOrderContext";
 
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
+      {"Copyright © "}
       <Link color="inherit" href="https://material-ui.com/">
         Your Website
-      </Link>{' '}
+      </Link>{" "}
       {new Date().getFullYear()}
-      {'.'}
+      {"."}
     </Typography>
   );
 }
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
-    position: 'relative',
+    position: "relative",
   },
   layout: {
-    width: 'auto',
+    width: "auto",
     marginLeft: theme.spacing(2),
     marginRight: theme.spacing(2),
     [theme.breakpoints.up(600 + theme.spacing(2) * 2)]: {
       width: 600,
-      marginLeft: 'auto',
-      marginRight: 'auto',
+      marginLeft: "auto",
+      marginRight: "auto",
     },
   },
   paper: {
@@ -54,11 +55,10 @@ const useStyles = makeStyles((theme) => ({
   },
   stepper: {
     padding: theme.spacing(3, 0, 5),
-    
   },
   buttons: {
-    display: 'flex',
-    justifyContent: 'flex-end',
+    display: "flex",
+    justifyContent: "flex-end",
   },
   button: {
     marginTop: theme.spacing(3),
@@ -66,46 +66,54 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const steps = ['Shipping address', 'Review your order'];
+const steps = ["Shipping address", "Review your order"];
 
-function getStepContent(step) {
+function getStepContent(step, classes) {
   switch (step) {
     case 0:
-      return <AddressForm />;
+      return <AddressForm classes={classes} />;
     case 1:
-        return <Review />;
+      return <Review classes1={classes} />;
     default:
-      throw new Error('Unknown step');
+      throw new Error("Unknown step");
   }
 }
 
 export default function Checkout() {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
-
-  const handleNext = () => {
-    setActiveStep(activeStep + 1);
-  };
-
-  const handleBack = () => {
-    setActiveStep(activeStep - 1);
-  };
+  const [orderId, setOrderId] = React.useState("");
+  const [address, setAddress] = React.useState(null);
 
   return (
-    <React.Fragment>
+    <StepOrderContext.Provider
+      value={{
+        activeStep,
+        setActiveStep,
+        orderId,
+        setOrderId,
+        address,
+        setAddress,
+      }}
+    >
       <CssBaseline />
       <AppBar position="absolute" color="default" className={classes.appBar}>
         <Header />
       </AppBar>
       <main className={classes.layout}>
         <Paper className={classes.paper}>
-          <Typography  style={{
-                        padding : "10px 0px 10px 0px",
-                        borderRadius:10,
-                        backgroundColor: "#ff084e",
-                        color: "white",
-                        fontWeight: 900,
-                      }} component="h1" variant="h4" align="center">
+          <Typography
+            style={{
+              padding: "10px 0px 10px 0px",
+              borderRadius: 10,
+              backgroundColor: "#ff084e",
+              color: "white",
+              fontWeight: 900,
+            }}
+            component="h1"
+            variant="h4"
+            align="center"
+          >
             Checkout with DNA Match
           </Typography>
           <Stepper activeStep={activeStep} className={classes.stepper}>
@@ -122,45 +130,20 @@ export default function Checkout() {
                   Thank you for your order.
                 </Typography>
                 <Typography variant="subtitle1">
-                  Your order number is #2001539. We have emailed your order confirmation, and will
-                  send you an update when your order has shipped.
+                  Your order number is {orderId}. We have emailed your order
+                  confirmation, and will send you an update when your order has
+                  shipped.
                 </Typography>
               </React.Fragment>
             ) : (
               <React.Fragment>
-                {getStepContent(activeStep)}
-                <div className={classes.buttons}>
-                  {activeStep !== 0 && (
-                    <Button
-                     style={{
-                        backgroundColor: "#ff084e",
-                        color: "white",
-                        fontWeight: 900,
-                      }}
-                     onClick={handleBack} className={classes.button}>
-                      Back
-                    </Button>
-                  )}
-                  <Button
-                     style={{
-                        backgroundColor: "#ff084e",
-                        color: "white",
-                        fontWeight: 900,
-                      }}
-                    variant="contained"
-                    color="primary"
-                    onClick={handleNext}
-                    className={classes.button}
-                  >
-                    {activeStep === steps.length - 1 ? 'Place order' : 'Next'}
-                  </Button>
-                </div>
+                {getStepContent(activeStep, classes)}
               </React.Fragment>
             )}
           </React.Fragment>
         </Paper>
         <Footer />
       </main>
-    </React.Fragment>
+    </StepOrderContext.Provider>
   );
 }
