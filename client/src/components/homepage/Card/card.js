@@ -14,7 +14,7 @@ const Card = (props) => {
       alert("Please Sign In");
       return;
     }
-    if(!currentUser.emailVerified){
+    if (!currentUser.emailVerified) {
       alert("Please Verify Your Mail Id\nFor that go to Your Profile");
       return;
     }
@@ -23,6 +23,8 @@ const Card = (props) => {
       name: "top",
       price: props.price,
       image_link: props.img,
+      quantity: 1,
+      effectiveprice: this.price * this.quantity,
     });
     console.log(cart);
     Cookies.set("cart", cart);
@@ -50,7 +52,7 @@ const Card = (props) => {
         </div>
         {/* Product Description */}
         <div className="product-description">
-          <h4 className="product-price">{props.price}</h4>
+          <h4 className="product-price">&#8377; {props.price}</h4>
           <p>{props.description}</p>
           {/* Add to Cart */}
           <form onSubmit={addToCart}>
@@ -62,7 +64,6 @@ const Card = (props) => {
                 fontWeight: 900,
               }}
               className="add-to-cart-btn"
-              
             >
               ADD TO CART
             </Button>
