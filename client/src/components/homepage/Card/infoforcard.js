@@ -5,13 +5,13 @@ const info = [
     id: 1,
     description: "Cotton Jeans",
     img: prod1,
-    price: "$39.40",
+    price: 39.4,
   },
   {
     id: 2,
     description: "The Cooler Cotton Jeans",
     img: prod1,
-    price: "$59.40",
+    price: 59.4,
   },
 ];
 

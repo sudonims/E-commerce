@@ -83,7 +83,16 @@ export default function Checkout() {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
   const [orderId, setOrderId] = React.useState("");
-  const [address, setAddress] = React.useState(null);
+  const [address, setAddress] = React.useState({
+    firstName: "",
+    lastName: "",
+    address1: "",
+    address2: "",
+    city: "",
+    zip: "",
+    state: "",
+    country: "",
+  });
 
   return (
     <StepOrderContext.Provider

@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import Cookies from "js-cookie";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import List from "@material-ui/core/List";
@@ -47,6 +48,8 @@ function loadScript(src) {
 }
 
 export default function Review({ classes1 }) {
+  const cart = Cookies.getJSON("cart");
+  const amount = cart.cart.reduce((a, b) => a + (b["price"] || 0), 0);
   const classes = useStyles();
   const { activeStep, setActiveStep, orderId, setOrderId } = React.useContext(
     StepOrderContext
@@ -68,7 +71,7 @@ export default function Review({ classes1 }) {
         const options = {
           key: "rzp_test_B96U3f6ow70StF",
           currency: "INR",
-          amount: "50000",
+          amount: `${amount * 100}`,
           order_id: id,
           name: "DNA Match",
           description: "Thank you.",
@@ -116,7 +119,7 @@ export default function Review({ classes1 }) {
           .post(
             server + "api/orders",
             {
-              amount: 50000,
+              amount: amount * 100,
               currency: "INR",
             },
             {
@@ -134,18 +137,24 @@ export default function Review({ classes1 }) {
       });
   };
 
+  console.log(amount);
+
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
         Order summary
       </Typography>
       <List disablePadding>
-        {products.map((product) => (
+        {cart.cart.map((product) => (
           <ListItem className={classes.listItem} key={product.name}>
             <ListItemText primary={product.name} secondary={product.desc} />
             <Typography variant="body2">{product.price}</Typography>
           </ListItem>
         ))}
+        <ListItem>
+          <ListItemText>Total Price:</ListItemText>
+          <Typography>{amount}</Typography>
+        </ListItem>
       </List>
       <div className={classes1.buttons}>
         <Button
