@@ -69,23 +69,38 @@ export default function Cart() {
         <Header />
         <div id="cart">
           <TableContainer>
-            <Table>
+            <Table
+              style={{
+                textAlign: "center",
+              }}
+            >
               <TableHead>
                 <TableRow>
-                  <TableCell></TableCell>
-                  <TableCell>Product</TableCell>
-                  <TableCell>Shop</TableCell>
-                  <TableCell>Price</TableCell>
-                  <TableCell></TableCell>
-                  <TableCell>Quantity</TableCell>
-                  <TableCell>Remove</TableCell>
+                  <TableCell style={{ width: "16%", textAlign: "center" }}>
+                    Image
+                  </TableCell>
+                  <TableCell style={{ width: "16%", textAlign: "center" }}>
+                    Product
+                  </TableCell>
+                  <TableCell style={{ width: "16%", textAlign: "center" }}>
+                    Shop
+                  </TableCell>
+                  <TableCell style={{ width: "16%", textAlign: "center" }}>
+                    Price
+                  </TableCell>
+                  <TableCell style={{ width: "16%", textAlign: "center" }}>
+                    Quantity
+                  </TableCell>
+                  <TableCell style={{ width: "16%", textAlign: "center" }}>
+                    Remove
+                  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {cart.cart.map((item) => {
                   return (
                     <TableRow>
-                      <TableCell>
+                      <TableCell style={{ width: "16%", textAlign: "center" }}>
                         <img
                           height="150px"
                           width="150px"
@@ -93,21 +108,48 @@ export default function Cart() {
                           src={item.image_link}
                         />
                       </TableCell>
-                      <TableCell>{item.id}</TableCell>
-                      <TableCell> {item.name} </TableCell>
-                      <TableCell> {item.price} </TableCell>
-                      <TableCell>
-                        <div className="flex flex-row">
-                          <Button onClick={() => quan("+", item.id)}>+</Button>
+                      <TableCell style={{ width: "16%", textAlign: "center" }}>
+                        {item.id}
+                      </TableCell>
+                      <TableCell style={{ width: "16%", textAlign: "center" }}>
+                        {" "}
+                        {item.name}{" "}
+                      </TableCell>
+                      <TableCell style={{ width: "16%", textAlign: "center" }}>
+                        {" "}
+                        {item.price}{" "}
+                      </TableCell>
+                      <TableCell style={{ width: "16%", textAlign: "center" }}>
+                        <div className="flex md:flex-row flex-col justify-evenly">
+                          <Button
+                            style={{
+                              // marginRight: -40,
+                              backgroundColor: "#ff084e",
+                              color: "white",
+                            }}
+                            onClick={() => quan("+", item.id)}
+                          >
+                            +
+                          </Button>
                           <Typography>{item.quantity}</Typography>
-                          <Button onClick={() => quan("-", item.id)}>-</Button>
+                          <Button
+                            style={{
+                              // marginLeft: -40,
+                              backgroundColor: "#ff084e",
+                              color: "white",
+                            }}
+                            onClick={() => quan("-", item.id)}
+                          >
+                            -
+                          </Button>
                         </div>
                       </TableCell>
-                      <TableCell>
+                      <TableCell style={{ width: "16%", textAlign: "center" }}>
                         <form onSubmit={remove}>
                           <input name="id" hidden value={item.id} />
                           <Button
                             style={{
+                              marginTop: 25,
                               backgroundColor: "#ff084e",
                               color: "white",
                             }}
@@ -121,10 +163,14 @@ export default function Cart() {
                   );
                 })}
                 <TableRow>
-                  <TableCell>Total Cart Value: </TableCell>
+                  <TableCell style={{ width: "16%", textAlign: "center" }}>
+                    Total Cart Value:{" "}
+                  </TableCell>
                   <TableCell />
                   <TableCell />
-                  <TableCell>{totalAmount}</TableCell>
+                  <TableCell style={{ width: "16%", textAlign: "center" }}>
+                    {totalAmount}
+                  </TableCell>
                 </TableRow>
               </TableBody>
             </Table>
