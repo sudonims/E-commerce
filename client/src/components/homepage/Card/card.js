@@ -18,14 +18,19 @@ const Card = (props) => {
       alert("Please Verify Your Mail Id\nFor that go to Your Profile");
       return;
     }
+
+    var a = cart.cart.find(o => o.id === props.id);
+
+    if(!a)
     cart.cart.push({
       id: props.id,
       name: "top",
       price: props.price,
       image_link: props.img,
       quantity: 1,
-      effectiveprice: this.price * this.quantity,
+      effectivePrice: parseFloat(props.price),
     });
+
     console.log(cart);
     Cookies.set("cart", cart);
     alert("Added to cart");

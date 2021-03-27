@@ -11,6 +11,7 @@ import StepOrderContext from "./stepOrderContext";
 import { APP } from "../../firebase/firebaseConfig";
 import server from "../../serverChoose";
 import DNA from "../../assets/logo.png";
+import { AuthContext } from "../../firebase/firebase";
 const products = [];
 const addresses = [
   "1 Material-UI Drive",
@@ -49,7 +50,8 @@ function loadScript(src) {
 
 export default function Review({ classes1 }) {
   const cart = Cookies.getJSON("cart");
-  const amount = cart.cart.reduce((a, b) => a + (b["price"] || 0), 0);
+  const amount = cart.cart.reduce((a, b) => a + (b["effectivePrice"] || 0), 0);
+  const { currentUser } = React.useContext(AuthContext);
   const classes = useStyles();
   const { activeStep, setActiveStep, orderId, setOrderId } = React.useContext(
     StepOrderContext
@@ -101,9 +103,9 @@ export default function Review({ classes1 }) {
               });
           },
           prefill: {
-            name: "Something",
-            email: "sdfdsjfh2@ndsfdf.com",
-            phone_number: "9899999999",
+            name: currentUser.displayName,
+            email: currentUser.email,
+            phone_number: currentUser.phone_number,
           },
         };
         const paymentObject = new window.Razorpay(options);

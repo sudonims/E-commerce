@@ -17,7 +17,7 @@ import { Route, Switch, useRouteMatch } from "react-router";
 export default function Cart() {
   const [cart, setCart] = React.useState(Cookies.getJSON("cart"));
   const [totalAmount, setTotalAmount] = React.useState(
-    cart.cart.reduce((a, b) => a + (b["price"] || 0), 0)
+    cart.cart.reduce((a, b) => a + (b["effectivePrice"] || 0), 0)
   );
   const { url } = useRouteMatch();
   const remove = (e) => {
@@ -38,20 +38,23 @@ export default function Cart() {
       if (item.id === id) {
         if (opr === "+") {
           item.quantity = item.quantity + 1;
+          item.effectivePrice = parseFloat((item.quantity*item.price).toFixed(2));
         } else {
-          if (item.quantity > 0) {
+          if (item.quantity > 1) {
             item.quantity = item.quantity - 1;
+            item.effectivePrice = parseFloat((item.quantity*item.price).toFixed(2));
           }
         }
       }
       return item;
     });
+    cart_={cart:cart_};
     console.log(cart_);
     Cookies.set("cart", cart_);
     setCart(cart_);
   };
   React.useEffect(() => {
-    setTotalAmount(cart.cart.reduce((a, b) => a + (b["price"] || 0), 0));
+    setTotalAmount(cart.cart.reduce((a, b) => a + (b["effectivePrice"] || 0), 0));
   }, [cart]);
 
   console.log(url);
@@ -68,6 +71,7 @@ export default function Cart() {
                   <TableCell>Product</TableCell>
                   <TableCell>Shop</TableCell>
                   <TableCell>Price</TableCell>
+                  <TableCell></TableCell>
                   <TableCell>Quantity</TableCell>
                   <TableCell>Remove</TableCell>
                 </TableRow>

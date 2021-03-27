@@ -25,6 +25,7 @@ import Feedback from "./homepage/FeedBackForm/feedbackform";
 const Profile = () => {
   const { currentUser } = React.useContext(AuthContext);
   const [open, setOpen] = React.useState(false);
+  console.log(currentUser);
 
   const handleClick = () => {
     setOpen(!open);
