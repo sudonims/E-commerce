@@ -1,5 +1,4 @@
 import React from "react";
-import { jsPDF } from "jspdf";
 import Cookies from "js-cookie";
 import "jspdf-autotable";
 import Table from "@material-ui/core/Table";
@@ -38,23 +37,29 @@ export default function Cart() {
       if (item.id === id) {
         if (opr === "+") {
           item.quantity = item.quantity + 1;
-          item.effectivePrice = parseFloat((item.quantity*item.price).toFixed(2));
+          item.effectivePrice = parseFloat(
+            (item.quantity * item.price).toFixed(2)
+          );
         } else {
           if (item.quantity > 1) {
             item.quantity = item.quantity - 1;
-            item.effectivePrice = parseFloat((item.quantity*item.price).toFixed(2));
+            item.effectivePrice = parseFloat(
+              (item.quantity * item.price).toFixed(2)
+            );
           }
         }
       }
       return item;
     });
-    cart_={cart:cart_};
+    cart_ = { cart: cart_ };
     console.log(cart_);
     Cookies.set("cart", cart_);
     setCart(cart_);
   };
   React.useEffect(() => {
-    setTotalAmount(cart.cart.reduce((a, b) => a + (b["effectivePrice"] || 0), 0));
+    setTotalAmount(
+      cart.cart.reduce((a, b) => a + (b["effectivePrice"] || 0), 0)
+    );
   }, [cart]);
 
   console.log(url);

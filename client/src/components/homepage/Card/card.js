@@ -5,10 +5,10 @@ import { AuthContext } from "../../firebase/firebase";
 import { Button } from "@material-ui/core";
 
 const Card = (props) => {
-  var cart = Cookies.getJSON("cart");
   const { currentUser } = React.useContext(AuthContext);
 
   const addToCart = (e) => {
+    var cart = Cookies.getJSON("cart");
     e.preventDefault();
     if (!currentUser) {
       alert("Please Sign In");
@@ -19,17 +19,17 @@ const Card = (props) => {
       return;
     }
 
-    var a = cart.cart.find(o => o.id === props.id);
+    var a = cart.cart.find((o) => o.id === props.id);
 
-    if(!a)
-    cart.cart.push({
-      id: props.id,
-      name: "top",
-      price: props.price,
-      image_link: props.img,
-      quantity: 1,
-      effectivePrice: parseFloat(props.price),
-    });
+    if (!a)
+      cart.cart.push({
+        id: props.id,
+        name: "top",
+        price: props.price,
+        image_link: props.img,
+        quantity: 1,
+        effectivePrice: parseFloat(props.price),
+      });
 
     console.log(cart);
     Cookies.set("cart", cart);
