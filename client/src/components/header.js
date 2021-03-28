@@ -268,7 +268,7 @@ export default function Header({ rightlinks, leftlinks }) {
                   <nav className="navbar navbar-expand-lg align-items-start">
                     <button
                       onClick={() => setOpen(!open)}
-                      style={{ paddingLeft: -20 }}
+                      style={{ marginTop:-25,paddingRight:25 }}
                       className="navbar-toggler"
                       type="button"
                       data-toggle="collapse"
