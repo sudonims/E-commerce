@@ -6,19 +6,10 @@ import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import {
-  Avatar,
-  Button,
-  ButtonBase,
-  Drawer,
-  Grid,
-  Hidden,
-} from "@material-ui/core";
+import { Avatar, Button, Drawer, Grid, Hidden, Paper } from "@material-ui/core";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import { AuthContext } from "./firebase/firebase";
-import CustomDropdown from "./utils/CustomDropdown";
 import { APP } from "./firebase/firebaseConfig";
 import Feedback from "./homepage/FeedBackForm/feedbackform";
 
@@ -92,15 +83,15 @@ const Profile = () => {
                   />
                 </Grid>
                 <Grid style={{ margin: 15 }} item xs={12}>
-                <Button
-                      onClick={()=>{
-                        window.location.href = "/myorders"
-                      }}
-                    >
-                      View Your Orders
-                    </Button>
+                  <Button
+                    onClick={() => {
+                      window.location.href = "/myorders";
+                    }}
+                  >
+                    View Your Orders
+                  </Button>
                 </Grid>
-                
+
                 <Grid style={{ margin: 15 }} item xs={12}>
                   {!currentUser.emailVerified && (
                     <Button
@@ -177,8 +168,85 @@ export default function Header({ rightlinks, leftlinks }) {
 
   return (
     <>
-      <Drawer anchor="right" open={open} onClose={() => setOpen(!open)}>
-        <>Some Shit</>
+      <Drawer
+        style={{ minWidth: "50vw" }}
+        anchor="right"
+        open={open}
+        onClose={() => setOpen(!open)}
+      >
+        <Paper style={{ width: 280 }}>
+          <ul className="navbar-nav animated" id="nav">
+            <li className="nav-item active">
+              <a className="nav-link currentLink" href="/">
+                Home
+              </a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link currentLink" href="/aboutus">
+                About Us
+              </a>
+            </li>
+            <li className="nav-item currentLink">
+              <a className="nav-link currentLink" href="/contactus">
+                Contact Us
+              </a>
+            </li>
+            <li className="nav-item currentLink">
+              <a onClick={feedChange} className="nav-link">
+                Feed Back Form
+              </a>
+              <Feedback open={openFeed} setOpen={feedChange} />
+            </li>
+            <li className="nav-item">
+              {currentUser ? (
+                [
+                  <Button
+                    onClick={() => {
+                      APP.auth()
+                        .signOut()
+                        .then(() => {
+                          alert("SignOut Successfull");
+                        });
+                    }}
+                    style={{
+                      backgroundColor: "#ff084e",
+                      color: "white",
+                      fontWeight: 900,
+                      marginRight: 10,
+                    }}
+                  >
+                    SIgnOut
+                  </Button>,
+                  <Profile />,
+                  <IconButton
+                    href="/cart"
+                    style={{
+                      backgroundColor: "#ff084e",
+                      color: "white",
+                      fontWeight: 900,
+                      marginTop: -10,
+                      marginLeft: 10,
+                    }}
+                    disabled={!currentUser.emailVerified}
+                  >
+                    <ShoppingCartIcon />
+                  </IconButton>,
+                ]
+              ) : (
+                <Button
+                  href="/signup"
+                  style={{
+                    backgroundColor: "#ff084e",
+                    color: "white",
+                    fontWeight: 900,
+                  }}
+                >
+                  Join Us
+                </Button>
+              )}
+            </li>
+          </ul>
+        </Paper>
       </Drawer>
       <header className="header_area bg-img background-overlay-white">
         <div className="top_header_area flex flex-row m-2 justify-between">
@@ -305,5 +373,3 @@ export default function Header({ rightlinks, leftlinks }) {
     </>
   );
 }
-
-

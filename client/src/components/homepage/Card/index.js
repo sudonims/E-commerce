@@ -1,4 +1,5 @@
 import React from "react";
+import Footer from "../../footer.js";
 import Header from "../../header.js";
 import Card from "./card.js";
 import Info from "./infoforcard.js";
@@ -114,6 +115,7 @@ export default function HomePage() {
           </section>
         </div>
       </div>
+      <Footer />
     </>
   );
 }
