@@ -10,8 +10,8 @@ import {
 } from "@material-ui/core";
 import React from "react";
 import { AuthContext } from "../firebase/firebase";
-import Footer from "../footer";
-import Header from "../header";
+import Footer from "../starters/footer";
+import Header from "../starters/header";
 import Cookies from "js-cookie";
 
 export default function Product({ prodId }) {

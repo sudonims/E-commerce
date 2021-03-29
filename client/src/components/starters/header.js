@@ -1,7 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
-import Logo from "./assets/logo.png";
+import Logo from "../assets/logo.png";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -9,9 +9,9 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { Avatar, Button, Drawer, Grid, Hidden, Paper } from "@material-ui/core";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
-import { AuthContext } from "./firebase/firebase";
-import { APP } from "./firebase/firebaseConfig";
-import Feedback from "./homepage/FeedBackForm/feedbackform";
+import { AuthContext } from "../firebase/firebase";
+import { APP } from "../firebase/firebaseConfig";
+import Feedback from "../homepage/FeedBackForm/feedbackform";
 
 const Profile = () => {
   const { currentUser } = React.useContext(AuthContext);

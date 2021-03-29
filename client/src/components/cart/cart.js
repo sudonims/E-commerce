@@ -7,7 +7,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import Header from "../header.js";
+import Header from "../starters/header.js";
 import Checkout from "./checkout/Checkout.js";
 
 import { Button, Typography } from "@material-ui/core";

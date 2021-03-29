@@ -1,8 +1,8 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Cookies from "js-cookie";
-import SignIn from "./components/signin.js";
-import SignUp from "./components/signup.js";
+import SignIn from "./components/starters/signin.js";
+import SignUp from "./components/starters/signup.js";
 import { AuthProvider } from "./components/firebase/firebase";
 import HomePage from "./components/homepage/Card/index.js";
 import "./components/css/animate.css";

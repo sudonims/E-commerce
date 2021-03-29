@@ -12,8 +12,8 @@ import Link from "@material-ui/core/Link";
 import Typography from "@material-ui/core/Typography";
 import AddressForm from "./AddressForm";
 import Review from "./Review";
-import Header from "../../header";
-import Footer from "../../footer";
+import Header from "../../starters/header";
+import Footer from "../../starters/footer";
 import StepOrderContext from "./stepOrderContext";
 
 function Copyright() {
