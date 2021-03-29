@@ -134,15 +134,24 @@ export default function SignIn() {
   const oldSchoolSignIn = (e) => {
     e.preventDefault();
 
-    const { email, password } = e.target.elements;
+    const { email, password, remember } = e.target.elements;
+    console.log(remember.checked);
+
+    var persist = remember.checked
+      ? firebase.auth.Auth.Persistence.LOCAL
+      : firebase.auth.Auth.Persistence.SESSION;
 
     APP.auth()
-      .signInWithEmailAndPassword(email.value, password.value)
-      .then((res) => {
-        alert("Signed IN");
-        window.location.href = "/";
-      })
-      .catch((err) => console.log(err));
+      .setPersistence(persist)
+      .then(() => {
+        APP.auth()
+          .signInWithEmailAndPassword(email.value, password.value)
+          .then((res) => {
+            alert("Signed IN");
+            window.location.href = "/";
+          })
+          .catch((err) => console.log(err));
+      });
   };
   return (
     <>
@@ -179,7 +188,9 @@ export default function SignIn() {
               autoComplete="current-password"
             />
             <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
+              control={
+                <Checkbox name="remember" value="remember" color="primary" />
+              }
               label="Remember me"
             />
             <Button

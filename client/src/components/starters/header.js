@@ -14,9 +14,47 @@ import { APP } from "../firebase/firebaseConfig";
 import Feedback from "../homepage/FeedBackForm/feedbackform";
 
 const Profile = () => {
+  const [width, setWidth] = React.useState(window.innerWidth);
   const { currentUser } = React.useContext(AuthContext);
   const [open, setOpen] = React.useState(false);
-  console.log(currentUser);
+  const [email, setEmail] = React.useState(currentUser.email);
+
+  React.useEffect(
+    (width) => {
+      window.addEventListener("resize", () => {
+        setWidth(window.innerWidth);
+      });
+    },
+    [width]
+  );
+
+  const submit = (e) => {
+    e.preventDefault();
+    const { email, name, phone } = e.target.elements;
+    if (email.value !== currentUser.email) {
+      APP.auth()
+        .currentUser.verifyBeforeUpdateEmail(email.value)
+        .then(() => {
+          alert("Email will change once you verify");
+        })
+        .catch((err) => {
+          console.log(err);
+          alert("Check new email and try again after sign in");
+        });
+    }
+
+    if (name.value !== currentUser.displayName) {
+      APP.auth()
+        .currentUser.updateProfile({
+          displayName: name.value,
+        })
+        .then(() => {
+          alert("Name updated");
+        });
+    }
+
+    // if(phone)
+  };
 
   const handleClick = () => {
     setOpen(!open);
@@ -44,94 +82,105 @@ const Profile = () => {
         <DialogTitle id="form-dialog-title">Profile</DialogTitle>
         <DialogContent>
           <Grid container>
-            <Grid style={{ margin: 15 }} item xs={6}>
-              <Grid container>
-                <Grid style={{ margin: 15 }} item xs={12}>
-                  <TextField
-                    autoFocus
-                    margin="dense"
-                    id="email"
-                    label="Email Address"
-                    type="email"
-                    name="email"
-                    fullWidth
-                    defaultValue={currentUser.email}
+            <Grid item xs={12} sm={12} md={5} lg={5} xl={5}>
+              <div className="flex flex-row">
+                <div className="flex-1" />
+                <Avatar
+                  style={{
+                    height: width > 1200 ? 400 : 150,
+                    width: width > 1200 ? 400 : 150,
+                  }}
+                >
+                  <img
+                    src="https://thumbor.forbes.com/thumbor/250x382/https://blogs-images.forbes.com/dorothypomerantz/files/2011/09/Spongebob-squarepants.jpg"
+                    height="100%"
+                    width="100%"
                   />
-                </Grid>
-                <Grid style={{ margin: 15 }} item xs={12}>
-                  <TextField
-                    autoFocus
-                    margin="dense"
-                    id="name"
-                    name="name"
-                    label="Name"
-                    type="text"
-                    fullWidth
-                    defaultValue={currentUser.displayName}
-                  />
-                </Grid>
-                <Grid style={{ margin: 15 }} item xs={12}>
-                  <TextField
-                    autoFocus
-                    margin="dense"
-                    id="phone"
-                    name="phone"
-                    label="Phone Number"
-                    type="text"
-                    fullWidth
-                    defaultValue={currentUser.phone}
-                  />
-                </Grid>
-                <Grid style={{ margin: 15 }} item xs={12}>
-                  <Button
-                    onClick={() => {
-                      window.location.href = "/myorders";
-                    }}
-                  >
-                    View Your Orders
-                  </Button>
-                </Grid>
-
-                <Grid style={{ margin: 15 }} item xs={12}>
-                  {!currentUser.emailVerified && (
-                    <Button
-                      onClick={() =>
-                        APP.auth()
-                          .currentUser.sendEmailVerification()
-                          .then(() => {
-                            alert("Check your Email");
-                          })
-                      }
-                    >
-                      Verify Email
-                    </Button>
-                  )}
-                </Grid>
-              </Grid>
+                </Avatar>
+                <div className="flex-1" />
+              </div>
             </Grid>
-            <Grid item xs={5}>
-              <Avatar
-                style={{
-                  marginLeft: 20,
-                  height: 400,
-                  width: 400,
-                }}
-              >
-                <img
-                  src="https://thumbor.forbes.com/thumbor/250x382/https://blogs-images.forbes.com/dorothypomerantz/files/2011/09/Spongebob-squarepants.jpg"
-                  height="100%"
-                  width="100%"
-                />
-              </Avatar>
+            <Grid
+              style={{ margin: 15 }}
+              item
+              xs={12}
+              sm={12}
+              md={6}
+              lg={6}
+              xl={6}
+            >
+              <form onSubmit={submit}>
+                <Grid container>
+                  <Grid style={{ margin: 15 }} item xs={12}>
+                    <TextField
+                      autoFocus
+                      margin="dense"
+                      id="email"
+                      label="Email Address"
+                      type="email"
+                      name="email"
+                      fullWidth
+                      defaultValue={currentUser.email}
+                    />
+                  </Grid>
+                  <Grid style={{ margin: 15 }} item xs={12}>
+                    <TextField
+                      autoFocus
+                      margin="dense"
+                      id="name"
+                      name="name"
+                      label="Name"
+                      type="text"
+                      fullWidth
+                      defaultValue={currentUser.displayName}
+                    />
+                  </Grid>
+                  <Grid style={{ margin: 15 }} item xs={12}>
+                    <TextField
+                      autoFocus
+                      margin="dense"
+                      id="phone"
+                      name="phone"
+                      label="Phone Number"
+                      type="text"
+                      fullWidth
+                      defaultValue={currentUser.phone}
+                    />
+                  </Grid>
+                  <Grid style={{ margin: 15 }} item xs={12}>
+                    <Button
+                      onClick={() => {
+                        window.location.href = "/myorders";
+                      }}
+                    >
+                      View Your Orders
+                    </Button>
+                  </Grid>
+
+                  <Grid style={{ margin: 15 }} item xs={12}>
+                    {!currentUser.emailVerified && (
+                      <Button
+                        onClick={() =>
+                          APP.auth()
+                            .currentUser.sendEmailVerification()
+                            .then(() => {
+                              alert("Check your Email");
+                            })
+                        }
+                      >
+                        Verify Email
+                      </Button>
+                    )}
+                  </Grid>
+                  <Button type="submit">Update</Button>
+                </Grid>
+              </form>
             </Grid>
           </Grid>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClick} color="primary">
             Cancel
-          </Button>
-          <Button onClick={handleClick} color="primary">
-            Update
           </Button>
         </DialogActions>
       </Dialog>
@@ -189,55 +238,55 @@ export default function Header({ rightlinks, leftlinks }) {
               <Button onClick={feedChange}>Feed Back Form</Button>
               <Feedback open={openFeed} setOpen={feedChange} />
             </li>
-            <li className="nav-item">
-              {currentUser ? (
-                [
-                  <Button
-                    onClick={() => {
-                      APP.auth()
-                        .signOut()
-                        .then(() => {
-                          alert("SignOut Successfull");
-                        });
-                    }}
-                    style={{
-                      backgroundColor: "#ff084e",
-                      color: "white",
-                      fontWeight: 900,
-                      marginRight: 10,
-                    }}
-                  >
-                    SIgnOut
-                  </Button>,
-                  <Profile />,
-                  <IconButton
-                    href="/cart"
-                    style={{
-                      backgroundColor: "#ff084e",
-                      color: "white",
-                      fontWeight: 900,
-                      marginTop: -10,
-                      marginLeft: 10,
-                    }}
-                    disabled={!currentUser.emailVerified}
-                  >
-                    <ShoppingCartIcon />
-                  </IconButton>,
-                ]
-              ) : (
+          </ul>
+          <div className="absolute bottom-2 m-2">
+            {currentUser ? (
+              [
                 <Button
-                  href="/signup"
+                  onClick={() => {
+                    APP.auth()
+                      .signOut()
+                      .then(() => {
+                        alert("SignOut Successfull");
+                      });
+                  }}
                   style={{
                     backgroundColor: "#ff084e",
                     color: "white",
                     fontWeight: 900,
+                    marginRight: 10,
                   }}
                 >
-                  Join Us
-                </Button>
-              )}
-            </li>
-          </ul>
+                  SIgnOut
+                </Button>,
+                <Profile />,
+                <IconButton
+                  href="/cart"
+                  style={{
+                    backgroundColor: "#ff084e",
+                    color: "white",
+                    fontWeight: 900,
+                    marginTop: -10,
+                    marginLeft: 10,
+                  }}
+                  disabled={!currentUser.emailVerified}
+                >
+                  <ShoppingCartIcon />
+                </IconButton>,
+              ]
+            ) : (
+              <Button
+                href="/signup"
+                style={{
+                  backgroundColor: "#ff084e",
+                  color: "white",
+                  fontWeight: 900,
+                }}
+              >
+                Join Us
+              </Button>
+            )}
+          </div>
         </Paper>
       </Drawer>
       <header className="header_area bg-img background-overlay-white">
