@@ -176,25 +176,17 @@ export default function Header({ rightlinks, leftlinks }) {
       >
         <Paper style={{ width: 280 }}>
           <ul className="navbar-nav animated" id="nav">
-            <li className="nav-item active">
-              <a className="nav-link currentLink" href="/">
-                Home
-              </a>
+            <li className="nav-item">
+              <Button href="/">Home</Button>
             </li>
             <li className="nav-item">
-              <a className="nav-link currentLink" href="/aboutus">
-                About Us
-              </a>
+              <Button href="/aboutus">About Us</Button>
             </li>
-            <li className="nav-item currentLink">
-              <a className="nav-link currentLink" href="/contactus">
-                Contact Us
-              </a>
+            <li className="nav-item">
+              <Button href="/contactus">Contact Us</Button>
             </li>
-            <li className="nav-item currentLink">
-              <a onClick={feedChange} className="nav-link">
-                Feed Back Form
-              </a>
+            <li className="nav-item">
+              <Button onClick={feedChange}>Feed Back Form</Button>
               <Feedback open={openFeed} setOpen={feedChange} />
             </li>
             <li className="nav-item">
@@ -268,7 +260,7 @@ export default function Header({ rightlinks, leftlinks }) {
                   <nav className="navbar navbar-expand-lg align-items-start">
                     <button
                       onClick={() => setOpen(!open)}
-                      style={{ marginTop:-25,paddingRight:25 }}
+                      style={{ marginTop: -25, paddingRight: 25 }}
                       className="navbar-toggler"
                       type="button"
                       data-toggle="collapse"
@@ -283,25 +275,19 @@ export default function Header({ rightlinks, leftlinks }) {
                     </button>
                     <Hidden mdDown>
                       <ul className="navbar-nav animated" id="nav">
-                        <li className="nav-item active">
-                          <a className="nav-link currentLink" href="/">
-                            Home
-                          </a>
+                        <li className="nav-item">
+                          <Button href="/">Home</Button>
                         </li>
                         <li className="nav-item">
-                          <a className="nav-link currentLink" href="/aboutus">
-                            About Us
-                          </a>
+                          <Button href="/aboutus">About Us</Button>
                         </li>
-                        <li className="nav-item currentLink">
-                          <a className="nav-link currentLink" href="/contactus">
-                            Contact Us
-                          </a>
+                        <li className="nav-item">
+                          <Button href="/contactus">Contact Us</Button>
                         </li>
-                        <li className="nav-item currentLink">
-                          <a onClick={feedChange} className="nav-link">
+                        <li className="nav-item ">
+                          <Button href="#" onClick={feedChange}>
                             Feed Back Form
-                          </a>
+                          </Button>
                           <Feedback open={openFeed} setOpen={feedChange} />
                         </li>
                       </ul>
