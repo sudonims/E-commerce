@@ -1,6 +1,6 @@
 import React from "react";
-import Footer from "../../footer.js";
-import Header from "../../header.js";
+import Footer from "../../starters/footer.js";
+import Header from "../../starters/header.js";
 import Card from "./card.js";
 import Info from "./infoforcard.js";
 

@@ -20,7 +20,7 @@ const Card = (props) => {
 
     var a = cart.cart.find((o) => o.id === props.id);
 
-    if (!a)
+    if (!a){      
       cart.cart.push({
         id: props.id,
         name: "top",
@@ -29,10 +29,16 @@ const Card = (props) => {
         quantity: 1,
         effectivePrice: parseFloat(props.price),
       });
+      alert("Added to cart");
+      
+      
+    }else{
+      alert("Already Added");
+    }
 
     console.log(cart);
     Cookies.set("cart", cart);
-    alert("Added to cart");
+    
   };
 
   return (

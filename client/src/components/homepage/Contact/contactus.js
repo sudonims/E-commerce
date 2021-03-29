@@ -1,8 +1,8 @@
 import React from "react";
-import Head from "../../header.js";
+import Head from "../../starters/header.js";
 import Info from "./info.js";
 import Card from "./cardInfo.js";
-import Footer from "../../footer.js";
+import Footer from "../../starters/footer.js";
 
 const createCard = (info) => {
   return (

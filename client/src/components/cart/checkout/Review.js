@@ -9,7 +9,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import { Button } from "@material-ui/core";
 import StepOrderContext from "./stepOrderContext";
 import { APP } from "../../firebase/firebaseConfig";
-import server from "../../serverChoose";
+import server from "../../starters/serverChoose";
 import DNA from "../../assets/logo.png";
 import { AuthContext } from "../../firebase/firebase";
 const products = [];
