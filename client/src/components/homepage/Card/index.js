@@ -8,10 +8,7 @@ const createCard = (info) => {
   return (
     <>
       <Card
-        id={info.id}
-        img={info.img}
-        price={info.price}
-        description={info.description}
+        info={info}
       />
     </>
   );
