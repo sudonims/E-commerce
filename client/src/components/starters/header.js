@@ -1,6 +1,8 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
+import firebase from "firebase/app";
+import "firebase/auth";
 import Logo from "../assets/logo.png";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
@@ -17,7 +19,6 @@ const Profile = () => {
   const [width, setWidth] = React.useState(window.innerWidth);
   const { currentUser } = React.useContext(AuthContext);
   const [open, setOpen] = React.useState(false);
-  const [email, setEmail] = React.useState(currentUser.email);
 
   React.useEffect(
     (width) => {
@@ -28,7 +29,30 @@ const Profile = () => {
     [width]
   );
 
-  const submit = (e) => {
+  const setRecaptcha = () => {
+    return new Promise((resolve) => {
+      console.log("trying");
+      try {
+        window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier(
+          "recaptcha-container",
+          {
+            size: "invisible",
+            callback: (response) => {
+              console.info("Invisible Captcha", response);
+              // reCAPTCHA solved, allow signInWithPhoneNumber.
+              console.log("Successssssss");
+              resolve("success");
+            },
+            defaultCountry: "IN",
+          }
+        );
+      } catch (err) {
+        console.log(err);
+      }
+    });
+  };
+
+  const submit = async (e) => {
     e.preventDefault();
     const { email, name, phone } = e.target.elements;
     if (email.value !== currentUser.email) {
@@ -51,6 +75,22 @@ const Profile = () => {
         .then(() => {
           alert("Name updated");
         });
+    }
+
+    if (phone.value !== currentUser.phoneNumber) {
+      await setRecaptcha().then((data) => {
+        console.log(data);
+        if (data === "success") {
+          APP.auth()
+            .currentUser.linkWithPhoneNumber(
+              phone.value,
+              window.recaptchaVerifier
+            )
+            .then(() => {
+              alert("Phone Number Added");
+            });
+        }
+      });
     }
 
     // if(phone)
@@ -135,7 +175,7 @@ const Profile = () => {
                       defaultValue={currentUser.displayName}
                     />
                   </Grid>
-                  <Grid style={{ margin: 15 }} item xs={12}>
+                  {/* <Grid style={{ margin: 15 }} item xs={12}>
                     <TextField
                       autoFocus
                       margin="dense"
@@ -146,7 +186,7 @@ const Profile = () => {
                       fullWidth
                       defaultValue={currentUser.phone}
                     />
-                  </Grid>
+                  </Grid> */}
                   <Grid style={{ margin: 15 }} item xs={12}>
                     <Button
                       onClick={() => {
@@ -177,6 +217,7 @@ const Profile = () => {
               </form>
             </Grid>
           </Grid>
+          <div id="recaptcha-container"></div>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClick} color="primary">
@@ -188,18 +229,8 @@ const Profile = () => {
   );
 };
 
-const useStyles = makeStyles((theme) => ({
-  title: {
-    justifyContent: "left",
-    [theme.breakpoints.down("md")]: {
-      justifyContent: "center",
-    },
-  },
-}));
-
 export default function Header({ rightlinks, leftlinks }) {
   const { currentUser } = React.useContext(AuthContext);
-  const classes = useStyles();
   const [openFeed, setOpenFeed] = React.useState(false);
   const [open, setOpen] = React.useState(false);
   const [width, setWidth] = React.useState(window.innerWidth);

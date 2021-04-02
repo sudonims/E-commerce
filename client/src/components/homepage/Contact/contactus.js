@@ -6,14 +6,12 @@ import Footer from "../../starters/footer.js";
 
 const createCard = (info) => {
   return (
-    <>
-      <Card
-        name={info.name}
-        email={info.email}
-        phone={info.phone}
-        img={info.img}
-      />
-    </>
+    <Card
+      name={info.name}
+      email={info.email}
+      phone={info.phone}
+      img={info.img}
+    />
   );
 };
 

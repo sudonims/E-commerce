@@ -36,22 +36,20 @@ const App = () => {
     <>
       <AuthProvider>
         <Router>
-        <Switch>
-          <Route path="/signin" component={() => <SignIn />} />
-          <Route path="/signup" component={() => <SignUp />} />
-          <Route exact path="/" component={() => <HomePage />} />
-          <Route path="/cart" component={() => <Cart />} />
-          <Route path="/contactus" component={() => <ContactUs />} />
-          <Route path="/aboutus" component={() => <AboutUs />} />
-          <Route path="/myorders" component={() => <Myorders />} />
-          
+          <Switch>
+            <Route path="/signin" component={() => <SignIn />} />
+            <Route path="/signup" component={() => <SignUp />} />
+            <Route exact path="/" component={() => <HomePage />} />
+            <Route path="/cart" component={() => <Cart />} />
+            <Route path="/contactus" component={() => <ContactUs />} />
+            <Route path="/aboutus" component={() => <AboutUs />} />
+            <Route path="/myorders" component={() => <Myorders />} />
 
-          <Route
-            path="/product/:id"
-            component={(props) => <Product prodId={props.match.params.id} />}
-          />
-
-        </Switch>
+            <Route
+              path="/product/:id"
+              component={(props) => <Product prodId={props.match.params.id} />}
+            />
+          </Switch>
         </Router>
       </AuthProvider>
     </>
