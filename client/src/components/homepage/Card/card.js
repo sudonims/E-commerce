@@ -18,16 +18,17 @@ const Card = (props) => {
       return;
     }
 
-    var a = cart.cart.find((o) => o.id === props.id);
+    var a = cart.cart.find((o) => o.id === props.info.id);
 
     if (!a){      
       cart.cart.push({
-        id: props.id,
-        name: "top",
-        price: props.price,
-        image_link: props.img,
+        id: props.info.id,
+        name: props.info.name,
+        description: props.info.description,
+        price: props.info.price,
+        image_link: props.info.img,
         quantity: 1,
-        effectivePrice: parseFloat(props.price),
+        effectivePrice: parseFloat(props.info.price),
       });
       alert("Added to cart");
       
@@ -49,10 +50,10 @@ const Card = (props) => {
       >
         {/* Product Image */}
         <div className="product-img">
-          <img src={props.img} alt="" />
+          <img src={props.info.img} alt="" />
           <div className="product-quicview">
             <a
-              href={"/product/" + props.id}
+              href={"/product/" + props.info.id}
               data-toggle="modal"
               data-target="#quickview"
             >
@@ -62,8 +63,8 @@ const Card = (props) => {
         </div>
         {/* Product Description */}
         <div className="product-description">
-          <h4 className="product-price">&#8377; {props.price}</h4>
-          <p>{props.description}</p>
+          <h4 className="product-price">&#8377; {props.info.price}</h4>
+          <p>{props.info.description}</p>
           {/* Add to Cart */}
           <form onSubmit={addToCart}>
             <Button

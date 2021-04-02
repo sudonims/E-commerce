@@ -1,4 +1,5 @@
 import React from 'react';
+import Loading from './loding';
 const APP = require('./firebaseConfig').APP;
 
 export const AuthContext = React.createContext();
@@ -15,7 +16,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   if (pending) {
-    return <>Loading</>;
+    return <Loading />;
   }
 
   return (

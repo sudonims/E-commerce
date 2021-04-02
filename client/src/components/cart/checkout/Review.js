@@ -12,6 +12,7 @@ import { APP } from "../../firebase/firebaseConfig";
 import server from "../../starters/serverChoose";
 import DNA from "../../assets/logo.png";
 import { AuthContext } from "../../firebase/firebase";
+import Card from './cardForOrder.js';
 const products = [];
 const addresses = [
   "1 Material-UI Drive",
@@ -148,10 +149,7 @@ export default function Review({ classes1 }) {
       </Typography>
       <List disablePadding>
         {cart.cart.map((product) => (
-          <ListItem className={classes.listItem} key={product.name}>
-            <ListItemText primary={product.name} secondary={product.desc} />
-            <Typography variant="body2">{product.price}</Typography>
-          </ListItem>
+           <Card product={product} />
         ))}
         <ListItem>
           <ListItemText>Total Price:</ListItemText>

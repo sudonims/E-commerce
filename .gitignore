@@ -1,5 +1,5 @@
 
-server/node_modules
-client/node_modules
+node_modules/
 
 server/cloth-match-792e6-firebase-adminsdk-zlud4-f69f608c74.json
+cloth-match-792e6-firebase-adminsdk-zlud4-f69f608c74.json
