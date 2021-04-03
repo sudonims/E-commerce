@@ -40,30 +40,21 @@ export default function AboutUs() {
                   md={6}
                   lg={6}
                   xl={6}
+
                 >
                   <a href="/" className="link">
                     <img width={350} src={DNALogo} alt="" />
                   </a>
                 </Grid>
-                <Grid xs={12} sm={12} md={6} lg={6} xl={6}>
-                  <h3>Maecenas a gravida quam</h3>
-                  <p>
-                    Etiam posuere hendrerit arcu, ac blandit nulla. Sed congue
-                    malesuada nibh, a varius odio vehicula aliquet. Aliquam
-                    consequat, nunc quis sollicitudin aliquet, enim magna cursus
-                    auctor lacinia nunc ex blandit augue. Ut vitae neque
-                    fermentum, luctus elit fermentum, porta augue. Nullam
-                    ultricies, turpis at fermentum iaculis, nunc justo dictum
-                    dui, non aliquet erat nibh non ex.
-                  </p>
-                  <p>
-                    Sed congue malesuada nibh, a varius odio vehicula aliquet.
-                    Aliquam consequat, nunc quis sollicitudin aliquet, enim
-                    magna cursus auctor lacinia nunc ex blandit augue. Ut vitae
-                    neque fermentum, luctus elit fermentum, porta augue. Nullam
-                    ultricies, turpis at fermentum iaculis, nunc justo dictum
-                    dui, non aliquet erat nibh non ex.{" "}
-                  </p>
+                <Grid xs={12} sm={12} md={6} lg={6} xl={6} >
+                  <h2>Our Features</h2>
+                  <h4 style={{ margin: 0 }}   >1. Mobile Compatibility</h4>
+                  <h4 style={{ margin: 0 }}   >2. Accessible to All Users.</h4>
+                  <h4 style={{ margin: 0 }}   >
+                    3. Well Planned Information Architecture.
+                  </h4>
+                  <h4 style={{ margin: 0 }}   >4. Fast Load Times.</h4>
+                  <h4 style={{ margin: 0 }}   >5. Effective Navigation.</h4>
                 </Grid>
               </Grid>
             </div>
