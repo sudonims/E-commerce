@@ -15,15 +15,19 @@ export default function AboutUs() {
         <section id="banner" style={{ backgroundColor: "#ff084e" }}>
           <div className="inner">
             <header>
-              <h1>This is DNA Match</h1>
+              <h1>DNA Match</h1>
               <p>
-                Our purpose at Cents of Style is to empower women to lead bold
-                and full lives. We believe that if you look good, you feel good.
-                And when you feel good you can do good for others around you.
-                Cents of Style brings you a wide range of trendy shoes,
-                beautiful scarves, and statement-making jewelry, all at
-                affordable prices to make them accessible to you.
+                <b style={{ color: "white" }}>DNA Match</b> platform is
+                dedicated to help people find their best clothes. Our vision
+                is to create a better everyday life for people. Our project idea
+                is to let people try clothes virtually before buying so they
+                would have a perfect idea of how the product would look on them.
+                Using industry standard ML algorithm, the tried on clothes look
+                like they are real. We hope that you like what we are trying to
+                achieve.
               </p>
+
+              <p><b style={{ color: "white" }}>Thank you for visiting!!</b></p>
             </header>
           </div>
         </section>
@@ -40,21 +44,52 @@ export default function AboutUs() {
                   md={6}
                   lg={6}
                   xl={6}
-
                 >
                   <a href="/" className="link">
                     <img width={350} src={DNALogo} alt="" />
                   </a>
                 </Grid>
-                <Grid xs={12} sm={12} md={6} lg={6} xl={6} >
-                  <h2>Our Features</h2>
-                  <h4 style={{ margin: 0 }}   >1. Mobile Compatibility</h4>
-                  <h4 style={{ margin: 0 }}   >2. Accessible to All Users.</h4>
-                  <h4 style={{ margin: 0 }}   >
-                    3. Well Planned Information Architecture.
-                  </h4>
-                  <h4 style={{ margin: 0 }}   >4. Fast Load Times.</h4>
-                  <h4 style={{ margin: 0 }}   >5. Effective Navigation.</h4>
+                <Grid xs={12} sm={12} md={6} lg={6} xl={6}>
+                  <h2 className="font-black text-4xl md:mt-16 text-center md:text-left ">
+                    Our Features
+                  </h2>
+                  <p
+                    className="text-lg md:text-xl font-bold text-center"
+                    style={{ margin: 0 }}
+                  >
+                    Virtual Clothes Try On
+                  </p>
+                  <p
+                    className="text-lg md:text-xl font-bold text-center"
+                    style={{ margin: 0 }}
+                  >
+                    Mobile Compatibility
+                  </p>
+                  
+                  <p
+                    className="text-lg md:text-xl font-bold text-center"
+                    style={{ margin: 0 }}
+                  >
+                    Accessible to All Users.
+                  </p>
+                  <p
+                    className="text-lg md:text-xl font-bold text-center"
+                    style={{ margin: 0 }}
+                  >
+                    Well Planned Information Architecture.
+                  </p>
+                  <p
+                    className="text-lg md:text-xl font-bold text-center"
+                    style={{ margin: 0 }}
+                  >
+                    Fast Load Times.
+                  </p>
+                  <p
+                    className="text-lg md:text-xl font-bold text-center"
+                    style={{ margin: 0 }}
+                  >
+                    Effective Navigation.
+                  </p>
                 </Grid>
               </Grid>
             </div>
