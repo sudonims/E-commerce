@@ -128,7 +128,13 @@ export default function SignIn() {
         alert("Signed IN");
         window.location.href = "/";
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        if (err.code == "auth/user-not-found") {
+          alert("Oops!! User not found");
+          window.location.reload();
+        }
+      });
   };
 
   const oldSchoolSignIn = (e) => {
@@ -150,7 +156,13 @@ export default function SignIn() {
             alert("Signed IN");
             window.location.href = "/";
           })
-          .catch((err) => console.log(err));
+          .catch((err) => {
+            console.log(err);
+            if (err.code == "auth/user-not-found") {
+              alert("Oops!! User not found");
+              window.location.reload();
+            }
+          });
       });
   };
   return (
