@@ -190,8 +190,11 @@ export default function Cart() {
           </div>
         </div>
       </Route>
-      <Route path={`${url}/checkout`}>
+      <Route exact path={`${url}/checkout`}>
         <Checkout />
+      </Route>
+      <Route path={`${url}/checkout/buy`}>
+        <Checkout buyNow />
       </Route>
     </Switch>
   ) : (

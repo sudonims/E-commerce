@@ -15,16 +15,14 @@ function cardInfo(props) {
               {props.phone}
             </a>
           </p>
-          <div className="overflow-auto">
-            <p className="text-white font-black">
-              Email : &nbsp;
-              <a
-                href={`mailto:${props.email}`}
-                className="text-white no-underline"
-              >
-                {props.email}
-              </a>
-            </p>
+          <div className="flex flex-row justify-start justify-items-start">
+            <p className="text-white font-black">Email: </p>
+            <a
+              href={`mailto:${props.email}`}
+              className="text-white font-bold no-underline left-0"
+            >
+              {props.email}
+            </a>
           </div>
         </div>
       </div>

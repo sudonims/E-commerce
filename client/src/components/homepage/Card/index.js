@@ -5,13 +5,7 @@ import Card from "./card.js";
 import Info from "./infoforcard.js";
 
 const createCard = (info) => {
-  return (
-    <>
-      <Card
-        info={info}
-      />
-    </>
-  );
+  return <Card info={info} />;
 };
 
 export default function HomePage() {

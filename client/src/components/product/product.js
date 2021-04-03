@@ -39,6 +39,19 @@ export default function Product({ prodId }) {
     // });
   }, []);
 
+  const buyNow = () => {
+    Cookies.set(
+      "buynow",
+      JSON.stringify({
+        id: prod.id,
+        name: prod.name,
+        price: prod.price,
+        image_link: prod.image,
+      })
+    );
+    window.location.href = "/cart/checkout/buy";
+  };
+
   const submit = (e) => {
     e.preventDefault();
   };
@@ -48,7 +61,7 @@ export default function Product({ prodId }) {
     e.preventDefault();
     cart.cart.push({
       id: prod.id,
-      name: "top",
+      name: prod.name,
       price: prod.price,
       image_link: prod.image,
     });
@@ -126,14 +139,17 @@ export default function Product({ prodId }) {
                       style={{
                         backgroundColor: "rgb(255, 8, 78)",
                         marginRight: 10,
-                        color: "white"
+                        color: "white",
                       }}
-                      type="submit"
+                      onClick={buyNow}
                     >
                       Buy
                     </Button>
                     <Button
-                      style={{ backgroundColor: "rgb(255, 8, 78)" ,color: "white"}}
+                      style={{
+                        backgroundColor: "rgb(255, 8, 78)",
+                        color: "white",
+                      }}
                       onClick={addCart}
                     >
                       Add to Cart

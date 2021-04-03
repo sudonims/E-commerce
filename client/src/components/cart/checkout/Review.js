@@ -12,28 +12,7 @@ import { APP } from "../../firebase/firebaseConfig";
 import server from "../../starters/serverChoose";
 import DNA from "../../assets/logo.png";
 import { AuthContext } from "../../firebase/firebase";
-import Card from './cardForOrder.js';
-const products = [];
-const addresses = [
-  "1 Material-UI Drive",
-  "Reactville",
-  "Anytown",
-  "99999",
-  "USA",
-];
-const payments = [];
-
-const useStyles = makeStyles((theme) => ({
-  listItem: {
-    padding: theme.spacing(1, 0),
-  },
-  total: {
-    fontWeight: 700,
-  },
-  title: {
-    marginTop: theme.spacing(2),
-  },
-}));
+import Card from "./cardForOrder.js";
 
 function loadScript(src) {
   return new Promise((resolve) => {
@@ -49,11 +28,13 @@ function loadScript(src) {
   });
 }
 
-export default function Review({ classes1 }) {
-  const cart = Cookies.getJSON("cart");
+export default function Review({ classes1, buyNow }) {
+  const cart = buyNow
+    ? { cart: [Cookies.getJSON("buynow")] }
+    : Cookies.getJSON("cart");
+  console.log(cart);
   const amount = cart.cart.reduce((a, b) => a + (b["effectivePrice"] || 0), 0);
   const { currentUser } = React.useContext(AuthContext);
-  const classes = useStyles();
   const { activeStep, setActiveStep, orderId, setOrderId } = React.useContext(
     StepOrderContext
   );
@@ -149,7 +130,7 @@ export default function Review({ classes1 }) {
       </Typography>
       <List disablePadding>
         {cart.cart.map((product) => (
-           <Card product={product} />
+          <Card product={product} />
         ))}
         <ListItem>
           <ListItemText>Total Price:</ListItemText>
