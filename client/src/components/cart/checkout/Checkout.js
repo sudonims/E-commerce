@@ -57,7 +57,7 @@ function getStepContent(step, classes, buyNow) {
     case 0:
       return <AddressForm classes={classes} />;
     case 1:
-      return <Review buyNow classes1={classes} />;
+      return <Review buyNow={buyNow} classes1={classes} />;
     default:
       throw new Error("Unknown step");
   }

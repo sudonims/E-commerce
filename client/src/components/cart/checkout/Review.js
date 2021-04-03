@@ -35,9 +35,13 @@ export default function Review({ classes1, buyNow }) {
   console.log(cart);
   const amount = cart.cart.reduce((a, b) => a + (b["effectivePrice"] || 0), 0);
   const { currentUser } = React.useContext(AuthContext);
-  const { activeStep, setActiveStep, orderId, setOrderId } = React.useContext(
-    StepOrderContext
-  );
+  const {
+    activeStep,
+    setActiveStep,
+    orderId,
+    setOrderId,
+    address,
+  } = React.useContext(StepOrderContext);
 
   const placeOrder = async (id) => {
     APP.auth()
@@ -105,6 +109,8 @@ export default function Review({ classes1, buyNow }) {
             {
               amount: amount * 100,
               currency: "INR",
+              orderDetails: cart.cart,
+              address: address,
             },
             {
               headers: {
@@ -129,9 +135,11 @@ export default function Review({ classes1, buyNow }) {
         Order summary
       </Typography>
       <List disablePadding>
-        {cart.cart.map((product) => (
-          <Card product={product} />
-        ))}
+        <div className="flex flex-row overflow-auto flex-nowrap justify-around">
+          {cart.cart.map((product) => (
+            <Card product={product} />
+          ))}
+        </div>
         <ListItem>
           <ListItemText>Total Price:</ListItemText>
           <Typography>{amount}</Typography>

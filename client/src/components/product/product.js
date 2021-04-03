@@ -47,8 +47,11 @@ export default function Product({ prodId }) {
       JSON.stringify({
         id: prod.id,
         name: prod.name,
+        description: prod.description,
         price: prod.price,
-        image_link: prod.image,
+        image_link: prod.img,
+        quantity: 1,
+        effectivePrice: parseFloat(prod.price),
       })
     );
     window.location.href = "/cart/checkout/buy";
@@ -57,8 +60,6 @@ export default function Product({ prodId }) {
   const submit = (e) => {
     e.preventDefault();
   };
-  var cart = Cookies.getJSON("cart");
-
   const addCart = (e) => {
     var cart = Cookies.getJSON("cart");
     e.preventDefault();
@@ -91,6 +92,7 @@ export default function Product({ prodId }) {
     console.log(cart);
     Cookies.set("cart", cart);
   };
+
   return (
     prod && (
       <div className="flex flex-col">

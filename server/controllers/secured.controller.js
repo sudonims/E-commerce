@@ -1,19 +1,44 @@
 const { instance } = require("../razorpay");
 const crypto = require("crypto");
+const bcrypt = require("bcrypt");
+const { db } = require("../firebase");
 
 module.exports = {
   orders: (req, res) => {
     try {
-      const { amount, currency, name, email } = req.body;
+      const { amount, currency, orderDetails, address } = req.body;
+      console.log(orderDetails);
+      const sha = crypto.createHmac("sha256", "PMFgShL5uukieCrm8aVcEnBW");
+      sha.update(JSON.stringify(orderDetails));
+
+      const recipt_id = `receipt_${sha.digest("hex").slice(0, 12)}`;
 
       instance.orders.create(
         {
           amount: amount,
           currency: currency,
-          receipt: "order_rcptid_11",
+          receipt: recipt_id,
         },
-        (err, order) => {
+        async (err, order) => {
           console.log(order);
+          await db
+            .collection("users")
+            .doc(req.uid)
+            .collection("order")
+            .doc(recipt_id)
+            .set(
+              {
+                details: orderDetails,
+                address: address,
+              },
+              {
+                merge: true,
+              }
+            )
+            .catch((err) => {
+              console.log(err);
+              throw new Error("Error OCcured. Check logs");
+            });
           res.status(200).send(order);
         }
       );
