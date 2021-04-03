@@ -16,7 +16,7 @@ import { Route, Switch, useRouteMatch } from "react-router";
 export default function Cart() {
   const [cart, setCart] = React.useState(Cookies.getJSON("cart"));
   const [totalAmount, setTotalAmount] = React.useState(
-    cart.cart.reduce((a, b) => a + (b["effectivePrice"] || 0), 0)
+    cart.cart.reduce((a, b) => parseFloat((a + (b["effectivePrice"] || 0)).toFixed(2)), 0)
   );
   const { url } = useRouteMatch();
   const remove = (e) => {
@@ -58,7 +58,7 @@ export default function Cart() {
   };
   React.useEffect(() => {
     setTotalAmount(
-      cart.cart.reduce((a, b) => a + (b["effectivePrice"] || 0), 0)
+      cart.cart.reduce((a, b) => parseFloat((a + (b["effectivePrice"] || 0)).toFixed(2)), 0)
     );
   }, [cart]);
 

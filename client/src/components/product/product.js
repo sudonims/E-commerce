@@ -13,19 +13,12 @@ import { AuthContext } from "../firebase/firebase";
 import Footer from "../starters/footer";
 import Header from "../starters/header";
 import Cookies from "js-cookie";
+import Info from "../homepage/Card/infoforcard.js";
 
 export default function Product({ prodId }) {
   const { currentUser } = React.useContext(AuthContext);
 
-  const [prod, setProd] = React.useState({
-    id: "0xAAA",
-    image: "",
-    name: "demo",
-    description: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing`,
-    sizes: ["XS", "S", "M", "L", "XL"],
-    price: 549.99,
-    reviews: [{}, {}, {}],
-  });
+  const [prod, setProd] = React.useState(null);
 
   React.useEffect(() => {
     // GET from backend
@@ -37,6 +30,15 @@ export default function Product({ prodId }) {
     //   price: 549.99,
     //   reviews: [{}, {}, {}],
     // });
+    console.log(Info);
+    var a = Info.filter((a) => {
+      console.log(prodId, a, typeof prodId);
+      return parseInt(prodId) === a.id;
+    });
+    console.log(a);
+    if (a.length > 0) {
+      setProd(a.pop());
+    }
   }, []);
 
   const submit = (e) => {
@@ -45,16 +47,39 @@ export default function Product({ prodId }) {
   var cart = Cookies.getJSON("cart");
 
   const addCart = (e) => {
+    var cart = Cookies.getJSON("cart");
     e.preventDefault();
-    cart.cart.push({
-      id: prod.id,
-      name: "top",
-      price: prod.price,
-      image_link: prod.image,
-    });
+    if (!currentUser) {
+      alert("Please Sign In");
+      return;
+    }
+    if (!currentUser.emailVerified) {
+      alert("Please Verify Your Mail Id\nFor that go to Your Profile");
+      return;
+    }
+
+    var a = cart.cart.find((o) => o.id === prod.id);
+
+    if (!a){      
+      cart.cart.push({
+        id: prod.id,
+        name: prod.name,
+        description: prod.description,
+        price: prod.price,
+        image_link: prod.img,
+        quantity: 1,
+        effectivePrice: parseFloat(prod.price),
+      });
+      alert("Added to cart");
+      
+      
+    }else{
+      alert("Already Added");
+    }
+
     console.log(cart);
     Cookies.set("cart", cart);
-    alert("Added to cart");
+    
   };
   return (
     prod && (
@@ -63,9 +88,10 @@ export default function Product({ prodId }) {
         <Container style={{ marginTop: 20 }}>
           <Grid container>
             <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
-              <img src={prod.image} alt="image" />
+              <img src={prod.img} alt="image" />
             </Grid>
-            <Grid item xs={12} sm={12} md={8} lg={8} xl={8}>
+            <Grid md={1} />
+            <Grid item xs={12} sm={12} md={7} lg={7} xl={7}>
               <form onSubmit={submit}>
                 <input hidden type="text" value={currentUser.uid} name="user" />
                 <input hidden type="text" value={prodId} name="prodid" />
@@ -126,14 +152,17 @@ export default function Product({ prodId }) {
                       style={{
                         backgroundColor: "rgb(255, 8, 78)",
                         marginRight: 10,
-                        color: "white"
+                        color: "white",
                       }}
                       type="submit"
                     >
                       Buy
                     </Button>
                     <Button
-                      style={{ backgroundColor: "rgb(255, 8, 78)" ,color: "white"}}
+                      style={{
+                        backgroundColor: "rgb(255, 8, 78)",
+                        color: "white",
+                      }}
                       onClick={addCart}
                     >
                       Add to Cart

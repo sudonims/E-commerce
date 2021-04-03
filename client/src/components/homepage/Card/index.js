@@ -6,11 +6,9 @@ import Info from "./infoforcard.js";
 
 const createCard = (info) => {
   return (
-    <>
       <Card
         info={info}
       />
-    </>
   );
 };
 

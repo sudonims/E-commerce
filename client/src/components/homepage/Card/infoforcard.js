@@ -6,6 +6,7 @@ const info = [
     name:"top",
     description: "Cotton Jeans",
     img: prod1,
+    sizes: ["XS", "S", "M", "L", "XL"],
     price: 39.4,
   },
   {
@@ -13,6 +14,7 @@ const info = [
     name:"cool top",
     description: "The Cooler Cotton Jeans",
     img: prod1,
+    sizes: ["XS", "S", "M", "L", "XL"],
     price: 59.4,
   },
 ];
