@@ -8,19 +8,24 @@ function cardInfo(props) {
           <h2 className="name">{props.name}</h2>
           <img className="circle-img" src={props.img} alt="avatar_img" />
         </div>
-        <div className="bottom">
+        <div className="bottom flex flex-col">
           <p className="text-white font-black">
             Contact No : &nbsp;
             <a href={`tel:${props.phone}`} className="info no-underline	">
               {props.phone}
             </a>
           </p>
-          <p className="text-white font-black">
-            Email : &nbsp;
-            <a href={`mailto:${props.email}`} className="info no-underline	">
-              {props.email}
-            </a>
-          </p>
+          <div className="overflow-auto">
+            <p className="text-white font-black">
+              Email : &nbsp;
+              <a
+                href={`mailto:${props.email}`}
+                className="text-white no-underline"
+              >
+                {props.email}
+              </a>
+            </p>
+          </div>
         </div>
       </div>
     </div>
