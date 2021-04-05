@@ -32,53 +32,64 @@ const Profile = () => {
   const submit = async (e) => {
     e.preventDefault();
     const { email, name, phone } = e.target.elements;
-    if (email.value !== currentUser.email) {
-      APP.auth()
-        .currentUser.verifyBeforeUpdateEmail(email.value)
-        .then(() => {
-          alert("Email will change once you verify");
-        })
-        .catch((err) => {
-          console.log(err);
-          alert("Check new email and try again after sign in");
-        });
-    }
+    try {
+      if (email.value !== currentUser.email) {
+        APP.auth()
+          .currentUser.verifyBeforeUpdateEmail(email.value)
+          .then(() => {
+            alert("Email will change once you verify");
+          })
+          .catch((err) => {
+            console.log(err);
+            alert("Check new email and try again after sign in");
+          });
+      }
 
-    if (name.value !== currentUser.displayName) {
-      APP.auth()
-        .currentUser.updateProfile({
-          displayName: name.value,
-        })
-        .then(() => {
-          alert("Name updated");
-        });
-    }
-    if (phone.value !== currentUser.phoneNumber) {
-      var recaptcha = new firebase.auth.RecaptchaVerifier(
-        "recaptcha-container"
-      );
-      var number ="+91"+ phone.value;
-      firebase
-        .auth()
-        .signInWithPhoneNumber(number, recaptcha)
-        .then(function (e) {
-          var code = prompt("Enter the otp", "");
+      if (name.value !== currentUser.displayName) {
+        APP.auth()
+          .currentUser.updateProfile({
+            displayName: name.value,
+          })
+          .then(() => {
+            alert("Name updated");
+          });
+      }
+      if (phone.value !== currentUser.phoneNumber) {
+        var recaptcha = new firebase.auth.RecaptchaVerifier(
+          "recaptcha-container"
+        );
+        var number =
+          phone.value.slice(0, 3) === "+91" ? phone.value : "+91" + phone.value;
 
-          if (code === null) return;
+        var provider = new firebase.auth.PhoneAuthProvider();
+        provider
+          .verifyPhoneNumber(number, recaptcha)
+          .then((verificationId) => {
+            var code = prompt("Enter the OTP", "");
 
-          e.confirm(code)
-            .then(function (result) {
-              console.log(result.user);
-
-              alert("Verified Mobile Number!!");
-            })
-            .catch(function (error) {
-              console.error(error);
-            });
-        })
-        .catch(function (error) {
-          console.error(error);
-        });
+            return firebase.auth.PhoneAuthProvider.credential(
+              verificationId,
+              code
+            );
+          })
+          .then((cred) => {
+            APP.auth()
+              .currentUser.updatePhoneNumber(cred)
+              .then(() => {
+                alert("Phone Number Verified and changed");
+              });
+          })
+          .catch((err) => {
+            if (err.code === "auth/invalid-phone-number") {
+              alert("Check phone Number Again");
+            }
+          });
+      }
+    } catch (err) {
+      console.log("err", err);
+      if (err === "auth/invalid-phone-number") {
+        alert("Inavlid Phone Number. Check Again");
+      }
     }
   };
 
@@ -146,7 +157,7 @@ const Profile = () => {
                       type="email"
                       name="email"
                       fullWidth
-                      defaultValue={currentUser.email}
+                      defaultValue={currentUser.email || ""}
                     />
                   </Grid>
                   <Grid style={{ margin: 15 }} item xs={12}>
@@ -158,7 +169,7 @@ const Profile = () => {
                       label="Name"
                       type="text"
                       fullWidth
-                      defaultValue={currentUser.displayName}
+                      defaultValue={currentUser.displayName || ""}
                     />
                   </Grid>
                   <Grid style={{ margin: 15 }} item xs={12}>
@@ -170,7 +181,7 @@ const Profile = () => {
                       label="Phone Number"
                       type="text"
                       fullWidth
-                      defaultValue={currentUser.phone}
+                      defaultValue={currentUser.phoneNumber || ""}
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -417,14 +428,13 @@ export default function Header({ rightlinks, leftlinks }) {
                           marginLeft: 10,
                         }}
                         // disabled={!currentUser.emailVerified}
-                        onClick={()=>{
-                          if(!currentUser.emailVerified){
-                            alert("Please Verify Your Email")
-                          }else{
-                            window.location.href='/cart';
+                        onClick={() => {
+                          if (!currentUser.emailVerified) {
+                            alert("Please Verify Your Email");
+                          } else {
+                            window.location.href = "/cart";
                           }
-                        }
-                        }
+                        }}
                       >
                         <ShoppingCartIcon />
                       </IconButton>,
