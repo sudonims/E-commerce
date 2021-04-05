@@ -1,6 +1,5 @@
 const { instance } = require("../razorpay");
 const crypto = require("crypto");
-const bcrypt = require("bcrypt");
 const { db } = require("../firebase");
 
 module.exports = {
@@ -70,6 +69,21 @@ module.exports = {
     } catch (err) {
       console.log(err);
       res.status(503).send("Error Occured");
+    }
+  },
+
+  feedback: async (req, res) => {
+    const { subject, message, rating } = req.body;
+    try {
+      await db.collection("feedback").doc(req.uid).set({
+        subject,
+        message,
+        rating,
+      });
+      res.status(200).send("success");
+    } catch (err) {
+      console.log(err);
+      res.status(503).send("Error occured");
     }
   },
 };
