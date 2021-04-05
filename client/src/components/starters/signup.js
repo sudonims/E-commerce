@@ -125,12 +125,7 @@ export default function SignUp() {
                 />
               </Grid>
               <Grid item xs={12}>
-                <FormControlLabel
-                  control={
-                    <Checkbox value="allowExtraEmails" color="primary" />
-                  }
-                  label="Provide all updates via mail"
-                />
+                
               </Grid>
             </Grid>
             <Button

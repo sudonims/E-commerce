@@ -15,15 +15,17 @@ function cardInfo(props) {
               {props.phone}
             </a>
           </p>
-          <div className="flex flex-row justify-start justify-items-start">
-            <p className="text-white font-black">Email: </p>
+          {/* <div className="flex flex-row"> */}
+          <p className="text-white font-black">
+            Email: &nbsp;
             <a
               href={`mailto:${props.email}`}
               className="text-white font-bold no-underline left-0"
             >
               {props.email}
             </a>
-          </div>
+          </p>
+          {/* </div> */}
         </div>
       </div>
     </div>
