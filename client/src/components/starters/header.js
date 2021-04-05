@@ -29,29 +29,6 @@ const Profile = () => {
     [width]
   );
 
-  const setRecaptcha = () => {
-    return new Promise((resolve) => {
-      console.log("trying");
-      try {
-        window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier(
-          "recaptcha-container",
-          {
-            size: "invisible",
-            callback: (response) => {
-              console.info("Invisible Captcha", response);
-              // reCAPTCHA solved, allow signInWithPhoneNumber.
-              console.log("Successssssss");
-              resolve("success");
-            },
-            defaultCountry: "IN",
-          }
-        );
-      } catch (err) {
-        console.log(err);
-      }
-    });
-  };
-
   const submit = async (e) => {
     e.preventDefault();
     const { email, name, phone } = e.target.elements;
@@ -76,24 +53,33 @@ const Profile = () => {
           alert("Name updated");
         });
     }
-
     if (phone.value !== currentUser.phoneNumber) {
-      await setRecaptcha().then((data) => {
-        console.log(data);
-        if (data === "success") {
-          APP.auth()
-            .currentUser.linkWithPhoneNumber(
-              phone.value,
-              window.recaptchaVerifier
-            )
-            .then(() => {
-              alert("Phone Number Added");
-            });
-        }
-      });
-    }
+      var recaptcha = new firebase.auth.RecaptchaVerifier(
+        "recaptcha-container"
+      );
+      var number ="+91"+ phone.value;
+      firebase
+        .auth()
+        .signInWithPhoneNumber(number, recaptcha)
+        .then(function (e) {
+          var code = prompt("Enter the otp", "");
 
-    // if(phone)
+          if (code === null) return;
+
+          e.confirm(code)
+            .then(function (result) {
+              console.log(result.user);
+
+              alert("Verified Mobile Number!!");
+            })
+            .catch(function (error) {
+              console.error(error);
+            });
+        })
+        .catch(function (error) {
+          console.error(error);
+        });
+    }
   };
 
   const handleClick = () => {
@@ -175,7 +161,7 @@ const Profile = () => {
                       defaultValue={currentUser.displayName}
                     />
                   </Grid>
-                  {/* <Grid style={{ margin: 15 }} item xs={12}>
+                  <Grid style={{ margin: 15 }} item xs={12}>
                     <TextField
                       autoFocus
                       margin="dense"
@@ -186,12 +172,18 @@ const Profile = () => {
                       fullWidth
                       defaultValue={currentUser.phone}
                     />
-                  </Grid> */}
-                  <Grid style={{ margin: 15 }} item xs={12}>
+                  </Grid>
+                  <Grid item xs={12}>
                     <Button
+                      style={{
+                        margin: 15,
+                        backgroundColor: "#ff084e",
+                        color: "white",
+                      }}
                       onClick={() => {
                         window.location.href = "/myorders";
                       }}
+                      hidden={!currentUser.emailVerified}
                     >
                       View Your Orders
                     </Button>
@@ -207,17 +199,28 @@ const Profile = () => {
                               alert("Check your Email");
                             })
                         }
+                        style={{ backgroundColor: "#ff084e", color: "white" }}
                       >
                         Verify Email
                       </Button>
                     )}
                   </Grid>
-                  <Button type="submit">Update</Button>
+                  <div id="recaptcha-container"></div>
+                  <Button
+                    hidden={!currentUser.emailVerified}
+                    style={{
+                      margin: 15,
+                      backgroundColor: "#ff084e",
+                      color: "white",
+                    }}
+                    type="submit"
+                  >
+                    Update
+                  </Button>
                 </Grid>
               </form>
             </Grid>
           </Grid>
-          <div id="recaptcha-container"></div>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClick} color="primary">
@@ -288,7 +291,7 @@ export default function Header({ rightlinks, leftlinks }) {
                     marginRight: 10,
                   }}
                 >
-                  SIgnOut
+                  SignOut
                 </Button>,
                 <Profile />,
                 <IconButton
@@ -405,7 +408,7 @@ export default function Header({ rightlinks, leftlinks }) {
                       </Button>,
                       <Profile />,
                       <IconButton
-                        href="/cart"
+                        // href="/cart"
                         style={{
                           backgroundColor: "#ff084e",
                           color: "white",
@@ -413,7 +416,15 @@ export default function Header({ rightlinks, leftlinks }) {
                           marginTop: -10,
                           marginLeft: 10,
                         }}
-                        disabled={!currentUser.emailVerified}
+                        // disabled={!currentUser.emailVerified}
+                        onClick={()=>{
+                          if(!currentUser.emailVerified){
+                            alert("Please Verify Your Email")
+                          }else{
+                            window.location.href='/cart';
+                          }
+                        }
+                        }
                       >
                         <ShoppingCartIcon />
                       </IconButton>,
