@@ -71,9 +71,10 @@ export default function HomePage() {
                 </div>
                 <div className="col-12 col-md-8 col-lg-9">
                   <div className="shop_grid_product_area">
-                    <div className="row">
-                      {/* Single gallery Item */}
-                      {Info.map(createCard)}
+                    <div className="flex flex-row">
+                      <div className="flex flex-row flex-wrap">
+                        {Info.map(createCard)}
+                      </div>
                     </div>
                   </div>
                   <div
