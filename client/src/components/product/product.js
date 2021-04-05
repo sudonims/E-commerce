@@ -105,7 +105,7 @@ export default function Product({ prodId }) {
             <Grid md={1} />
             <Grid item xs={12} sm={12} md={7} lg={7} xl={7}>
               <form onSubmit={submit}>
-                <input hidden type="text" value={currentUser.uid} name="user" />
+                <input hidden type="text" value={currentUser ? currentUser.uid : ""} name="user" />
                 <input hidden type="text" value={prodId} name="prodid" />
 
                 <div className="flex flex-col">
@@ -167,6 +167,8 @@ export default function Product({ prodId }) {
                         color: "white",
                       }}
                       onClick={buyNow}
+                      disabled={!(currentUser && currentUser.emailVerified )}
+
                     >
                       Buy
                     </Button>
@@ -176,6 +178,7 @@ export default function Product({ prodId }) {
                         color: "white",
                       }}
                       onClick={addCart}
+                      disabled={!(currentUser && currentUser.emailVerified )}
                     >
                       Add to Cart
                     </Button>

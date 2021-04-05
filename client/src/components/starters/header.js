@@ -58,6 +58,7 @@ const Profile = () => {
         "recaptcha-container"
       );
       var number ="+91"+ phone.value;
+
       firebase
         .auth()
         .signInWithPhoneNumber(number, recaptcha)
@@ -269,7 +270,7 @@ export default function Header({ rightlinks, leftlinks }) {
               <Button href="/contactus">Contact Us</Button>
             </li>
             <li className="nav-item">
-              <Button onClick={feedChange}>Feed Back Form</Button>
+              <Button onClick={feedChange} >Feed Back Form</Button>
               <Feedback open={openFeed} setOpen={feedChange} />
             </li>
           </ul>
@@ -368,7 +369,7 @@ export default function Header({ rightlinks, leftlinks }) {
                           <Button href="/contactus">Contact Us</Button>
                         </li>
                         <li className="nav-item ">
-                          <Button href="#" onClick={feedChange}>
+                          <Button disabled={!(currentUser && currentUser.emailVerified )} href="#" onClick={feedChange}>
                             Feed Back Form
                           </Button>
                           <Feedback open={openFeed} setOpen={feedChange} />
