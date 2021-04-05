@@ -22,7 +22,7 @@ export default function Feedback({ open, setOpen }) {
       .then((token) => {
         axios
           .post(
-            server + "api/orders",
+            server + "api/feedback",
             {
               subject: subject.value,
               message: message.value,
