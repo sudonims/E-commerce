@@ -85,6 +85,7 @@ const Profile = () => {
             }
           });
       }
+      window.location.reload();
     } catch (err) {
       console.log("err", err);
       if (err === "auth/invalid-phone-number") {
