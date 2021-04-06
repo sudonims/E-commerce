@@ -13,6 +13,10 @@ import server from "../../starters/serverChoose";
 
 export default function Feedback({ open, setOpen }) {
   const [value, setValue] = React.useState(2);
+  const [status, setStatus] = React.useState({
+    message: "",
+    severity: "",
+  });
 
   const submit = (e) => {
     e.preventDefault();
@@ -36,14 +40,20 @@ export default function Feedback({ open, setOpen }) {
           )
           .then((res) => {
             if (res.data === "success") {
-              alert("Thank you for your special feedback!!");
+              setStatus({
+                message: "Thank you for your special feedback!!",
+                severity: "success",
+              });
             } else {
               throw new Error("error while feedback");
             }
           })
           .catch((err) => {
             console.log(err);
-            alert("Error Occured\nTry after some time");
+            setStatus({
+              message: "Error Occured\nTry after some time",
+              severity: "error",
+            });
           });
       });
   };
