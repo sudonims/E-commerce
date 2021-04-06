@@ -14,10 +14,7 @@ import Alert from "../../alert/alert.js";
 
 export default function Feedback({ open, setOpen }) {
   const [value, setValue] = React.useState(2);
-  const [status, setStatus] = React.useState({
-    message: "",
-    severity: "",
-  });
+  const [status, setStatus] = React.useState(null);
 
   const submit = (e) => {
     e.preventDefault();
@@ -43,7 +40,7 @@ export default function Feedback({ open, setOpen }) {
             if (res.data === "success") {
               setStatus({
                 message: "Thank you for your special feedback!!",
-                severity: "success",
+                severity: "green",
               });
             } else {
               throw new Error("error while feedback");
@@ -53,13 +50,20 @@ export default function Feedback({ open, setOpen }) {
             console.log(err);
             setStatus({
               message: "Error Occured\nTry after some time",
-              severity: "error",
+              severity: "red",
             });
           });
       });
   };
+  console.log(status);
   return (
     <div>
+      <Alert
+        message={"hey"}
+        severity={"green"}
+        onClose={() => setStatus(null)}
+      />
+
       <Dialog open={open} onClose={setOpen} aria-labelledby="form-dialog-title">
         <form onSubmit={submit}>
           <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
@@ -101,7 +105,6 @@ export default function Feedback({ open, setOpen }) {
             <Button
               style={{ backgroundColor: "#ff084e", color: "white" }}
               type="submit"
-              onClick={setOpen}
             >
               Send Feedback
             </Button>
