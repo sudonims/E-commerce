@@ -1,6 +1,7 @@
 import {
   Avatar,
   Button,
+  Card,
   Container,
   FormControlLabel,
   Grid,
@@ -98,106 +99,120 @@ export default function Product({ prodId }) {
       <div className="flex flex-col">
         <Header />
         <Container style={{ marginTop: 20 }}>
-          <Grid container>
-            <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
-              <img src={prod.img} alt="image" />
-            </Grid>
-            <Grid md={1} />
-            <Grid item xs={12} sm={12} md={7} lg={7} xl={7}>
-              <form onSubmit={submit}>
-                <input hidden type="text" value={currentUser ? currentUser.uid : ""} name="user" />
-                <input hidden type="text" value={prodId} name="prodid" />
+          <Card
+            elevation={15}
+            style={{
+              width: "100%",
+              padding: 15,
+              backgroundColor: "rgb(255, 8, 78, 0.2)",
+              border: "1px solid black",
+              borderRadius: 15,
+            }}
+          >
+            <Grid container>
+              <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
+                <img src={prod.img} alt="image" />
+              </Grid>
+              <Grid md={1} />
+              <Grid item xs={12} sm={12} md={7} lg={7} xl={7}>
+                <form onSubmit={submit}>
+                  <input
+                    hidden
+                    type="text"
+                    value={currentUser ? currentUser.uid : ""}
+                    name="user"
+                  />
+                  <input hidden type="text" value={prodId} name="prodid" />
 
-                <div className="flex flex-col">
-                  <Typography variant="h2" className="font-black">
-                    {prod.name}
-                  </Typography>
-                  <Typography>{prod.description}</Typography>
-                  <div className="flex flex-row mt-8">
-                    <Typography variant="h5">Size</Typography>
-                    <RadioGroup
-                      defaultValue={prod.sizes[0]}
-                      aria-label="size"
-                      name="size"
+                  <div className="flex flex-col">
+                    <Typography variant="h2" className="font-black">
+                      {prod.name}
+                    </Typography>
+                    <Typography>{prod.description}</Typography>
+                    {/* <div className="flex flex-row mt-8">
+                      <Typography variant="h5">Size</Typography>
+                      <RadioGroup
+                        defaultValue={prod.sizes[0]}
+                        aria-label="size"
+                        name="size"
+                      >
+                        <div className="flex flex-row">
+                          {prod.sizes.map((size) => (
+                            <FormControlLabel
+                              value={size}
+                              control={
+                                <Radio
+                                  icon={
+                                    <Avatar
+                                      style={{
+                                        backgroundColor: "pink",
+                                        color: "black",
+                                        marginLeft: 10,
+                                      }}
+                                    >
+                                      {size}
+                                    </Avatar>
+                                  }
+                                />
+                              }
+                            />
+                          ))}
+                        </div>
+                      </RadioGroup>
+                    </div> */}
+                    <div className="flex flex-row mt-8">
+                      <input
+                        hidden
+                        type="number"
+                        value={prod.price}
+                        name="price"
+                      />
+                      <p className="text-2xl text-black font-black">
+                        {`Price`} &nbsp;&nbsp;&nbsp; {`${prod.price}`}
+                      </p>
+                    </div>
+                    <div
+                      style={{ justifyContent: "flex-start" }}
+                      className="mt-8 flex flex-row"
                     >
-                      <div className="flex flex-row">
-                        {prod.sizes.map((size) => (
-                          <FormControlLabel
-                            value={size}
-                            control={
-                              <Radio
-                                icon={
-                                  <Avatar
-                                    style={{
-                                      backgroundColor: "pink",
-                                      color: "black",
-                                      marginLeft: 10,
-                                    }}
-                                  >
-                                    {size}
-                                  </Avatar>
-                                }
-                              />
-                            }
-                          />
-                        ))}
+                      <Button
+                        style={{
+                          backgroundColor: "rgb(255, 8, 78)",
+                          marginRight: 10,
+                          color: "white",
+                        }}
+                        onClick={buyNow}
+                        disabled={!(currentUser && currentUser.emailVerified)}
+                      >
+                        Buy
+                      </Button>
+                      <Button
+                        style={{
+                          backgroundColor: "rgb(255, 8, 78)",
+                          color: "white",
+                        }}
+                        onClick={addCart}
+                        disabled={!(currentUser && currentUser.emailVerified)}
+                      >
+                        Add to Cart
+                      </Button>
+                    </div>
+
+                    <div className="mt-8">
+                      <Typography variant="h4">
+                        Try the product virtually!!!
+                      </Typography>
+                      <div>
+                        <form>
+                          <input type="file" />
+                        </form>
                       </div>
-                    </RadioGroup>
-                  </div>
-                  <div className="flex flex-row mt-8">
-                    <input
-                      hidden
-                      type="number"
-                      value={prod.price}
-                      name="price"
-                    />
-                    <Typography variant="h4" style={{ marginRight: 20 }}>
-                      Price
-                    </Typography>
-                    <Typography variant="h4">{prod.price}</Typography>
-                  </div>
-                  <div
-                    style={{ justifyContent: "flex-start" }}
-                    className="mt-8 flex flex-row"
-                  >
-                    <Button
-                      style={{
-                        backgroundColor: "rgb(255, 8, 78)",
-                        marginRight: 10,
-                        color: "white",
-                      }}
-                      onClick={buyNow}
-                      disabled={!(currentUser && currentUser.emailVerified )}
-
-                    >
-                      Buy
-                    </Button>
-                    <Button
-                      style={{
-                        backgroundColor: "rgb(255, 8, 78)",
-                        color: "white",
-                      }}
-                      onClick={addCart}
-                      disabled={!(currentUser && currentUser.emailVerified )}
-                    >
-                      Add to Cart
-                    </Button>
-                  </div>
-
-                  <div className="mt-8">
-                    <Typography variant="h4">
-                      Try the product virtually!!!
-                    </Typography>
-                    <div>
-                      <form>
-                        <input type="file" />
-                      </form>
                     </div>
                   </div>
-                </div>
-              </form>
+                </form>
+              </Grid>
             </Grid>
-          </Grid>
+          </Card>
         </Container>
         <Footer />
       </div>

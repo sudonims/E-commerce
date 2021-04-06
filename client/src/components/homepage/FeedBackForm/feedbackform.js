@@ -58,11 +58,13 @@ export default function Feedback({ open, setOpen }) {
   console.log(status);
   return (
     <div>
-      <Alert
-        message={"hey"}
-        severity={"green"}
-        onClose={() => setStatus(null)}
-      />
+      {status && (
+        <Alert
+          message={status.message}
+          severity={status.severity}
+          onClose={() => setStatus(null)}
+        />
+      )}
 
       <Dialog open={open} onClose={setOpen} aria-labelledby="form-dialog-title">
         <form onSubmit={submit}>

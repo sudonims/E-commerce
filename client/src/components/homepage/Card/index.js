@@ -12,7 +12,6 @@ export default function HomePage() {
   return (
     <>
       <Header />
-
       <div>
         <div id="wrapper">
           {/* ****** Header Area Start ****** */}
