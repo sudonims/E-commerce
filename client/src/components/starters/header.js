@@ -32,11 +32,15 @@ const Profile = () => {
   const submit = async (e) => {
     e.preventDefault();
     const { email, name, phone } = e.target.elements;
+    var a = 0,
+      b = 0,
+      c = 0;
     try {
       if (email.value !== currentUser.email) {
         APP.auth()
           .currentUser.verifyBeforeUpdateEmail(email.value)
           .then(() => {
+            a = 1;
             alert("Email will change once you verify");
           })
           .catch((err) => {
@@ -51,6 +55,7 @@ const Profile = () => {
             displayName: name.value,
           })
           .then(() => {
+            b = 1;
             alert("Name updated");
           });
       }
@@ -76,7 +81,9 @@ const Profile = () => {
             APP.auth()
               .currentUser.updatePhoneNumber(cred)
               .then(() => {
+                c = 1;
                 alert("Phone Number Verified and changed");
+                (a || b || c) && window.location.reload();
               });
           })
           .catch((err) => {
@@ -85,7 +92,6 @@ const Profile = () => {
             }
           });
       }
-      window.location.reload();
     } catch (err) {
       console.log("err", err);
       if (err === "auth/invalid-phone-number") {
@@ -97,7 +103,29 @@ const Profile = () => {
   const handleClick = () => {
     setOpen(!open);
   };
-
+  const uploadImage = (e) => {
+    const ref = firebase.storage().ref();
+    var file = e.target.files[0];
+    const name = new Date() + "-" + file.name;
+    const metadata = {
+      contentType: file.type,
+    };
+    const task = ref.child(name).put(file, metadata);
+    task
+      .then((snapshot) => snapshot.ref.getDownloadURL())
+      .then((url) => {
+        console.log(url);
+        APP.auth()
+          .currentUser.updateProfile({
+            photoURL: url,
+          })
+          .then(() => {
+            alert("Photo updated successfully");
+            window.location.reload();
+          });
+      })
+      .catch(console.error);
+  };
   return (
     <>
       <Button
@@ -129,12 +157,28 @@ const Profile = () => {
                     width: width > 1200 ? 400 : 150,
                   }}
                 >
-                  <img
-                    src="https://thumbor.forbes.com/thumbor/250x382/https://blogs-images.forbes.com/dorothypomerantz/files/2011/09/Spongebob-squarepants.jpg"
-                    height="100%"
-                    width="100%"
-                  />
+                  <img src={currentUser.photoURL} height="100%" width="100%" />
                 </Avatar>
+                <div style={{ marginBottom: 15 }}>
+                  <label htmlFor="uploadPhoto">
+                    <input
+                      type="file"
+                      style={{ display: "none" }}
+                      id="uploadPhoto"
+                      name="uploadPhoto"
+                      onChange={uploadImage}
+                    />
+                    <Button
+                      component="span"
+                      style={{ backgroundColor: "#ff084e", color: "white" }}
+                    >
+                      Upload Image
+                    </Button>
+                    {/* <span id="fileName" style={{ marginLeft: 10 }}>
+                      Add File
+                    </span> */}
+                  </label>
+                </div>
                 <div className="flex-1" />
               </div>
             </Grid>
@@ -281,7 +325,7 @@ export default function Header({ rightlinks, leftlinks }) {
               <Button href="/contactus">Contact Us</Button>
             </li>
             <li className="nav-item">
-              <Button onClick={feedChange} >Feed Back Form</Button>
+              <Button onClick={feedChange}>Feed Back Form</Button>
               <Feedback open={openFeed} setOpen={feedChange} />
             </li>
           </ul>
@@ -294,6 +338,7 @@ export default function Header({ rightlinks, leftlinks }) {
                       .signOut()
                       .then(() => {
                         alert("SignOut Successfull");
+                        window.location.href = "/";
                       });
                   }}
                   style={{
@@ -380,7 +425,13 @@ export default function Header({ rightlinks, leftlinks }) {
                           <Button href="/contactus">Contact Us</Button>
                         </li>
                         <li className="nav-item ">
-                          <Button disabled={!(currentUser && currentUser.emailVerified )} href="#" onClick={feedChange}>
+                          <Button
+                            disabled={
+                              !(currentUser && currentUser.emailVerified)
+                            }
+                            href="#"
+                            onClick={feedChange}
+                          >
                             Feed Back Form
                           </Button>
                           <Feedback open={openFeed} setOpen={feedChange} />
