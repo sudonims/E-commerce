@@ -10,6 +10,7 @@ import Rating1 from "./Rating1";
 import { APP } from "../../firebase/firebaseConfig";
 import axios from "axios";
 import server from "../../starters/serverChoose";
+import Alert from "../../alert/alert.js";
 
 export default function Feedback({ open, setOpen }) {
   const [value, setValue] = React.useState(2);

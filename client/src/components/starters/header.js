@@ -103,7 +103,29 @@ const Profile = () => {
   const handleClick = () => {
     setOpen(!open);
   };
-
+  const uploadImage = (e) => {
+    const ref = firebase.storage().ref();
+    var file = e.target.files[0];
+    const name = new Date() + "-" + file.name;
+    const metadata = {
+      contentType: file.type,
+    };
+    const task = ref.child(name).put(file, metadata);
+    task
+      .then((snapshot) => snapshot.ref.getDownloadURL())
+      .then((url) => {
+        console.log(url);
+        APP.auth()
+          .currentUser.updateProfile({
+            photoURL: url,
+          })
+          .then(() => {
+            alert("Photo updated successfully");
+            window.location.reload();
+          });
+      })
+      .catch(console.error);
+  };
   return (
     <>
       <Button
@@ -137,6 +159,26 @@ const Profile = () => {
                 >
                   <img src={currentUser.photoURL} height="100%" width="100%" />
                 </Avatar>
+                <div style={{ marginBottom: 15 }}>
+                  <label htmlFor="uploadPhoto">
+                    <input
+                      type="file"
+                      style={{ display: "none" }}
+                      id="uploadPhoto"
+                      name="uploadPhoto"
+                      onChange={uploadImage}
+                    />
+                    <Button
+                      component="span"
+                      style={{ backgroundColor: "#ff084e", color: "white" }}
+                    >
+                      Upload Image
+                    </Button>
+                    {/* <span id="fileName" style={{ marginLeft: 10 }}>
+                      Add File
+                    </span> */}
+                  </label>
+                </div>
                 <div className="flex-1" />
               </div>
             </Grid>
@@ -296,6 +338,7 @@ export default function Header({ rightlinks, leftlinks }) {
                       .signOut()
                       .then(() => {
                         alert("SignOut Successfull");
+                        window.location.href = "/";
                       });
                   }}
                   style={{
