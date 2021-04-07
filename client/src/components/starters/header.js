@@ -13,12 +13,15 @@ import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import { AuthContext } from "../firebase/firebase";
 import { APP } from "../firebase/firebaseConfig";
 import Feedback from "../homepage/FeedBackForm/feedbackform";
+import { useSnackbar } from "notistack";
 
 const Profile = () => {
   const [width, setWidth] = React.useState(window.innerWidth);
   const { currentUser } = React.useContext(AuthContext);
   const [open, setOpen] = React.useState(false);
   const [status,setStatus]=React.useState(null);
+  const { enqueueSnackbar } = useSnackbar();
+
 
   React.useEffect(
     (width) => {
@@ -43,10 +46,12 @@ const Profile = () => {
           .then(() => {
             a = 1;
             // alert("Email will change once you verify");
-            setStatus({
-              message: "Error Occured\nTry after some time",
-              severity: "red",
-            });
+            {
+              enqueueSnackbar("Email will change once you verify", {
+                variant: "warning",
+              });
+            }
+
           })
           .catch((err) => {
             console.log(err);

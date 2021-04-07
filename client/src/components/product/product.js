@@ -45,13 +45,22 @@ export default function Product({ prodId }) {
 
   const buyNow = () => {
     if (!currentUser) {
-      alert("Please Sign In");
+      {
+        enqueueSnackbar("Please Join us", {
+          variant: "info",
+        });
+      }
       return;
     }
     if (!currentUser.emailVerified) {
-      alert("Please Verify Your Mail Id\nFor that go to Your Profile");
+      {
+        enqueueSnackbar("Your email is not verified!!", {
+          variant: "info",
+        });
+      }
       return;
     }
+
     Cookies.set(
       "buynow",
       JSON.stringify({
@@ -75,7 +84,7 @@ export default function Product({ prodId }) {
     e.preventDefault();
     if (!currentUser) {
       {
-        enqueueSnackbar("Please Sign In", {
+        enqueueSnackbar("Please Join us", {
           variant: "info",
         });
       }
@@ -98,8 +107,8 @@ export default function Product({ prodId }) {
         name: prod.name,
         description: prod.description,
         price: prod.price,
-        image_link: prod.img,
         quantity: 1,
+        image_link: prod.img,
         effectivePrice: parseFloat(prod.price),
       });
       {
