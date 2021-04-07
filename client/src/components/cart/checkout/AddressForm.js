@@ -4,6 +4,7 @@ import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
+import { useSnackbar } from "notistack";
 import {
   Button,
   Dialog,
@@ -14,6 +15,7 @@ import StepOrderContext from "./stepOrderContext";
 import { func } from "prop-types";
 
 export default function AddressForm({ classes }) {
+  const { enqueueSnackbar } = useSnackbar();
   const { activeStep, setActiveStep, address, setAddress } = React.useContext(
     StepOrderContext
   );
@@ -66,6 +68,11 @@ export default function AddressForm({ classes }) {
       }, showError);
     } else {
       alert("Geolocation is not supported by this browser.");
+      {
+        enqueueSnackbar("Thank you for your special feedback!!", {
+          variant: "success",
+        });
+      }
     }
   }
 

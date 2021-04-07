@@ -13,6 +13,7 @@ import Container from "@material-ui/core/Container";
 import { APP } from "../firebase/firebaseConfig";
 import logo from "../assets/logo.png";
 import Footer from "./footer";
+import { useSnackbar } from "notistack";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -36,9 +37,10 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignUp() {
   const classes = useStyles();
-  
+  const { enqueueSnackbar } = useSnackbar();
 
   const onSubmit = async (e) => {
+    
     e.preventDefault();
     const { firstName, lastName, email, password } = e.target.elements;
     try {
@@ -48,7 +50,12 @@ export default function SignUp() {
         .catch((err) => {
           console.log(err);
           if (err.code == "auth/email-already-in-use") {
-            alert("Email already exist");
+            
+            {
+              enqueueSnackbar("Email already exist!!", {
+                variant: "info",
+              });
+            }
             window.location.reload();
             throw new Error("Error");
           }
@@ -59,7 +66,12 @@ export default function SignUp() {
           displayName: `${firstName.value} ${lastName.value}`,
         })
         .then((res) => {
-          alert("User created");
+          
+          {
+            enqueueSnackbar("User created!!", {
+              variant: "info",
+            });
+          }
           window.location.href = "/";
         })
         .catch((err) => console.log(err));

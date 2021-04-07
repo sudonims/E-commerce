@@ -55,7 +55,11 @@ const Profile = () => {
           })
           .catch((err) => {
             console.log(err);
-            alert("Check new email and try again after sign in");
+            {
+              enqueueSnackbar("Check new email and try again after sign in", {
+                variant: "warning",
+              });
+            }
           });
       }
 
@@ -66,10 +70,18 @@ const Profile = () => {
           })
           .then(() => {
             b = 1;
-            alert("Name updated");
+            {
+              enqueueSnackbar("Name Updated", {
+                variant: "success",
+              });
+            }
           })
           .catch(err=>{
-            alert("There is something error while updating name");
+            {
+              enqueueSnackbar("There is something error while updating name", {
+                variant: "error",
+              });
+            }
           });
       }
       if (phone.value !== currentUser.phoneNumber) {
@@ -95,20 +107,32 @@ const Profile = () => {
               .currentUser.updatePhoneNumber(cred)
               .then(() => {
                 c = 1;
-                alert("Phone Number Verified and changed");
+                {
+                  enqueueSnackbar("Phone Numeber Verified and changed!!", {
+                    variant: "success",
+                  });
+                }
                 (a || b || c) && window.location.reload();
               });
           })
           .catch((err) => {
             if (err.code === "auth/invalid-phone-number") {
-              alert("Check phone Number Again");
+              {
+                enqueueSnackbar("Check phone Number Again!!", {
+                  variant: "warning",
+                });
+              }
             }
           });
       }
     } catch (err) {
       console.log("err", err);
       if (err === "auth/invalid-phone-number") {
-        alert("Inavlid Phone Number. Check Again");
+        {
+          enqueueSnackbar("Invalid Phone Number.Check Again!!", {
+            variant: "warning",
+          });
+        }
       }
     }
   };
@@ -133,7 +157,12 @@ const Profile = () => {
             photoURL: url,
           })
           .then(() => {
-            alert("Photo updated successfully");
+
+            {
+              enqueueSnackbar("Photo updated successfully!!", {
+                variant: "success",
+              });
+            }
             window.location.reload();
           });
       })
@@ -265,7 +294,12 @@ const Profile = () => {
                           APP.auth()
                             .currentUser.sendEmailVerification()
                             .then(() => {
-                              alert("Check your Email");
+                  
+                              {
+                                enqueueSnackbar("Check your email", {
+                                  variant: "info",
+                                });
+                              }
                             })
                         }
                         style={{ backgroundColor: "#ff084e", color: "white" }}
@@ -306,6 +340,7 @@ export default function Header({ rightlinks, leftlinks }) {
   const [openFeed, setOpenFeed] = React.useState(false);
   const [open, setOpen] = React.useState(false);
   const [width, setWidth] = React.useState(window.innerWidth);
+  const { enqueueSnackbar } = useSnackbar();
 
   const feedChange = () => setOpenFeed(!openFeed);
 
@@ -350,7 +385,11 @@ export default function Header({ rightlinks, leftlinks }) {
                     APP.auth()
                       .signOut()
                       .then(() => {
-                        alert("SignOut Successfull");
+                        {
+                          enqueueSnackbar("SignOut Successfully!!", {
+                            variant: "success",
+                          });
+                        }
                         window.location.href = "/";
                       });
                   }}
@@ -470,7 +509,12 @@ export default function Header({ rightlinks, leftlinks }) {
                           APP.auth()
                             .signOut()
                             .then(() => {
-                              alert("SignOut Successfull");
+                      
+                              {
+                                enqueueSnackbar("SignOut Successfull!!", {
+                                  variant: "success",
+                                });
+                              }
                             });
                         }}
                         style={{
@@ -495,7 +539,12 @@ export default function Header({ rightlinks, leftlinks }) {
                         // disabled={!currentUser.emailVerified}
                         onClick={() => {
                           if (!currentUser.emailVerified) {
-                            alert("Please Verify Your Email");
+                    
+                            {
+                              enqueueSnackbar("Please Verify Your Email", {
+                                variant: "warning",
+                              });
+                            }
                           } else {
                             window.location.href = "/cart";
                           }
