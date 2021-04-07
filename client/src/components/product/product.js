@@ -15,10 +15,11 @@ import Footer from "../starters/footer";
 import Header from "../starters/header";
 import Cookies from "js-cookie";
 import Info from "../homepage/Card/infoforcard.js";
+import { useSnackbar } from "notistack";
 
 export default function Product({ prodId }) {
   const { currentUser } = React.useContext(AuthContext);
-
+  const { enqueueSnackbar } = useSnackbar();
   const [prod, setProd] = React.useState(null);
 
   React.useEffect(() => {
@@ -43,6 +44,23 @@ export default function Product({ prodId }) {
   }, []);
 
   const buyNow = () => {
+    if (!currentUser) {
+      {
+        enqueueSnackbar("Please Join us", {
+          variant: "info",
+        });
+      }
+      return;
+    }
+    if (!currentUser.emailVerified) {
+      {
+        enqueueSnackbar("Your email is not verified!!", {
+          variant: "info",
+        });
+      }
+      return;
+    }
+
     Cookies.set(
       "buynow",
       JSON.stringify({
@@ -65,11 +83,19 @@ export default function Product({ prodId }) {
     var cart = Cookies.getJSON("cart");
     e.preventDefault();
     if (!currentUser) {
-      alert("Please Sign In");
+      {
+        enqueueSnackbar("Please Join us", {
+          variant: "info",
+        });
+      }
       return;
     }
     if (!currentUser.emailVerified) {
-      alert("Please Verify Your Mail Id\nFor that go to Your Profile");
+      {
+        enqueueSnackbar("Your email is not verified!!", {
+          variant: "info",
+        });
+      }
       return;
     }
 
@@ -81,13 +107,23 @@ export default function Product({ prodId }) {
         name: prod.name,
         description: prod.description,
         price: prod.price,
-        image_link: prod.img,
         quantity: 1,
+        image_link: prod.img,
         effectivePrice: parseFloat(prod.price),
       });
-      alert("Added to cart");
+      {
+        enqueueSnackbar("Added to cart!!", {
+          variant: "success",
+        });
+      }
     } else {
-      alert("Already Added");
+      {
+        enqueueSnackbar("The item is already added to the cart", {
+          variant: "info",
+        });
+      }
+      
+
     }
 
     console.log(cart);
@@ -182,7 +218,7 @@ export default function Product({ prodId }) {
                           color: "white",
                         }}
                         onClick={buyNow}
-                        disabled={!(currentUser && currentUser.emailVerified)}
+                        // disabled={!(currentUser && currentUser.emailVerified)}
                       >
                         Buy
                       </Button>
@@ -192,7 +228,7 @@ export default function Product({ prodId }) {
                           color: "white",
                         }}
                         onClick={addCart}
-                        disabled={!(currentUser && currentUser.emailVerified)}
+                        // disabled={!(currentUser && currentUser.emailVerified)}
                       >
                         Add to Cart
                       </Button>

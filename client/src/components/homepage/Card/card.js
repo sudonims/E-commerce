@@ -2,19 +2,28 @@ import React from "react";
 import Cookies from "js-cookie";
 import { AuthContext } from "../../firebase/firebase";
 import { Button } from "@material-ui/core";
+import { useSnackbar } from "notistack";
 
 const Card = (props) => {
   const { currentUser } = React.useContext(AuthContext);
-
+  const { enqueueSnackbar } = useSnackbar();
   const addToCart = (e) => {
     var cart = Cookies.getJSON("cart");
     e.preventDefault();
     if (!currentUser) {
-      alert("Please Sign In");
+      {
+        enqueueSnackbar("Please join us First!!", {
+          variant: "info",
+        });
+      }
       return;
     }
     if (!currentUser.emailVerified) {
-      alert("Please Verify Your Mail Id\nFor that go to Your Profile");
+      {
+        enqueueSnackbar("Please verify your email\nFor that go to My Profile", {
+          variant: "info",
+        });
+      }
       return;
     }
 
@@ -30,11 +39,19 @@ const Card = (props) => {
         quantity: 1,
         effectivePrice: parseFloat(props.info.price),
       });
-      alert("Added to cart");
-    } else {
-      alert("Already Added");
-    }
 
+      {
+        enqueueSnackbar("Item is added to cart successfully!!", {
+          variant: "success",
+        });
+      }
+    } else {
+      {
+        enqueueSnackbar("Already Added", {
+          variant: "info",
+        });
+      }
+    }
     console.log(cart);
     Cookies.set("cart", cart);
   };
@@ -81,5 +98,4 @@ const Card = (props) => {
     </>
   );
 };
-
 export default Card;

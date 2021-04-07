@@ -13,11 +13,15 @@ import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import { AuthContext } from "../firebase/firebase";
 import { APP } from "../firebase/firebaseConfig";
 import Feedback from "../homepage/FeedBackForm/feedbackform";
+import { useSnackbar } from "notistack";
 
 const Profile = () => {
   const [width, setWidth] = React.useState(window.innerWidth);
   const { currentUser } = React.useContext(AuthContext);
   const [open, setOpen] = React.useState(false);
+  const [status,setStatus]=React.useState(null);
+  const { enqueueSnackbar } = useSnackbar();
+
 
   React.useEffect(
     (width) => {
@@ -34,13 +38,20 @@ const Profile = () => {
     var a = 0,
       b = 0,
       c = 0;
+      var message="";
     try {
       if (email.value !== currentUser.email) {
         APP.auth()
           .currentUser.verifyBeforeUpdateEmail(email.value)
           .then(() => {
             a = 1;
-            alert("Email will change once you verify");
+            // alert("Email will change once you verify");
+            {
+              enqueueSnackbar("Email will change once you verify", {
+                variant: "warning",
+              });
+            }
+
           })
           .catch((err) => {
             console.log(err);
@@ -56,6 +67,9 @@ const Profile = () => {
           .then(() => {
             b = 1;
             alert("Name updated");
+          })
+          .catch(err=>{
+            alert("There is something error while updating name");
           });
       }
       if (phone.value !== currentUser.phoneNumber) {
