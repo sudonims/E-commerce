@@ -19,9 +19,8 @@ const Profile = () => {
   const [width, setWidth] = React.useState(window.innerWidth);
   const { currentUser } = React.useContext(AuthContext);
   const [open, setOpen] = React.useState(false);
-  const [status,setStatus]=React.useState(null);
+  const [status, setStatus] = React.useState(null);
   const { enqueueSnackbar } = useSnackbar();
-
 
   React.useEffect(
     (width) => {
@@ -38,7 +37,7 @@ const Profile = () => {
     var a = 0,
       b = 0,
       c = 0;
-      var message="";
+    var message = "";
     try {
       if (email.value !== currentUser.email) {
         APP.auth()
@@ -51,7 +50,6 @@ const Profile = () => {
                 variant: "warning",
               });
             }
-
           })
           .catch((err) => {
             console.log(err);
@@ -68,7 +66,7 @@ const Profile = () => {
             b = 1;
             alert("Name updated");
           })
-          .catch(err=>{
+          .catch((err) => {
             alert("There is something error while updating name");
           });
       }
@@ -108,7 +106,12 @@ const Profile = () => {
     } catch (err) {
       console.log("err", err);
       if (err === "auth/invalid-phone-number") {
-        alert("Inavlid Phone Number. Check Again");
+        // alert("Inavlid Phone Number. Check Again");
+        
+          enqueueSnackbar("SignOut Successfull", {
+            variant: "success",
+          });
+        
       }
     }
   };
@@ -133,7 +136,12 @@ const Profile = () => {
             photoURL: url,
           })
           .then(() => {
-            alert("Photo updated successfully");
+            // alert("Photo updated successfully");
+            {
+              enqueueSnackbar("Photo updated successfully", {
+                variant: "success",
+              });
+            }
             window.location.reload();
           });
       })
@@ -265,7 +273,15 @@ const Profile = () => {
                           APP.auth()
                             .currentUser.sendEmailVerification()
                             .then(() => {
-                              alert("Check your Email");
+                              // alert();
+                              {
+                                enqueueSnackbar(
+                                  "Email was sent to your registered emailid for verification",
+                                  {
+                                    variant: "info",
+                                  }
+                                );
+                              }
                             })
                         }
                         style={{ backgroundColor: "#ff084e", color: "white" }}
@@ -306,6 +322,7 @@ export default function Header({ rightlinks, leftlinks }) {
   const [openFeed, setOpenFeed] = React.useState(false);
   const [open, setOpen] = React.useState(false);
   const [width, setWidth] = React.useState(window.innerWidth);
+  const { enqueueSnackbar } = useSnackbar();
 
   const feedChange = () => setOpenFeed(!openFeed);
 
@@ -350,7 +367,11 @@ export default function Header({ rightlinks, leftlinks }) {
                     APP.auth()
                       .signOut()
                       .then(() => {
-                        alert("SignOut Successfull");
+                        {
+                          enqueueSnackbar("SignOut Successfull", {
+                            variant: "success",
+                          });
+                        }
                         window.location.href = "/";
                       });
                   }}
@@ -470,7 +491,12 @@ export default function Header({ rightlinks, leftlinks }) {
                           APP.auth()
                             .signOut()
                             .then(() => {
-                              alert("SignOut Successfull");
+                              // alert("SignOut Successfull");
+                              {
+                                enqueueSnackbar("SignOut Successfull", {
+                                  variant: "success",
+                                });
+                              }
                             });
                         }}
                         style={{
@@ -480,7 +506,7 @@ export default function Header({ rightlinks, leftlinks }) {
                           marginRight: 10,
                         }}
                       >
-                        SIgnOut
+                        SignOut
                       </Button>,
                       <Profile />,
                       <IconButton
@@ -495,7 +521,12 @@ export default function Header({ rightlinks, leftlinks }) {
                         // disabled={!currentUser.emailVerified}
                         onClick={() => {
                           if (!currentUser.emailVerified) {
-                            alert("Please Verify Your Email");
+                            // alert("Please Verify Your Email");
+                            {
+                              enqueueSnackbar("Please Verify Your Email", {
+                                variant: "info",
+                              });
+                            }
                           } else {
                             window.location.href = "/cart";
                           }
