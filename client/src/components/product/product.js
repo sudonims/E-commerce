@@ -44,6 +44,14 @@ export default function Product({ prodId }) {
   }, []);
 
   const buyNow = () => {
+    if (!currentUser) {
+      alert("Please Sign In");
+      return;
+    }
+    if (!currentUser.emailVerified) {
+      alert("Please Verify Your Mail Id\nFor that go to Your Profile");
+      return;
+    }
     Cookies.set(
       "buynow",
       JSON.stringify({

@@ -36,6 +36,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignUp() {
   const classes = useStyles();
+  
 
   const onSubmit = async (e) => {
     e.preventDefault();
