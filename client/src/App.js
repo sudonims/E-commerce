@@ -5,6 +5,8 @@ import SignIn from "./components/starters/signin.js";
 import SignUp from "./components/starters/signup.js";
 import { AuthProvider } from "./components/firebase/firebase";
 import HomePage from "./components/homepage/Card/index.js";
+import "owl.carousel/dist/assets/owl.carousel.css";
+import "owl.carousel/dist/assets/owl.theme.default.css";
 import "./components/css/animate.css";
 import "./components/css/bootstrap.min.css";
 import "./components/css/core-style.css";

@@ -20,7 +20,7 @@ const Card = (props) => {
 
     var a = cart.cart.find((o) => o.id === props.info.id);
 
-    if (!a){      
+    if (!a) {
       cart.cart.push({
         id: props.info.id,
         name: props.info.name,
@@ -31,21 +31,18 @@ const Card = (props) => {
         effectivePrice: parseFloat(props.info.price),
       });
       alert("Added to cart");
-      
-      
-    }else{
+    } else {
       alert("Already Added");
     }
 
     console.log(cart);
     Cookies.set("cart", cart);
-    
   };
 
   return (
     <>
       <div
-        className="col-12 col-sm-6 col-lg-4 single_gallery_item wow fadeInUpBig"
+        className="col-12 single_gallery_item wow fadeInUpBig"
         data-wow-delay="0.2s"
       >
         {/* Product Image */}

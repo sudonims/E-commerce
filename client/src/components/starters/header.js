@@ -148,17 +148,21 @@ const Profile = () => {
         <DialogContent>
           <Grid container>
             <Grid item xs={12} sm={12} md={5} lg={5} xl={5}>
-              <div className="flex flex-row">
-                <div className="flex-1" />
+              <div className="flex flex-col place-content-center">
                 <Avatar
                   style={{
                     height: width > 1200 ? 400 : 150,
                     width: width > 1200 ? 400 : 150,
                   }}
                 >
-                  <img src={currentUser.photoURL} height="100%" width="100%" />
+                  <img
+                    className="object-cover"
+                    src={currentUser.photoURL}
+                    height="100%"
+                    width="100%"
+                  />
                 </Avatar>
-                <div style={{ marginBottom: 15 }}>
+                <div style={{ margin: 15 }}>
                   <label htmlFor="uploadPhoto">
                     <input
                       type="file"
@@ -178,7 +182,6 @@ const Profile = () => {
                     </span> */}
                   </label>
                 </div>
-                <div className="flex-1" />
               </div>
             </Grid>
             <Grid
