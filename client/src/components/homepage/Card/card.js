@@ -11,7 +11,6 @@ const Card = (props) => {
     var cart = Cookies.getJSON("cart");
     e.preventDefault();
     if (!currentUser) {
-      
       {
         enqueueSnackbar("Please join us First!!", {
           variant: "info",
@@ -20,7 +19,6 @@ const Card = (props) => {
       return;
     }
     if (!currentUser.emailVerified) {
-      
       {
         enqueueSnackbar("Please verify your email\nFor that go to My Profile", {
           variant: "info",
@@ -31,7 +29,7 @@ const Card = (props) => {
 
     var a = cart.cart.find((o) => o.id === props.info.id);
 
-    if (!a){      
+    if (!a) {
       cart.cart.push({
         id: props.info.id,
         name: props.info.name,
@@ -41,14 +39,13 @@ const Card = (props) => {
         quantity: 1,
         effectivePrice: parseFloat(props.info.price),
       });
-      
+
       {
         enqueueSnackbar("Item is added to cart successfully!!", {
           variant: "success",
         });
       }
-    }  
-    else{
+    } else {
       {
         enqueueSnackbar("Already Added", {
           variant: "info",
@@ -57,13 +54,12 @@ const Card = (props) => {
     }
     console.log(cart);
     Cookies.set("cart", cart);
-    
   };
 
   return (
     <>
       <div
-        className="col-12 col-sm-6 col-lg-4 single_gallery_item wow fadeInUpBig"
+        className="col-12 single_gallery_item wow fadeInUpBig"
         data-wow-delay="0.2s"
       >
         {/* Product Image */}
