@@ -23,6 +23,7 @@ import ContactUs from "./components/homepage/Contact/contactus.js";
 import AboutUs from "./components/homepage/AboutUs/AboutUs.js";
 import Product from "./components/product/product.js";
 import Myorders from "./components/Myorders/myorders.js";
+import { SnackbarProvider } from "notistack";
 
 const App = () => {
   React.useEffect(() => {
@@ -33,8 +34,8 @@ const App = () => {
   }, []);
 
   return (
-    <>
-      <AuthProvider>
+    <AuthProvider>
+      <SnackbarProvider maxSnack={3}>
         <Router>
           <Switch>
             <Route path="/signin" component={() => <SignIn />} />
@@ -51,8 +52,8 @@ const App = () => {
             />
           </Switch>
         </Router>
-      </AuthProvider>
-    </>
+      </SnackbarProvider>
+    </AuthProvider>
   );
 };
 

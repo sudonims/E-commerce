@@ -1,4 +1,5 @@
 import React from "react";
+import { useSnackbar } from "notistack";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
@@ -10,12 +11,11 @@ import Rating1 from "./Rating1";
 import { APP } from "../../firebase/firebaseConfig";
 import axios from "axios";
 import server from "../../starters/serverChoose";
-import Alert from "../../alert/alert.js";
+// import Alert from "../../alert/alert.js";
 
 export default function Feedback({ open, setOpen }) {
   const [value, setValue] = React.useState(2);
-  const [status, setStatus] = React.useState(null);
-
+  const { enqueueSnackbar } = useSnackbar();
   const submit = (e) => {
     e.preventDefault();
     const { subject, message } = e.target.elements;
@@ -38,9 +38,8 @@ export default function Feedback({ open, setOpen }) {
           )
           .then((res) => {
             if (res.data === "success") {
-              setStatus({
-                message: "Thank you for your special feedback!!",
-                severity: "green",
+              enqueueSnackbar("Thank you for your special feedback!!", {
+                variant: "success",
               });
             } else {
               throw new Error("error while feedback");
@@ -48,24 +47,14 @@ export default function Feedback({ open, setOpen }) {
           })
           .catch((err) => {
             console.log(err);
-            setStatus({
-              message: "Error Occured\nTry after some time",
-              severity: "red",
+            enqueueSnackbar("Error Occured\nTry after some time", {
+              variant: "error",
             });
           });
       });
   };
-  console.log(status);
   return (
     <div>
-      {status && (
-        <Alert
-          message={status.message}
-          severity={status.severity}
-          onClose={() => setStatus(null)}
-        />
-      )}
-
       <Dialog open={open} onClose={setOpen} aria-labelledby="form-dialog-title">
         <form onSubmit={submit}>
           <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
