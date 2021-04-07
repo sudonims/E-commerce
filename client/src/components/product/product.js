@@ -43,6 +43,14 @@ export default function Product({ prodId }) {
   }, []);
 
   const buyNow = () => {
+    if (!currentUser) {
+      alert("Please Sign In");
+      return;
+    }
+    if (!currentUser.emailVerified) {
+      alert("Please Verify Your Mail Id\nFor that go to Your Profile");
+      return;
+    }
     Cookies.set(
       "buynow",
       JSON.stringify({
@@ -182,7 +190,7 @@ export default function Product({ prodId }) {
                           color: "white",
                         }}
                         onClick={buyNow}
-                        disabled={!(currentUser && currentUser.emailVerified)}
+                        // disabled={!(currentUser && currentUser.emailVerified)}
                       >
                         Buy
                       </Button>
@@ -192,7 +200,7 @@ export default function Product({ prodId }) {
                           color: "white",
                         }}
                         onClick={addCart}
-                        disabled={!(currentUser && currentUser.emailVerified)}
+                        // disabled={!(currentUser && currentUser.emailVerified)}
                       >
                         Add to Cart
                       </Button>

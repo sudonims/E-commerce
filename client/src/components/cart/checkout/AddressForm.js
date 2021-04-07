@@ -11,6 +11,7 @@ import {
   DialogContent,
 } from "@material-ui/core";
 import StepOrderContext from "./stepOrderContext";
+import { func } from "prop-types";
 
 export default function AddressForm({ classes }) {
   const { activeStep, setActiveStep, address, setAddress } = React.useContext(
@@ -18,6 +19,10 @@ export default function AddressForm({ classes }) {
   );
 
   const [open, setOpen] = React.useState(false);
+  const [position, setPosition] = React.useState(null);
+
+  React.useEffect(getLocation, []);
+
   const addressSubmit = (e) => {
     e.preventDefault();
 
@@ -49,6 +54,48 @@ export default function AddressForm({ classes }) {
   const confirmAdress = () => {
     setActiveStep(activeStep + 1);
   };
+
+  function getLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        console.log(position);
+        setPosition({
+          latitute: position.coords.latitude,
+          longitude: position.coords.longitude,
+        });
+      }, showError);
+    } else {
+      alert("Geolocation is not supported by this browser.");
+    }
+  }
+
+  function showError(error) {
+    switch (error.code) {
+      case error.PERMISSION_DENIED:
+        alert("User denied the request for Geolocation.");
+        break;
+      case error.POSITION_UNAVAILABLE:
+        alert("Location information is unavailable.");
+        break;
+      case error.TIMEOUT:
+        alert("The request to get user location timed out.");
+        break;
+      case error.UNKNOWN_ERROR:
+        alert("An unknown error occurred.");
+      default:
+        alert("Something went wrong");
+    }
+  }
+
+  async function getAddres() {
+    await fetch(
+      `https://maps.googleapis.com/maps/api/geocode/json?lating=${position.latitute},${position.longitude}&sensor=false&key=AIzaSyDuarGo4no_QhTQFLlJBW2do2LuOwiSLSQ`
+    )
+      .then((res) => res.json())
+      .then((data) => console.log(data))
+      .catch((err) => alert(err));
+  }
+  console.log(position);
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
@@ -238,6 +285,17 @@ export default function AddressForm({ classes }) {
           </Grid>
         </Grid>
         <div className={classes.buttons}>
+          <Button
+            style={{
+              backgroundColor: "#ff084e",
+              color: "white",
+              fontWeight: 900,
+            }}
+            className={classes.button}
+            onClick={getAddres}
+          >
+            My current location
+          </Button>
           <Button
             type="submit"
             style={{
