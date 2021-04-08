@@ -20,6 +20,7 @@ import { APP } from "../firebase/firebaseConfig";
 import { AuthContext } from "../firebase/firebase";
 import Footer from "./footer";
 import Google from "./google1.png";
+import { useSnackbar } from "notistack";
 
 var provider = new firebase.auth.GoogleAuthProvider();
 
@@ -60,6 +61,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function FormDialog({ open, setOpen }) {
+  const { enqueueSnackbar } = useSnackbar();
   const submit = () => {
     var a = document.getElementById("name___").value;
 
@@ -67,6 +69,12 @@ function FormDialog({ open, setOpen }) {
       .sendPasswordResetEmail(a)
       .then(() => {
         alert("Email sent. Check your Email for reset");
+        {
+          enqueueSnackbar("Email sent. Check your Email for reset!!", {
+            variant: "success",
+          });
+        }
+      
       });
 
     setOpen();
@@ -113,7 +121,7 @@ function FormDialog({ open, setOpen }) {
 export default function SignIn() {
   const { currentUser } = React.useContext(AuthContext);
   const [open, setopen] = React.useState(false);
-  
+  const { enqueueSnackbar } = useSnackbar();
 
   const changeopen = () => {
     setopen(!open);
@@ -126,13 +134,23 @@ export default function SignIn() {
     APP.auth()
       .signInWithPopup(provider)
       .then((res) => {
-        alert("Signed IN");
+      
+        {
+          enqueueSnackbar("Signed IN!!", {
+            variant: "success",
+          });
+        }
         window.location.href = "/";
       })
       .catch((err) => {
         console.log(err);
         if (err.code == "auth/user-not-found") {
-          alert("Oops!! User not found");
+          
+          {
+            enqueueSnackbar("Oops!! User not found!!", {
+              variant: "warning",
+            });
+          }
           window.location.reload();
         }
       });
@@ -154,13 +172,23 @@ export default function SignIn() {
         APP.auth()
           .signInWithEmailAndPassword(email.value, password.value)
           .then((res) => {
-            alert("Signed IN");
+        
+            {
+              enqueueSnackbar("Signed IN!!", {
+                variant: "success",
+              });
+            }
             window.location.href = "/";
           })
           .catch((err) => {
             console.log(err);
             if (err.code == "auth/user-not-found") {
-              alert("Oops!! User not found");
+              
+              {
+                enqueueSnackbar("Oops user not found!!", {
+                  variant: "info",
+                });
+              }
               window.location.reload();
             }
           });

@@ -13,6 +13,7 @@ import server from "../../starters/serverChoose";
 import DNA from "../../assets/logo.png";
 import { AuthContext } from "../../firebase/firebase";
 import Card from "./cardForOrder.js";
+import { useSnackbar } from "notistack";
 
 function loadScript(src) {
   return new Promise((resolve) => {
@@ -29,6 +30,7 @@ function loadScript(src) {
 }
 
 export default function Review({ classes1, buyNow }) {
+  const { enqueueSnackbar } = useSnackbar();
   const cart = buyNow
     ? { cart: [Cookies.getJSON("buynow")] }
     : Cookies.getJSON("cart");
@@ -52,7 +54,11 @@ export default function Review({ classes1, buyNow }) {
         );
 
         if (!res) {
-          alert("Razorpay SDK failed to load. Are you online?");
+          {
+            enqueueSnackbar("Razorpay SDK failed to load. Are you online?", {
+              variant: "warning",
+            });
+          }
           return;
         }
 
@@ -83,7 +89,12 @@ export default function Review({ classes1, buyNow }) {
               .then((res) => {
                 if (res.status === 200) {
                   if (res.data === "success") {
-                    alert("Payment Success");
+          
+                    {
+                      enqueueSnackbar("Payment Success!!", {
+                        variant: "success",
+                      });
+                    }
                   }
                 }
               });

@@ -52,7 +52,11 @@ const Profile = () => {
           })
           .catch((err) => {
             console.log(err);
-            alert("Check new email and try again after sign in");
+            {
+              enqueueSnackbar("Check new email and try again after sign in", {
+                variant: "warning",
+              });
+            }
           });
       }
 
@@ -63,7 +67,11 @@ const Profile = () => {
           })
           .then(() => {
             b = 1;
-            alert("Name updated");
+            {
+              enqueueSnackbar("Name Updated", {
+                variant: "success",
+              });
+            }
           })
           .catch((err) => {
             alert("There is something error while updating name");
@@ -92,20 +100,32 @@ const Profile = () => {
               .currentUser.updatePhoneNumber(cred)
               .then(() => {
                 c = 1;
-                alert("Phone Number Verified and changed");
+                {
+                  enqueueSnackbar("Phone Numeber Verified and changed!!", {
+                    variant: "success",
+                  });
+                }
                 (a || b || c) && window.location.reload();
               });
           })
           .catch((err) => {
             if (err.code === "auth/invalid-phone-number") {
-              alert("Check phone Number Again");
+              {
+                enqueueSnackbar("Check phone Number Again!!", {
+                  variant: "warning",
+                });
+              }
             }
           });
       }
     } catch (err) {
       console.log("err", err);
       if (err === "auth/invalid-phone-number") {
-        alert("Inavlid Phone Number. Check Again");
+        // alert("Inavlid Phone Number. Check Again");
+
+        enqueueSnackbar("SignOut Successfull", {
+          variant: "success",
+        });
       }
     }
   };
@@ -118,20 +138,26 @@ const Profile = () => {
     var ref = storage.ref();
     var file = e.target.files[0];
     const name = new Date() + "-" + file.name;
+    const uid = APP.auth().currentUser.photoURL;
+    console.log(uid);
+
+    if (uid) {
+      ref.child(uid).delete();
+    }
+
     const metadata = {
       contentType: file.type,
     };
     try {
       if (currentUser.photoURL) {
         var old_ref = storage.refFromURL(currentUser.photoURL);
-        old_ref
-          .delete()
-          .then(() => {
-            console.log("deleted");
-          })
-          .catch((err) => {
-            throw new Error("Error Occured");
+        old_ref.delete().then(() => {
+          // alert("Photo updated successfully");
+          enqueueSnackbar("Photo updated successfully", {
+            variant: "success",
           });
+          // window.location.reload();
+        });
       }
       const task = ref.child(name).put(file, metadata);
       task
@@ -313,7 +339,15 @@ const Profile = () => {
                           APP.auth()
                             .currentUser.sendEmailVerification()
                             .then(() => {
-                              alert("Check your Email");
+                              // alert();
+                              {
+                                enqueueSnackbar(
+                                  "Email was sent to your registered emailid for verification",
+                                  {
+                                    variant: "info",
+                                  }
+                                );
+                              }
                             })
                         }
                         style={{ backgroundColor: "#ff084e", color: "white" }}
@@ -354,6 +388,7 @@ export default function Header({ rightlinks, leftlinks }) {
   const [openFeed, setOpenFeed] = React.useState(false);
   const [open, setOpen] = React.useState(false);
   const [width, setWidth] = React.useState(window.innerWidth);
+  const { enqueueSnackbar } = useSnackbar();
 
   const feedChange = () => setOpenFeed(!openFeed);
 
@@ -398,7 +433,11 @@ export default function Header({ rightlinks, leftlinks }) {
                     APP.auth()
                       .signOut()
                       .then(() => {
-                        alert("SignOut Successfull");
+                        {
+                          enqueueSnackbar("SignOut Successfull", {
+                            variant: "success",
+                          });
+                        }
                         window.location.href = "/";
                       });
                   }}
@@ -518,7 +557,12 @@ export default function Header({ rightlinks, leftlinks }) {
                           APP.auth()
                             .signOut()
                             .then(() => {
-                              alert("SignOut Successfull");
+                              // alert("SignOut Successfull");
+                              {
+                                enqueueSnackbar("SignOut Successfull", {
+                                  variant: "success",
+                                });
+                              }
                             });
                         }}
                         style={{
@@ -528,7 +572,7 @@ export default function Header({ rightlinks, leftlinks }) {
                           marginRight: 10,
                         }}
                       >
-                        SIgnOut
+                        SignOut
                       </Button>,
                       <Profile />,
                       <IconButton
@@ -543,7 +587,12 @@ export default function Header({ rightlinks, leftlinks }) {
                         // disabled={!currentUser.emailVerified}
                         onClick={() => {
                           if (!currentUser.emailVerified) {
-                            alert("Please Verify Your Email");
+                            // alert("Please Verify Your Email");
+                            {
+                              enqueueSnackbar("Please Verify Your Email", {
+                                variant: "info",
+                              });
+                            }
                           } else {
                             window.location.href = "/cart";
                           }
