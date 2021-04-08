@@ -123,6 +123,13 @@ const Profile = () => {
     const ref = firebase.storage().ref();
     var file = e.target.files[0];
     const name = new Date() + "-" + file.name;
+    const uid=APP.auth().currentUser.photoURL;
+    console.log(uid);
+
+    if(uid){
+      ref.child(uid).delete();
+    }
+    
     const metadata = {
       contentType: file.type,
     };
@@ -142,7 +149,7 @@ const Profile = () => {
                 variant: "success",
               });
             }
-            window.location.reload();
+            // window.location.reload();
           });
       })
       .catch(console.error);

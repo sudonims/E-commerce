@@ -52,31 +52,28 @@ const useStyles = makeStyles((theme) => ({
 
 const steps = ["Shipping address", "Review your order"];
 
-function getStepContent(step, classes, buyNow) {
-  switch (step) {
-    case 0:
-      return <AddressForm classes={classes} />;
-    case 1:
-      return <Review buyNow={buyNow} classes1={classes} />;
-    default:
-      throw new Error("Unknown step");
-  }
-}
 
 export default function Checkout({ buyNow }) {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
   const [orderId, setOrderId] = React.useState("");
-  const [address, setAddress] = React.useState({
-    firstName: "",
-    lastName: "",
-    address1: "",
-    address2: "",
-    city: "",
-    zip: "",
-    state: "",
-    country: "",
-  });
+  const [address, setAddress] = React.useState(null);
+
+  const updateAddress = (add) => {
+    console.log("updating", add);
+    setAddress(add);
+  };
+
+  function getStepContent(step, classes, buyNow) {
+    switch (step) {
+      case 0:
+        return <AddressForm classes={classes} />;
+      case 1:
+        return <Review buyNow={buyNow} classes1={classes} />;
+      default:
+        throw new Error("Unknown step");
+    }
+  }
 
   return (
     <StepOrderContext.Provider
@@ -86,7 +83,7 @@ export default function Checkout({ buyNow }) {
         orderId,
         setOrderId,
         address,
-        setAddress,
+        updateAddress,
       }}
     >
       <CssBaseline />
