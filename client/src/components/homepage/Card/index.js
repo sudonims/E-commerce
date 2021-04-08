@@ -3,6 +3,7 @@ import Footer from "../../starters/footer.js";
 import Header from "../../starters/header.js";
 import Card from "./card.js";
 import Info from "./infoforcard.js";
+import OwlCarousel from "react-owl-carousel";
 
 const createCard = (info) => {
   return <Card info={info} />;
@@ -14,17 +15,13 @@ export default function HomePage() {
       <Header />
       <div>
         <div id="wrapper">
-          {/* ****** Header Area Start ****** */}
-          {/* ****** Header Area End ****** */}
           <section className="top-discount-area d-md-flex align-items-center">
-            {/* Single Discount Area */}
             <div className="single-discount-area">
               <h5>Free Shipping &amp; Returns</h5>
               <h6>
                 <a href="#">BUY NOW</a>
               </h6>
             </div>
-            {/* Single Discount Area */}
             <div className="single-discount-area">
               <h5>20% Discount for all dresses</h5>
               <h6>USE CODE: Colorlib</h6>
@@ -71,9 +68,13 @@ export default function HomePage() {
                 <div className="col-12 col-md-8 col-lg-9">
                   <div className="shop_grid_product_area">
                     <div className="flex flex-row">
-                      <div className="flex flex-row flex-wrap">
-                        {Info.map(createCard)}
-                      </div>
+                      {window.innerWidth > 1200 ? (
+                        <OwlCarousel className="owl-theme" loop nav>
+                          {Info.map(createCard)}
+                        </OwlCarousel>
+                      ) : (
+                        Info.map(createCard)
+                      )}
                     </div>
                   </div>
                   <div

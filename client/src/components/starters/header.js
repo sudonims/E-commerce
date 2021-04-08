@@ -19,9 +19,8 @@ const Profile = () => {
   const [width, setWidth] = React.useState(window.innerWidth);
   const { currentUser } = React.useContext(AuthContext);
   const [open, setOpen] = React.useState(false);
-  const [status,setStatus]=React.useState(null);
+  const [status, setStatus] = React.useState(null);
   const { enqueueSnackbar } = useSnackbar();
-
 
   React.useEffect(
     (width) => {
@@ -38,7 +37,7 @@ const Profile = () => {
     var a = 0,
       b = 0,
       c = 0;
-      var message="";
+    var message = "";
     try {
       if (email.value !== currentUser.email) {
         APP.auth()
@@ -51,7 +50,6 @@ const Profile = () => {
                 variant: "warning",
               });
             }
-
           })
           .catch((err) => {
             console.log(err);
@@ -76,12 +74,17 @@ const Profile = () => {
               });
             }
           })
+<<<<<<< HEAD
           .catch(err=>{
             {
               enqueueSnackbar("There is something error while updating name", {
                 variant: "error",
               });
             }
+=======
+          .catch((err) => {
+            alert("There is something error while updating name");
+>>>>>>> 74d13967c874d5f16324bb24c079beea1125fdc2
           });
       }
       if (phone.value !== currentUser.phoneNumber) {
@@ -128,11 +131,20 @@ const Profile = () => {
     } catch (err) {
       console.log("err", err);
       if (err === "auth/invalid-phone-number") {
+<<<<<<< HEAD
         {
           enqueueSnackbar("Invalid Phone Number.Check Again!!", {
             variant: "warning",
           });
         }
+=======
+        // alert("Inavlid Phone Number. Check Again");
+        
+          enqueueSnackbar("SignOut Successfull", {
+            variant: "success",
+          });
+        
+>>>>>>> 74d13967c874d5f16324bb24c079beea1125fdc2
       }
     }
   };
@@ -157,9 +169,15 @@ const Profile = () => {
             photoURL: url,
           })
           .then(() => {
+<<<<<<< HEAD
 
             {
               enqueueSnackbar("Photo updated successfully!!", {
+=======
+            // alert("Photo updated successfully");
+            {
+              enqueueSnackbar("Photo updated successfully", {
+>>>>>>> 74d13967c874d5f16324bb24c079beea1125fdc2
                 variant: "success",
               });
             }
@@ -191,17 +209,21 @@ const Profile = () => {
         <DialogContent>
           <Grid container>
             <Grid item xs={12} sm={12} md={5} lg={5} xl={5}>
-              <div className="flex flex-row">
-                <div className="flex-1" />
+              <div className="flex flex-col place-content-center">
                 <Avatar
                   style={{
                     height: width > 1200 ? 400 : 150,
                     width: width > 1200 ? 400 : 150,
                   }}
                 >
-                  <img src={currentUser.photoURL} height="100%" width="100%" />
+                  <img
+                    className="object-cover"
+                    src={currentUser.photoURL}
+                    height="100%"
+                    width="100%"
+                  />
                 </Avatar>
-                <div style={{ marginBottom: 15 }}>
+                <div style={{ margin: 15 }}>
                   <label htmlFor="uploadPhoto">
                     <input
                       type="file"
@@ -221,7 +243,6 @@ const Profile = () => {
                     </span> */}
                   </label>
                 </div>
-                <div className="flex-1" />
               </div>
             </Grid>
             <Grid
@@ -294,11 +315,22 @@ const Profile = () => {
                           APP.auth()
                             .currentUser.sendEmailVerification()
                             .then(() => {
+<<<<<<< HEAD
                   
                               {
                                 enqueueSnackbar("Check your email", {
                                   variant: "info",
                                 });
+=======
+                              // alert();
+                              {
+                                enqueueSnackbar(
+                                  "Email was sent to your registered emailid for verification",
+                                  {
+                                    variant: "info",
+                                  }
+                                );
+>>>>>>> 74d13967c874d5f16324bb24c079beea1125fdc2
                               }
                             })
                         }
@@ -386,7 +418,11 @@ export default function Header({ rightlinks, leftlinks }) {
                       .signOut()
                       .then(() => {
                         {
+<<<<<<< HEAD
                           enqueueSnackbar("SignOut Successfully!!", {
+=======
+                          enqueueSnackbar("SignOut Successfull", {
+>>>>>>> 74d13967c874d5f16324bb24c079beea1125fdc2
                             variant: "success",
                           });
                         }
@@ -509,9 +545,15 @@ export default function Header({ rightlinks, leftlinks }) {
                           APP.auth()
                             .signOut()
                             .then(() => {
+<<<<<<< HEAD
                       
                               {
                                 enqueueSnackbar("SignOut Successfull!!", {
+=======
+                              // alert("SignOut Successfull");
+                              {
+                                enqueueSnackbar("SignOut Successfull", {
+>>>>>>> 74d13967c874d5f16324bb24c079beea1125fdc2
                                   variant: "success",
                                 });
                               }
@@ -524,7 +566,7 @@ export default function Header({ rightlinks, leftlinks }) {
                           marginRight: 10,
                         }}
                       >
-                        SIgnOut
+                        SignOut
                       </Button>,
                       <Profile />,
                       <IconButton
@@ -539,10 +581,17 @@ export default function Header({ rightlinks, leftlinks }) {
                         // disabled={!currentUser.emailVerified}
                         onClick={() => {
                           if (!currentUser.emailVerified) {
+<<<<<<< HEAD
                     
                             {
                               enqueueSnackbar("Please Verify Your Email", {
                                 variant: "warning",
+=======
+                            // alert("Please Verify Your Email");
+                            {
+                              enqueueSnackbar("Please Verify Your Email", {
+                                variant: "info",
+>>>>>>> 74d13967c874d5f16324bb24c079beea1125fdc2
                               });
                             }
                           } else {
