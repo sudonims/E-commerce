@@ -53,7 +53,11 @@ const Profile = () => {
           })
           .catch((err) => {
             console.log(err);
-            alert("Check new email and try again after sign in");
+            {
+              enqueueSnackbar("Check new email and try again after sign in", {
+                variant: "warning",
+              });
+            }
           });
       }
 
@@ -64,7 +68,11 @@ const Profile = () => {
           })
           .then(() => {
             b = 1;
-            alert("Name updated");
+            {
+              enqueueSnackbar("Name Updated", {
+                variant: "success",
+              });
+            }
           })
           .catch((err) => {
             alert("There is something error while updating name");
@@ -93,13 +101,21 @@ const Profile = () => {
               .currentUser.updatePhoneNumber(cred)
               .then(() => {
                 c = 1;
-                alert("Phone Number Verified and changed");
+                {
+                  enqueueSnackbar("Phone Numeber Verified and changed!!", {
+                    variant: "success",
+                  });
+                }
                 (a || b || c) && window.location.reload();
               });
           })
           .catch((err) => {
             if (err.code === "auth/invalid-phone-number") {
-              alert("Check phone Number Again");
+              {
+                enqueueSnackbar("Check phone Number Again!!", {
+                  variant: "warning",
+                });
+              }
             }
           });
       }

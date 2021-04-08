@@ -4,6 +4,7 @@ import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
+import { useSnackbar } from "notistack";
 import {
   Button,
   Dialog,
@@ -13,12 +14,10 @@ import {
 import StepOrderContext from "./stepOrderContext";
 
 export default function AddressForm({ classes }) {
-  const {
-    activeStep,
-    setActiveStep,
-    address,
-    updateAddress,
-  } = React.useContext(StepOrderContext);
+  const { enqueueSnackbar } = useSnackbar();
+  const { activeStep, setActiveStep, address, setAddress } = React.useContext(
+    StepOrderContext
+  );
 
   const [open, setOpen] = React.useState(false);
   const [position, setPosition] = React.useState(null);
@@ -69,25 +68,45 @@ export default function AddressForm({ classes }) {
         });
       }, showError);
     } else {
-      alert("Geolocation is not supported by this browser.");
+  
+      {
+        enqueueSnackbar("Geolocation is not supported by this browser!!", {
+          variant: "error",
+        });
+      }
     }
   }
 
   function showError(error) {
     switch (error.code) {
       case error.PERMISSION_DENIED:
-        alert("User denied the request for Geolocation.");
+        
+          enqueueSnackbar("User denied the request for Geolocation.", {
+            variant: "error",
+          });
+
         break;
       case error.POSITION_UNAVAILABLE:
-        alert("Location information is unavailable.");
+        enqueueSnackbar("Location information is unavailable", {
+          variant: "error",
+        });
         break;
       case error.TIMEOUT:
-        alert("The request to get user location timed out.");
+      
+        enqueueSnackbar("The request to get user location timed out.", {
+          variant: "error",
+        });
         break;
       case error.UNKNOWN_ERROR:
-        alert("An unknown error occurred.");
+        
+        enqueueSnackbar("An unknow eerror occurred", {
+          variant: "error",
+        });
       default:
-        alert("Something went wrong");
+      
+        enqueueSnackbar("Something went wrong", {
+          variant: "error",
+        });
     }
   }
 
