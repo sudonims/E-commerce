@@ -75,11 +75,9 @@ const Card = (props) => {
             </a>
           </div>
         </div>
-        {/* Product Description */}
         <div className="product-description">
           <h4 className="product-price">&#8377; {props.info.price}</h4>
           <p>{props.info.description}</p>
-          {/* Add to Cart */}
           <form onSubmit={addToCart}>
             <Button
               type="submit"

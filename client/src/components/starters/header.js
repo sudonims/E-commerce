@@ -19,9 +19,7 @@ const Profile = () => {
   const [width, setWidth] = React.useState(window.innerWidth);
   const { currentUser } = React.useContext(AuthContext);
   const [open, setOpen] = React.useState(false);
-  const [status,setStatus]=React.useState(null);
   const { enqueueSnackbar } = useSnackbar();
-
 
   React.useEffect(
     (width) => {
@@ -38,7 +36,7 @@ const Profile = () => {
     var a = 0,
       b = 0,
       c = 0;
-      var message="";
+    var message = "";
     try {
       if (email.value !== currentUser.email) {
         APP.auth()
@@ -51,7 +49,6 @@ const Profile = () => {
                 variant: "warning",
               });
             }
-
           })
           .catch((err) => {
             console.log(err);
@@ -68,7 +65,7 @@ const Profile = () => {
             b = 1;
             alert("Name updated");
           })
-          .catch(err=>{
+          .catch((err) => {
             alert("There is something error while updating name");
           });
       }
@@ -117,27 +114,71 @@ const Profile = () => {
     setOpen(!open);
   };
   const uploadImage = (e) => {
-    const ref = firebase.storage().ref();
+    const storage = firebase.storage();
+    var ref = storage.ref();
     var file = e.target.files[0];
     const name = new Date() + "-" + file.name;
     const metadata = {
       contentType: file.type,
     };
-    const task = ref.child(name).put(file, metadata);
-    task
-      .then((snapshot) => snapshot.ref.getDownloadURL())
-      .then((url) => {
-        console.log(url);
-        APP.auth()
-          .currentUser.updateProfile({
-            photoURL: url,
-          })
+    try {
+      if (currentUser.photoURL) {
+        var old_ref = storage.refFromURL(currentUser.photoURL);
+        old_ref
+          .delete()
           .then(() => {
-            alert("Photo updated successfully");
-            window.location.reload();
+            console.log("deleted");
+          })
+          .catch((err) => {
+            throw new Error("Error Occured");
           });
-      })
-      .catch(console.error);
+      }
+      const task = ref.child(name).put(file, metadata);
+      task
+        .then((snapshot) => snapshot.ref.getDownloadURL())
+        .then((url) => {
+          console.log(url);
+          APP.auth()
+            .currentUser.updateProfile({
+              photoURL: url,
+            })
+            .then(() => {
+              alert("Photo updated successfully");
+              window.location.reload();
+            });
+        })
+        .catch((err) => {
+          throw new Error("Error Occured");
+        });
+    } catch (err) {
+      console.log(err);
+      if (
+        err ==
+        "FirebaseError: Firebase Storage: refFromUrl() expected a valid full URL but got an invalid one. (storage/invalid-argument)"
+      ) {
+        const task = ref.child(name).put(file, metadata);
+        task
+          .then((snapshot) => snapshot.ref.getDownloadURL())
+          .then((url) => {
+            console.log(url);
+            APP.auth()
+              .currentUser.updateProfile({
+                photoURL: url,
+              })
+              .then(() => {
+                alert("Photo updated successfully");
+                window.location.reload();
+              });
+          })
+          .catch((err) => {
+            throw new Error("Error Occured");
+          });
+      } else {
+        enqueueSnackbar("Error Occured. photo not updated.", {
+          variant: "error",
+        });
+      }
+    }
   };
   return (
     <>
@@ -176,25 +217,29 @@ const Profile = () => {
                     width="100%"
                   />
                 </Avatar>
-                <div style={{ margin: 15 }}>
-                  <label htmlFor="uploadPhoto">
-                    <input
-                      type="file"
-                      style={{ display: "none" }}
-                      id="uploadPhoto"
-                      name="uploadPhoto"
-                      onChange={uploadImage}
-                    />
-                    <Button
-                      component="span"
-                      style={{ backgroundColor: "#ff084e", color: "white" }}
-                    >
-                      Upload Image
-                    </Button>
-                    {/* <span id="fileName" style={{ marginLeft: 10 }}>
+                <div className="flex flex-row">
+                  <div className="flex-1" />
+                  <div style={{ margin: 15 }}>
+                    <label htmlFor="uploadPhoto">
+                      <input
+                        type="file"
+                        style={{ display: "none" }}
+                        id="uploadPhoto"
+                        name="uploadPhoto"
+                        onChange={uploadImage}
+                      />
+                      <Button
+                        component="span"
+                        style={{ backgroundColor: "#ff084e", color: "white" }}
+                      >
+                        Upload Image
+                      </Button>
+                      {/* <span id="fileName" style={{ marginLeft: 10 }}>
                       Add File
                     </span> */}
-                  </label>
+                    </label>
+                  </div>
+                  <div className="flex-1" />
                 </div>
               </div>
             </Grid>
