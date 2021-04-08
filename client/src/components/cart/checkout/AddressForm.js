@@ -67,10 +67,10 @@ export default function AddressForm({ classes }) {
         });
       }, showError);
     } else {
-      alert("Geolocation is not supported by this browser.");
+  
       {
-        enqueueSnackbar("Thank you for your special feedback!!", {
-          variant: "success",
+        enqueueSnackbar("Geolocation is not supported by this browser!!", {
+          variant: "error",
         });
       }
     }
@@ -79,18 +79,33 @@ export default function AddressForm({ classes }) {
   function showError(error) {
     switch (error.code) {
       case error.PERMISSION_DENIED:
-        alert("User denied the request for Geolocation.");
+        
+          enqueueSnackbar("User denied the request for Geolocation.", {
+            variant: "error",
+          });
+
         break;
       case error.POSITION_UNAVAILABLE:
-        alert("Location information is unavailable.");
+        enqueueSnackbar("Location information is unavailable", {
+          variant: "error",
+        });
         break;
       case error.TIMEOUT:
-        alert("The request to get user location timed out.");
+      
+        enqueueSnackbar("The request to get user location timed out.", {
+          variant: "error",
+        });
         break;
       case error.UNKNOWN_ERROR:
-        alert("An unknown error occurred.");
+        
+        enqueueSnackbar("An unknow eerror occurred", {
+          variant: "error",
+        });
       default:
-        alert("Something went wrong");
+      
+        enqueueSnackbar("Something went wrong", {
+          variant: "error",
+        });
     }
   }
 

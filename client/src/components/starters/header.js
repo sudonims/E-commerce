@@ -74,17 +74,8 @@ const Profile = () => {
               });
             }
           })
-<<<<<<< HEAD
-          .catch(err=>{
-            {
-              enqueueSnackbar("There is something error while updating name", {
-                variant: "error",
-              });
-            }
-=======
           .catch((err) => {
             alert("There is something error while updating name");
->>>>>>> 74d13967c874d5f16324bb24c079beea1125fdc2
           });
       }
       if (phone.value !== currentUser.phoneNumber) {
@@ -131,20 +122,12 @@ const Profile = () => {
     } catch (err) {
       console.log("err", err);
       if (err === "auth/invalid-phone-number") {
-<<<<<<< HEAD
-        {
-          enqueueSnackbar("Invalid Phone Number.Check Again!!", {
-            variant: "warning",
-          });
-        }
-=======
         // alert("Inavlid Phone Number. Check Again");
         
           enqueueSnackbar("SignOut Successfull", {
             variant: "success",
           });
         
->>>>>>> 74d13967c874d5f16324bb24c079beea1125fdc2
       }
     }
   };
@@ -169,15 +152,9 @@ const Profile = () => {
             photoURL: url,
           })
           .then(() => {
-<<<<<<< HEAD
-
-            {
-              enqueueSnackbar("Photo updated successfully!!", {
-=======
             // alert("Photo updated successfully");
             {
               enqueueSnackbar("Photo updated successfully", {
->>>>>>> 74d13967c874d5f16324bb24c079beea1125fdc2
                 variant: "success",
               });
             }
@@ -315,13 +292,6 @@ const Profile = () => {
                           APP.auth()
                             .currentUser.sendEmailVerification()
                             .then(() => {
-<<<<<<< HEAD
-                  
-                              {
-                                enqueueSnackbar("Check your email", {
-                                  variant: "info",
-                                });
-=======
                               // alert();
                               {
                                 enqueueSnackbar(
@@ -330,7 +300,6 @@ const Profile = () => {
                                     variant: "info",
                                   }
                                 );
->>>>>>> 74d13967c874d5f16324bb24c079beea1125fdc2
                               }
                             })
                         }
@@ -418,11 +387,7 @@ export default function Header({ rightlinks, leftlinks }) {
                       .signOut()
                       .then(() => {
                         {
-<<<<<<< HEAD
-                          enqueueSnackbar("SignOut Successfully!!", {
-=======
                           enqueueSnackbar("SignOut Successfull", {
->>>>>>> 74d13967c874d5f16324bb24c079beea1125fdc2
                             variant: "success",
                           });
                         }
@@ -545,15 +510,9 @@ export default function Header({ rightlinks, leftlinks }) {
                           APP.auth()
                             .signOut()
                             .then(() => {
-<<<<<<< HEAD
-                      
-                              {
-                                enqueueSnackbar("SignOut Successfull!!", {
-=======
                               // alert("SignOut Successfull");
                               {
                                 enqueueSnackbar("SignOut Successfull", {
->>>>>>> 74d13967c874d5f16324bb24c079beea1125fdc2
                                   variant: "success",
                                 });
                               }
@@ -581,17 +540,10 @@ export default function Header({ rightlinks, leftlinks }) {
                         // disabled={!currentUser.emailVerified}
                         onClick={() => {
                           if (!currentUser.emailVerified) {
-<<<<<<< HEAD
-                    
-                            {
-                              enqueueSnackbar("Please Verify Your Email", {
-                                variant: "warning",
-=======
                             // alert("Please Verify Your Email");
                             {
                               enqueueSnackbar("Please Verify Your Email", {
                                 variant: "info",
->>>>>>> 74d13967c874d5f16324bb24c079beea1125fdc2
                               });
                             }
                           } else {
