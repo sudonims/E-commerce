@@ -12,6 +12,7 @@ module.exports = {
           next();
         })
         .catch((err) => {
+          console.log(err);
           res.status(503).send("Error Occured");
         });
     } catch (err) {
