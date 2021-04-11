@@ -101,4 +101,29 @@ module.exports = {
       res.status(503).send("Error");
     }
   },
+
+  getOrderDetailse: (req, res) => {
+    try {
+      const uid = req.uid;
+      const { id } = req.body;
+      const orderSnap = db
+        .collection("users")
+        .doc(uid)
+        .collection("order")
+        .doc(id);
+
+      orderSnap
+        .get()
+        .then((data) => {
+          res.status(200).send(data.data());
+        })
+        .catch((err) => {
+          console.log(err);
+          throw new Error("Error Occured");
+        });
+    } catch (err) {
+      console.log(err);
+      res.status(503).send("error");
+    }
+  },
 };
