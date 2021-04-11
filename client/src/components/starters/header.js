@@ -153,9 +153,7 @@ const Profile = () => {
         var old_ref = storage.refFromURL(currentUser.photoURL);
         old_ref.delete().then(() => {
           // alert("Photo updated successfully");
-          enqueueSnackbar("Photo updated successfully", {
-            variant: "success",
-          });
+         
           // window.location.reload();
         });
       }
@@ -169,7 +167,9 @@ const Profile = () => {
               photoURL: url,
             })
             .then(() => {
-              alert("Photo updated successfully");
+              enqueueSnackbar("Photo updated successfully", {
+                variant: "success",
+              });
               window.location.reload();
             });
         })
@@ -192,7 +192,9 @@ const Profile = () => {
                 photoURL: url,
               })
               .then(() => {
-                alert("Photo updated successfully");
+                enqueueSnackbar("Photo updated successfully", {
+                  variant: "success",
+                });
                 window.location.reload();
               });
           })
