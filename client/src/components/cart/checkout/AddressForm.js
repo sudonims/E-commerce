@@ -15,7 +15,7 @@ import StepOrderContext from "./stepOrderContext";
 
 export default function AddressForm({ classes }) {
   const { enqueueSnackbar } = useSnackbar();
-  const { activeStep, setActiveStep, address, setAddress } = React.useContext(
+  const { activeStep, setActiveStep, address, updateAddress } = React.useContext(
     StepOrderContext
   );
 

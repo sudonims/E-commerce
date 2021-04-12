@@ -68,7 +68,6 @@ function FormDialog({ open, setOpen }) {
     APP.auth()
       .sendPasswordResetEmail(a)
       .then(() => {
-        alert("Email sent. Check your Email for reset");
         {
           enqueueSnackbar("Email sent. Check your Email for reset!!", {
             variant: "success",
