@@ -10,6 +10,7 @@ const createCard = (info) => {
 };
 
 export default function HomePage() {
+  
   return (
     <>
       <Header />

@@ -16,11 +16,35 @@ import Header from "../starters/header";
 import Cookies from "js-cookie";
 import Info from "../homepage/Card/infoforcard.js";
 import { useSnackbar } from "notistack";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+import PopupState, { bindTrigger, bindMenu } from "material-ui-popup-state";
+import { makeStyles } from "@material-ui/core/styles";
+import InputLabel from "@material-ui/core/InputLabel";
+import FormHelperText from "@material-ui/core/FormHelperText";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
+
+const useStyles = makeStyles((theme) => ({
+  formControl: {
+    maxWidth: 120,
+    marginTop: 10,
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
+  },
+}));
 
 export default function Product({ prodId }) {
   const { currentUser } = React.useContext(AuthContext);
   const { enqueueSnackbar } = useSnackbar();
   const [prod, setProd] = React.useState(null);
+  const classes = useStyles();
+  const [size, setSize] = React.useState("");
+
+  const handleChange = (event) => {
+    setSize(event.target.value);
+  };
 
   React.useEffect(() => {
     // GET from backend
@@ -39,6 +63,7 @@ export default function Product({ prodId }) {
     });
     console.log(a);
     if (a.length > 0) {
+      setSize(a[0].sizes[0]);
       setProd(a.pop());
     }
   }, []);
@@ -110,6 +135,7 @@ export default function Product({ prodId }) {
         quantity: 1,
         image_link: prod.img,
         effectivePrice: parseFloat(prod.price),
+        size,
       });
       {
         enqueueSnackbar("Added to cart!!", {
@@ -122,14 +148,12 @@ export default function Product({ prodId }) {
           variant: "info",
         });
       }
-      
-
     }
 
     console.log(cart);
     Cookies.set("cart", cart);
   };
-
+  console.log(prod);
   return (
     prod && (
       <div className="flex flex-col">
@@ -165,37 +189,35 @@ export default function Product({ prodId }) {
                       {prod.name}
                     </Typography>
                     <Typography>{prod.description}</Typography>
-                    {/* <div className="flex flex-row mt-8">
-                      <Typography variant="h5">Size</Typography>
-                      <RadioGroup
-                        defaultValue={prod.sizes[0]}
-                        aria-label="size"
-                        name="size"
+                    <FormControl className={classes.formControl}>
+                      <InputLabel
+                        style={{ color: "black" }}
+                        id="demo-simple-select-label"
                       >
-                        <div className="flex flex-row">
-                          {prod.sizes.map((size) => (
-                            <FormControlLabel
+                        Size
+                      </InputLabel>
+                      <Select
+                        color="secondary"
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        value={size}
+                        onChange={handleChange}
+                        className="text-2xl text-black font-black"
+                      >
+                        {prod.sizes.map((size) => {
+                          return (
+                            <MenuItem
+                              className="text-2xl text-black font-black"
                               value={size}
-                              control={
-                                <Radio
-                                  icon={
-                                    <Avatar
-                                      style={{
-                                        backgroundColor: "pink",
-                                        color: "black",
-                                        marginLeft: 10,
-                                      }}
-                                    >
-                                      {size}
-                                    </Avatar>
-                                  }
-                                />
-                              }
-                            />
-                          ))}
-                        </div>
-                      </RadioGroup>
-                    </div> */}
+                            >
+                              <p className="text-lg m-0 text-black font-bold">
+                                {size}
+                              </p>
+                            </MenuItem>
+                          );
+                        })}
+                      </Select>
+                    </FormControl>
                     <div className="flex flex-row mt-8">
                       <input
                         hidden

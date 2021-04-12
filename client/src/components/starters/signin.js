@@ -7,35 +7,31 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import TextField from "@material-ui/core/TextField";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import logo from "../assets/logo.png";
 import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { APP } from "../firebase/firebaseConfig";
 import { AuthContext } from "../firebase/firebase";
 import Footer from "./footer";
 import Google from "./google1.png";
 import { useSnackbar } from "notistack";
+import { makeStyles } from "@material-ui/core/styles";
+import IconButton from "@material-ui/core/IconButton";
+import OutlinedInput from "@material-ui/core/OutlinedInput";
+import InputLabel from "@material-ui/core/InputLabel";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import FormControl from "@material-ui/core/FormControl";
+import TextField from "@material-ui/core/TextField";
+import Visibility from "@material-ui/icons/Visibility";
+import VisibilityOff from "@material-ui/icons/VisibilityOff";
 
 var provider = new firebase.auth.GoogleAuthProvider();
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
+
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -73,7 +69,6 @@ function FormDialog({ open, setOpen }) {
             variant: "success",
           });
         }
-      
       });
 
     setOpen();
@@ -121,6 +116,25 @@ export default function SignIn() {
   const { currentUser } = React.useContext(AuthContext);
   const [open, setopen] = React.useState(false);
   const { enqueueSnackbar } = useSnackbar();
+  const [values, setValues] = React.useState({
+    amount: "",
+    password: "",
+    weight: "",
+    weightRange: "",
+    showPassword: false,
+  });
+
+  const handleChange = (prop) => (event) => {
+    setValues({ ...values, [prop]: event.target.value });
+  };
+
+  const handleClickShowPassword = () => {
+    setValues({ ...values, showPassword: !values.showPassword });
+  };
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
 
   const changeopen = () => {
     setopen(!open);
@@ -133,7 +147,6 @@ export default function SignIn() {
     APP.auth()
       .signInWithPopup(provider)
       .then((res) => {
-      
         {
           enqueueSnackbar("Signed IN!!", {
             variant: "success",
@@ -144,7 +157,6 @@ export default function SignIn() {
       .catch((err) => {
         console.log(err);
         if (err.code == "auth/user-not-found") {
-          
           {
             enqueueSnackbar("Oops!! User not found!!", {
               variant: "warning",
@@ -171,7 +183,6 @@ export default function SignIn() {
         APP.auth()
           .signInWithEmailAndPassword(email.value, password.value)
           .then((res) => {
-        
             {
               enqueueSnackbar("Signed IN!!", {
                 variant: "success",
@@ -182,7 +193,6 @@ export default function SignIn() {
           .catch((err) => {
             console.log(err);
             if (err.code == "auth/user-not-found") {
-              
               {
                 enqueueSnackbar("Oops user not found!!", {
                   variant: "info",
@@ -216,17 +226,34 @@ export default function SignIn() {
               autoComplete="email"
               autoFocus
             />
-            <TextField
+            <FormControl
+              style={{width:"100%"}}
               variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-            />
+            >
+              <InputLabel htmlFor="outlined-adornment-password">
+                Password
+              </InputLabel>
+              <OutlinedInput
+                name="password"
+                id="outlined-adornment-password"
+                type={values.showPassword ? "text" : "password"}
+                value={values.password}
+                onChange={handleChange("password")}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                      edge="end"
+                    >
+                      {values.showPassword ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+                labelWidth={70}
+              />
+            </FormControl>
             <FormControlLabel
               control={
                 <Checkbox name="remember" value="remember" color="primary" />

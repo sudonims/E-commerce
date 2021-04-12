@@ -9,11 +9,35 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Header from "../starters/header.js";
 import Checkout from "./checkout/Checkout.js";
+import Card from '@material-ui/core/Card';
 
 import { Button, Typography } from "@material-ui/core";
 import { Route, Switch, useRouteMatch } from "react-router";
+import { makeStyles } from '@material-ui/core/styles';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+
+
+const useStyles = makeStyles((theme) => ({
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
+  },
+}));
 
 export default function Cart() {
+  const classes = useStyles();
+  const [age, setAge] = React.useState('');
+
+  const handleChange = (event) => {
+    setAge(event.target.value);
+  };
   const [cart, setCart] = React.useState(Cookies.getJSON("cart"));
   const [totalAmount, setTotalAmount] = React.useState(
     cart.cart.reduce(
@@ -74,6 +98,7 @@ export default function Cart() {
       <Route exact path={`${url}`}>
         <Header />
         <div id="cart">
+          <Card>
           <TableContainer>
             <Table
               style={{
@@ -86,10 +111,13 @@ export default function Cart() {
                     Image
                   </TableCell>
                   <TableCell style={{ width: "16%", textAlign: "center" }}>
-                    Product
+                    ProductID
                   </TableCell>
                   <TableCell style={{ width: "16%", textAlign: "center" }}>
                     Shop
+                  </TableCell>
+                  <TableCell style={{ width: "16%", textAlign: "center" }}>
+                    Size
                   </TableCell>
                   <TableCell style={{ width: "16%", textAlign: "center" }}>
                     Price
@@ -110,6 +138,7 @@ export default function Cart() {
                         <img
                           height="150px"
                           width="150px"
+                          className="ml-8"
                           alt={item.name}
                           src={item.image_link}
                         />
@@ -123,8 +152,41 @@ export default function Cart() {
                       </TableCell>
                       <TableCell style={{ width: "16%", textAlign: "center" }}>
                         {" "}
+                        <FormControl className={classes.formControl}>
+                      <InputLabel
+                        style={{ color: "black" }}
+                        id="demo-simple-select-label"
+                      >
+                        Size
+                      </InputLabel>
+                      <Select
+                        color="secondary"
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        // value={size}
+                        onChange={handleChange}
+                        className="text-2xl text-black font-black"
+                      >
+                        {/* {prod.sizes.map((size) => {
+                          return (
+                            <MenuItem
+                              className="text-2xl text-black font-black"
+                              value={size}
+                            >
+                              <p className="text-lg m-0 text-black font-bold">
+                                {size}
+                              </p>
+                            </MenuItem>
+                          );
+                        })} */}
+                      </Select>
+                    </FormControl>
+                      </TableCell>
+                      <TableCell style={{ width: "16%", textAlign: "center" }}>
+                        {" "}
                         {item.price}{" "}
                       </TableCell>
+                      
                       <TableCell style={{ width: "16%", textAlign: "center" }}>
                         <div className="flex md:flex-row flex-col justify-evenly">
                           <Button
@@ -181,6 +243,8 @@ export default function Cart() {
               </TableBody>
             </Table>
           </TableContainer>
+          
+          </Card>
           <div className="flex flex-row">
             <div className="flex-1" />
             <Button

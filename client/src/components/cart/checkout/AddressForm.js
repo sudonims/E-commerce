@@ -2,8 +2,6 @@ import React from "react";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
 import { useSnackbar } from "notistack";
 import {
   Button,
@@ -15,9 +13,18 @@ import StepOrderContext from "./stepOrderContext";
 
 export default function AddressForm({ classes }) {
   const { enqueueSnackbar } = useSnackbar();
+<<<<<<< HEAD
   const { activeStep, setActiveStep, address, updateAddress } = React.useContext(
     StepOrderContext
   );
+=======
+  const {
+    activeStep,
+    setActiveStep,
+    address,
+    updateAddress,
+  } = React.useContext(StepOrderContext);
+>>>>>>> c83f40e14be4e8a5f0d3ba8df72c513b9108fbb5
 
   const [open, setOpen] = React.useState(false);
   const [position, setPosition] = React.useState(null);
@@ -25,6 +32,18 @@ export default function AddressForm({ classes }) {
   const [add, setAdd] = React.useState(null);
 
   React.useEffect(getLocation, []);
+
+  // React.useEffect(() => {
+  //   setAdd((add) => {
+  //     var a = {};
+  //     if (add) {
+  //       a = add;
+  //     }
+  //     a["a"] = 1;
+
+  //     return a;
+  //   });
+  // }, [add]);
 
   const addressSubmit = (e) => {
     e.preventDefault();
@@ -45,7 +64,7 @@ export default function AddressForm({ classes }) {
       lastName: lastName.value,
       house_number: address1.value,
       address2: address2.value,
-      top: city.value,
+      town: city.value,
       postcode: zip.value,
       state: state.value,
       country: country.value,
@@ -68,23 +87,18 @@ export default function AddressForm({ classes }) {
         });
       }, showError);
     } else {
-  
-      {
-        enqueueSnackbar("Geolocation is not supported by this browser!!", {
-          variant: "error",
-        });
-      }
+      enqueueSnackbar("Geolocation is not supported by this browser!!", {
+        variant: "error",
+      });
     }
   }
 
   function showError(error) {
     switch (error.code) {
       case error.PERMISSION_DENIED:
-        
-          enqueueSnackbar("User denied the request for Geolocation.", {
-            variant: "error",
-          });
-
+        enqueueSnackbar("User denied the request for Geolocation.", {
+          variant: "error",
+        });
         break;
       case error.POSITION_UNAVAILABLE:
         enqueueSnackbar("Location information is unavailable", {
@@ -92,18 +106,15 @@ export default function AddressForm({ classes }) {
         });
         break;
       case error.TIMEOUT:
-      
         enqueueSnackbar("The request to get user location timed out.", {
           variant: "error",
         });
         break;
       case error.UNKNOWN_ERROR:
-        
-        enqueueSnackbar("An unknow eerror occurred", {
+        enqueueSnackbar("An unknown error occurred", {
           variant: "error",
         });
       default:
-      
         enqueueSnackbar("Something went wrong", {
           variant: "error",
         });
@@ -116,7 +127,7 @@ export default function AddressForm({ classes }) {
     )
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         //   {
         //     "ISO_3166-1_alpha-2": "IN",
         //     "ISO_3166-1_alpha-3": "IND",
@@ -138,7 +149,8 @@ export default function AddressForm({ classes }) {
       })
       .catch((err) => alert(err));
   }
-  // console.log("address", address);
+
+  console.log(add);
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
@@ -155,7 +167,7 @@ export default function AddressForm({ classes }) {
                 label="First name"
                 fullWidth
                 autoComplete="given-name"
-                defaultValue={add ? add.firstName : ""}
+                defaultValue={address ? address.firstName : ""}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -166,7 +178,7 @@ export default function AddressForm({ classes }) {
                 label="Last name"
                 fullWidth
                 autoComplete="family-name"
-                defaultValue={add ? add.lastName : ""}
+                defaultValue={address ? address.lastName : ""}
               />
             </Grid>
             <Grid item xs={12}>
@@ -177,7 +189,7 @@ export default function AddressForm({ classes }) {
                 label="Address line 1"
                 fullWidth
                 autoComplete="shipping address-line1"
-                defaultValue={add ? add.house_number : ""}
+                defaultValue={address ? address.house_number : ""}
               />
             </Grid>
             <Grid item xs={12}>
@@ -187,7 +199,7 @@ export default function AddressForm({ classes }) {
                 label="Address line 2"
                 fullWidth
                 autoComplete="shipping address-line2"
-                defaultValue={add ? add.address2 : ""}
+                defaultValue={address ? address.address2 : ""}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -198,7 +210,7 @@ export default function AddressForm({ classes }) {
                 label="City"
                 fullWidth
                 autoComplete="shipping address-level2"
-                defaultValue={add ? add.town : ""}
+                defaultValue={address ? address.town : ""}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -207,7 +219,7 @@ export default function AddressForm({ classes }) {
                 name="state"
                 label="State/Province/Region"
                 fullWidth
-                defaultValue={add ? add.state : ""}
+                defaultValue={address ? address.state : ""}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -218,7 +230,7 @@ export default function AddressForm({ classes }) {
                 label="Zip / Postal code"
                 fullWidth
                 autoComplete="shipping postal-code"
-                defaultValue={add ? add.postcode : ""}
+                defaultValue={address ? address.postcode : ""}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -229,7 +241,7 @@ export default function AddressForm({ classes }) {
                 label="Country"
                 fullWidth
                 autoComplete="shipping country"
-                defaultValue={add ? add.country : ""}
+                defaultValue={address ? address.country : ""}
               />
             </Grid>
           </Grid>
@@ -249,7 +261,7 @@ export default function AddressForm({ classes }) {
               label="First name"
               fullWidth
               autoComplete="given-name"
-              defaultValue={add ? add.firstName : ""}
+              defaultValue={address ? address.firstName : ""}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -260,7 +272,7 @@ export default function AddressForm({ classes }) {
               label="Last name"
               fullWidth
               autoComplete="family-name"
-              defaultValue={add ? add.lastName : ""}
+              defaultValue={address ? address.lastName : ""}
             />
           </Grid>
           <Grid item xs={12}>
@@ -271,7 +283,7 @@ export default function AddressForm({ classes }) {
               label="Address line 1"
               fullWidth
               autoComplete="shipping address-line1"
-              defaultValue={add ? add.address1 : ""}
+              defaultValue={address ? address.house_number : ""}
             />
           </Grid>
           <Grid item xs={12}>
@@ -281,7 +293,7 @@ export default function AddressForm({ classes }) {
               label="Address line 2"
               fullWidth
               autoComplete="shipping address-line2"
-              defaultValue={add ? add.address2 : ""}
+              defaultValue={address ? address.address2 : ""}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -292,7 +304,7 @@ export default function AddressForm({ classes }) {
               label="City"
               fullWidth
               autoComplete="shipping address-level2"
-              defaultValue={add ? add.city : ""}
+              defaultValue={address ? address.town : ""}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -301,7 +313,7 @@ export default function AddressForm({ classes }) {
               name="state"
               label="State/Province/Region"
               fullWidth
-              defaultValue={add ? add.state : ""}
+              defaultValue={address ? address.state : ""}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -312,7 +324,7 @@ export default function AddressForm({ classes }) {
               label="Zip / Postal code"
               fullWidth
               autoComplete="shipping postal-code"
-              defaultValue={add ? add.zip : ""}
+              defaultValue={address ? address.postcode : ""}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -323,7 +335,7 @@ export default function AddressForm({ classes }) {
               label="Country"
               fullWidth
               autoComplete="shipping country"
-              defaultValue={add ? add.country : ""}
+              defaultValue={address ? address.country : ""}
             />
           </Grid>
         </Grid>

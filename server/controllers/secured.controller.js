@@ -86,4 +86,44 @@ module.exports = {
       res.status(503).send("Error occured");
     }
   },
+
+  myOrders: (req, res) => {
+    try {
+      const uid = req.uid;
+      const orderSnap = db.collection("users").doc(uid).collection("order");
+
+      orderSnap.listDocuments().then((data) => {
+        const a = data.map((doc) => doc.id);
+        res.status(200).send(a);
+      });
+    } catch (err) {
+      console.log(err);
+      res.status(503).send("Error");
+    }
+  },
+
+  getOrderDetailse: (req, res) => {
+    try {
+      const uid = req.uid;
+      const { id } = req.body;
+      const orderSnap = db
+        .collection("users")
+        .doc(uid)
+        .collection("order")
+        .doc(id);
+
+      orderSnap
+        .get()
+        .then((data) => {
+          res.status(200).send(data.data());
+        })
+        .catch((err) => {
+          console.log(err);
+          throw new Error("Error Occured");
+        });
+    } catch (err) {
+      console.log(err);
+      res.status(503).send("error");
+    }
+  },
 };
