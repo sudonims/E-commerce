@@ -93,11 +93,11 @@ const OrderDialog = ({ openid, setOpenId }) => {
                       <p className="text-black font-black">{prod.name}</p>
                     </div>
                     <div>
-                      <p className="text-black font-black">Size {prod.size}</p>
+                      <p className="text-black font-black">Size: {prod.size}</p>
                     </div>
                     <div>
                       <p className="text-black font-black">
-                        Quantity {prod.quantity}
+                        Quantity: {prod.quantity}
                       </p>
                     </div>
                     <div>
@@ -165,39 +165,56 @@ export default function Myorders() {
     <>
       <Header />
       {openid && <OrderDialog openid={openid} setOpenId={setOpenId} />}
-      <Container style={{align:"center"}}>
-        <p className="text-2xl text-black font-black">My Orders</p>
-        <Card style={{ maxWidth: "50%" }}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell  style={{ textAlign: "center" }}>Order No.</TableCell>
-                <TableCell style={{ textAlign: "center" }}>Order Id</TableCell>
-                <TableCell style={{ textAlign: "center" }}>Status</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {ids.length === 0 && <> You have no order </>}
-              {ids.map((id, i) => {
-                return (
-                  <TableRow>
-                    <TableCell  style={{ textAlign: "center" }}>{i + 1}</TableCell>
-                    <TableCell>
-                      <ButtonBase
-                        style={{ height: "100%", width: "100%" ,textAlign: "center" }}
-                        onClick={handleClick}
-                        id={id}
-                      >
-                        {id}
-                      </ButtonBase>
-                    </TableCell>
-                    <TableCell  style={{ textAlign: "center" }}>Will be delievered</TableCell>
-                  </TableRow>
-                );
-              })}
-            </TableBody>
-          </Table>
-        </Card>
+      <Container style={{ align: "center" }}>
+        <p className="text-2xl text-black font-black text-center">My Orders</p>
+        <div className="flex flex-row">
+          <div className="flex-1" />
+
+          <Card style={{ maxWidth: "50%" }}>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell style={{ textAlign: "center" }}>
+                    Order No.
+                  </TableCell>
+                  <TableCell style={{ textAlign: "center" }}>
+                    Order Id
+                  </TableCell>
+                  <TableCell style={{ textAlign: "center" }}>Status</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {ids.length === 0 && <> You have no order </>}
+                {ids.map((id, i) => {
+                  return (
+                    <TableRow>
+                      <TableCell style={{ textAlign: "center" }}>
+                        {i + 1}
+                      </TableCell>
+                      <TableCell>
+                        <ButtonBase
+                          style={{
+                            height: "100%",
+                            width: "100%",
+                            textAlign: "center",
+                          }}
+                          onClick={handleClick}
+                          id={id}
+                        >
+                          {id}
+                        </ButtonBase>
+                      </TableCell>
+                      <TableCell style={{ textAlign: "center" }}>
+                        Will be delievered
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
+              </TableBody>
+            </Table>
+          </Card>
+          <div className="flex-1" />
+        </div>
       </Container>
       <Footer />
     </>
