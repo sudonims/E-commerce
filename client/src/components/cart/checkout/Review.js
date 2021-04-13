@@ -89,7 +89,6 @@ export default function Review({ classes1, buyNow }) {
               .then((res) => {
                 if (res.status === 200) {
                   if (res.data === "success") {
-          
                     {
                       enqueueSnackbar("Payment Success!!", {
                         variant: "success",

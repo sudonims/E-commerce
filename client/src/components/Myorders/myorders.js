@@ -165,14 +165,15 @@ export default function Myorders() {
     <>
       <Header />
       {openid && <OrderDialog openid={openid} setOpenId={setOpenId} />}
-      <Container>
+      <Container style={{align:"center"}}>
         <p className="text-2xl text-black font-black">My Orders</p>
         <Card style={{ maxWidth: "50%" }}>
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>#</TableCell>
+                <TableCell  style={{ textAlign: "center" }}>Order No.</TableCell>
                 <TableCell style={{ textAlign: "center" }}>Order Id</TableCell>
+                <TableCell style={{ textAlign: "center" }}>Status</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -180,16 +181,17 @@ export default function Myorders() {
               {ids.map((id, i) => {
                 return (
                   <TableRow>
-                    <TableCell>{i + 1}</TableCell>
+                    <TableCell  style={{ textAlign: "center" }}>{i + 1}</TableCell>
                     <TableCell>
                       <ButtonBase
-                        style={{ height: "100%", width: "100%" }}
+                        style={{ height: "100%", width: "100%" ,textAlign: "center" }}
                         onClick={handleClick}
                         id={id}
                       >
                         {id}
                       </ButtonBase>
                     </TableCell>
+                    <TableCell  style={{ textAlign: "center" }}>Will be delievered</TableCell>
                   </TableRow>
                 );
               })}

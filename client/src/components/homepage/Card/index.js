@@ -4,15 +4,23 @@ import Header from "../../starters/header.js";
 import Card from "./card.js";
 import Info from "./infoforcard.js";
 import OwlCarousel from "react-owl-carousel";
+import SizeContext from "./sizeSelectContext.js";
+import SizeUL from "./sizeUl.js";
 
 const createCard = (info) => {
   return <Card info={info} />;
 };
 
 export default function HomePage() {
-  
+  const [size, setSize] = React.useState("XS");
+
+  const updateSize = (size) => {
+    setSize(size);
+    console.log(size);
+  };
+
   return (
-    <>
+    <SizeContext.Provider value={{ size, updateSize }}>
       <Header />
       <div>
         <div id="wrapper">
@@ -42,26 +50,7 @@ export default function HomePage() {
                     <div className="widget size mb-50">
                       <h6 className="widget-title mb-30">Filter by Size</h6>
                       <div className="widget-desc">
-                        <ul className="d-flex justify-content-between">
-                          <li>
-                            <a href="#">XS</a>
-                          </li>
-                          <li>
-                            <a href="#">S</a>
-                          </li>
-                          <li>
-                            <a href="#">M</a>
-                          </li>
-                          <li>
-                            <a href="#">L</a>
-                          </li>
-                          <li>
-                            <a href="#">XL</a>
-                          </li>
-                          <li>
-                            <a href="#">XXL</a>
-                          </li>
-                        </ul>
+                        <SizeUL />
                       </div>
                     </div>
                   </div>
@@ -89,6 +78,6 @@ export default function HomePage() {
         </div>
       </div>
       <Footer />
-    </>
+    </SizeContext.Provider>
   );
 }

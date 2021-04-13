@@ -3,8 +3,10 @@ import Cookies from "js-cookie";
 import { AuthContext } from "../../firebase/firebase";
 import { Button } from "@material-ui/core";
 import { useSnackbar } from "notistack";
+import SizeContext from "./sizeSelectContext";
 
 const Card = (props) => {
+  const { size } = React.useContext(SizeContext);
   const { currentUser } = React.useContext(AuthContext);
   const { enqueueSnackbar } = useSnackbar();
   const addToCart = (e) => {
@@ -38,6 +40,8 @@ const Card = (props) => {
         image_link: props.info.img,
         quantity: 1,
         effectivePrice: parseFloat(props.info.price),
+        size,
+        availSize: props.info.sizes,
       });
 
       {
