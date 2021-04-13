@@ -3,15 +3,19 @@ import axios from "axios";
 import {
   ButtonBase,
   Card,
+  CardContent,
+  CardMedia,
   Container,
   Dialog,
   DialogContent,
+  DialogTitle,
   Table,
   TableBody,
   TableCell,
   TableHead,
   TableRow,
 } from "@material-ui/core";
+import OwlCarousel from "react-owl-carousel";
 import Footer from "../starters/footer";
 import Header from "../starters/header";
 import { APP } from "../firebase/firebaseConfig";
@@ -71,7 +75,43 @@ const OrderDialog = ({ openid, setOpenId }) => {
   console.log(data);
   return data ? (
     <Dialog open={openid.open} onClose={() => setOpenId(null)}>
-      <DialogContent>{openid.id}</DialogContent>
+      <DialogTitle>{openid.id}</DialogTitle>
+      <DialogContent>
+        <OwlCarousel items={2} className="owl-theme" nav>
+          {data.details.map((prod) => {
+            return (
+              <Card style={{ width: 250 }}>
+                <CardMedia
+                  component="img"
+                  image={prod.image_link}
+                  alt="prod_image"
+                  height="120"
+                />
+                <CardContent>
+                  <div className="flex flex-col">
+                    <div>
+                      <p className="text-black font-black">{prod.name}</p>
+                    </div>
+                    <div>
+                      <p className="text-black font-black">Size: {prod.size}</p>
+                    </div>
+                    <div>
+                      <p className="text-black font-black">
+                        Quantity: {prod.quantity}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-black font-black">
+                        Total: {prod.effectivePrice}
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            );
+          })}
+        </OwlCarousel>
+      </DialogContent>
     </Dialog>
   ) : (
     <Loading />
@@ -125,38 +165,56 @@ export default function Myorders() {
     <>
       <Header />
       {openid && <OrderDialog openid={openid} setOpenId={setOpenId} />}
-      <Container style={{align:"center"}}>
-        <p className="text-2xl text-black font-black">My Orders</p>
-        <Card style={{ maxWidth: "50%" }}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell  style={{ textAlign: "center" }}>Order No.</TableCell>
-                <TableCell style={{ textAlign: "center" }}>Order Id</TableCell>
-                <TableCell style={{ textAlign: "center" }}>Status</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {ids.map((id, i) => {
-                return (
-                  <TableRow>
-                    <TableCell  style={{ textAlign: "center" }}>{i + 1}</TableCell>
-                    <TableCell>
-                      <ButtonBase
-                        style={{ height: "100%", width: "100%" ,textAlign: "center" }}
-                        onClick={handleClick}
-                        id={id}
-                      >
-                        {id}
-                      </ButtonBase>
-                    </TableCell>
-                    <TableCell  style={{ textAlign: "center" }}>Will be delievered</TableCell>
-                  </TableRow>
-                );
-              })}
-            </TableBody>
-          </Table>
-        </Card>
+      <Container style={{ align: "center" }}>
+        <p className="text-2xl text-black font-black text-center">My Orders</p>
+        <div className="flex flex-row">
+          <div className="flex-1" />
+
+          <Card style={{ maxWidth: "50%" }}>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell style={{ textAlign: "center" }}>
+                    Order No.
+                  </TableCell>
+                  <TableCell style={{ textAlign: "center" }}>
+                    Order Id
+                  </TableCell>
+                  <TableCell style={{ textAlign: "center" }}>Status</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {ids.length === 0 && <> You have no order </>}
+                {ids.map((id, i) => {
+                  return (
+                    <TableRow>
+                      <TableCell style={{ textAlign: "center" }}>
+                        {i + 1}
+                      </TableCell>
+                      <TableCell>
+                        <ButtonBase
+                          style={{
+                            height: "100%",
+                            width: "100%",
+                            textAlign: "center",
+                          }}
+                          onClick={handleClick}
+                          id={id}
+                        >
+                          {id}
+                        </ButtonBase>
+                      </TableCell>
+                      <TableCell style={{ textAlign: "center" }}>
+                        Will be delievered
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
+              </TableBody>
+            </Table>
+          </Card>
+          <div className="flex-1" />
+        </div>
       </Container>
       <Footer />
     </>
