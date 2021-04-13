@@ -95,6 +95,7 @@ export default function Product({ prodId }) {
         price: prod.price,
         image_link: prod.img,
         quantity: 1,
+        size,
         effectivePrice: parseFloat(prod.price),
       })
     );

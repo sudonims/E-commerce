@@ -36,6 +36,9 @@ export default function MediaCard(props) {
             Price:- &#8377; {props.product.price}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
+            Size:- {props.product.size}
+          </Typography>
+          <Typography variant="body2" color="textSecondary" component="p">
             Qty:- {props.product.quantity}
           </Typography>
         </CardContent>
