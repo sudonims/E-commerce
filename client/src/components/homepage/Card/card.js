@@ -13,19 +13,17 @@ const Card = (props) => {
     var cart = Cookies.getJSON("cart");
     e.preventDefault();
     if (!currentUser) {
-      {
-        enqueueSnackbar("Please join us First!!", {
-          variant: "info",
-        });
-      }
+      enqueueSnackbar("Please join us First!!", {
+        variant: "info",
+      });
+
       return;
     }
     if (!currentUser.emailVerified) {
-      {
-        enqueueSnackbar("Please verify your email\nFor that go to My Profile", {
-          variant: "info",
-        });
-      }
+      enqueueSnackbar("Please verify your email\nFor that go to My Profile", {
+        variant: "info",
+      });
+
       return;
     }
 
@@ -44,17 +42,13 @@ const Card = (props) => {
         availSize: props.info.sizes,
       });
 
-      {
-        enqueueSnackbar("Item is added to cart successfully!!", {
-          variant: "success",
-        });
-      }
+      enqueueSnackbar("Item is added to cart successfully!!", {
+        variant: "success",
+      });
     } else {
-      {
-        enqueueSnackbar("Already Added", {
-          variant: "info",
-        });
-      }
+      enqueueSnackbar("Already Added", {
+        variant: "info",
+      });
     }
     console.log(cart);
     Cookies.set("cart", cart);

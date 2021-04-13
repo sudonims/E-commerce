@@ -28,7 +28,7 @@ export default function HomePage() {
             <div className="single-discount-area">
               <h5>Free Shipping &amp; Returns</h5>
               <h6>
-                <a href="#">BUY NOW</a>
+                <button>BUY NOW</button>
               </h6>
             </div>
             <div className="single-discount-area">

@@ -2,11 +2,8 @@ import React from "react";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
 import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
-import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
@@ -44,7 +41,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignUp() {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
   const { enqueueSnackbar } = useSnackbar();
   const [values, setValues] = React.useState({
     amount: "",
@@ -66,9 +62,7 @@ export default function SignUp() {
     event.preventDefault();
   };
 
-  const changeopen = () => {
-    setOpen(!open);
-  };
+  
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -79,12 +73,12 @@ export default function SignUp() {
         .then((res) => {})
         .catch((err) => {
           console.log(err);
-          if (err.code == "auth/email-already-in-use") {
-            {
+          if (err.code === "auth/email-already-in-use") {
+            
               enqueueSnackbar("Email already exist!!", {
                 variant: "info",
               });
-            }
+            
             window.location.reload();
             throw new Error("Error");
           }
@@ -95,11 +89,11 @@ export default function SignUp() {
           displayName: `${firstName.value} ${lastName.value}`,
         })
         .then((res) => {
-          {
+          
             enqueueSnackbar("User created!!", {
               variant: "info",
             });
-          }
+          
           window.location.href = "/";
         })
         .catch((err) => console.log(err));
@@ -110,7 +104,7 @@ export default function SignUp() {
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <div className={classes.paper}>
-          <img width={100} height={100} src={logo} />
+          <img  alt="img_logo" width={100} height={100} src={logo} />
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
