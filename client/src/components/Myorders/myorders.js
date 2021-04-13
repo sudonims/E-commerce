@@ -3,15 +3,19 @@ import axios from "axios";
 import {
   ButtonBase,
   Card,
+  CardContent,
+  CardMedia,
   Container,
   Dialog,
   DialogContent,
+  DialogTitle,
   Table,
   TableBody,
   TableCell,
   TableHead,
   TableRow,
 } from "@material-ui/core";
+import OwlCarousel from "react-owl-carousel";
 import Footer from "../starters/footer";
 import Header from "../starters/header";
 import { APP } from "../firebase/firebaseConfig";
@@ -71,7 +75,43 @@ const OrderDialog = ({ openid, setOpenId }) => {
   console.log(data);
   return data ? (
     <Dialog open={openid.open} onClose={() => setOpenId(null)}>
-      <DialogContent>{openid.id}</DialogContent>
+      <DialogTitle>{openid.id}</DialogTitle>
+      <DialogContent>
+        <OwlCarousel items={2} className="owl-theme" nav>
+          {data.details.map((prod) => {
+            return (
+              <Card style={{ width: 250 }}>
+                <CardMedia
+                  component="img"
+                  image={prod.image_link}
+                  alt="prod_image"
+                  height="120"
+                />
+                <CardContent>
+                  <div className="flex flex-col">
+                    <div>
+                      <p className="text-black font-black">{prod.name}</p>
+                    </div>
+                    <div>
+                      <p className="text-black font-black">Size {prod.size}</p>
+                    </div>
+                    <div>
+                      <p className="text-black font-black">
+                        Quantity {prod.quantity}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-black font-black">
+                        Total: {prod.effectivePrice}
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            );
+          })}
+        </OwlCarousel>
+      </DialogContent>
     </Dialog>
   ) : (
     <Loading />
@@ -136,6 +176,7 @@ export default function Myorders() {
               </TableRow>
             </TableHead>
             <TableBody>
+              {ids.length === 0 && <> You have no order </>}
               {ids.map((id, i) => {
                 return (
                   <TableRow>
