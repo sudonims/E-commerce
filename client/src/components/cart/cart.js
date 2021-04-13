@@ -9,17 +9,16 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Header from "../starters/header.js";
 import Checkout from "./checkout/Checkout.js";
-import Card from '@material-ui/core/Card';
+import Card from "@material-ui/core/Card";
 
 import { Button, Typography } from "@material-ui/core";
 import { Route, Switch, useRouteMatch } from "react-router";
-import { makeStyles } from '@material-ui/core/styles';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-
+import { makeStyles } from "@material-ui/core/styles";
+import InputLabel from "@material-ui/core/InputLabel";
+import MenuItem from "@material-ui/core/MenuItem";
+import FormHelperText from "@material-ui/core/FormHelperText";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -33,19 +32,30 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Cart() {
   const classes = useStyles();
-  const [age, setAge] = React.useState('');
 
-  const handleChange = (event) => {
-    setAge(event.target.value);
-  };
   const [cart, setCart] = React.useState(Cookies.getJSON("cart"));
+  const { url } = useRouteMatch();
   const [totalAmount, setTotalAmount] = React.useState(
     cart.cart.reduce(
       (a, b) => parseFloat((a + (b["effectivePrice"] || 0)).toFixed(2)),
       0
     )
   );
-  const { url } = useRouteMatch();
+  const handleChange = (e, id) => {
+    console.log(e.target.value);
+    var cart_ = cart.cart.map((item) => {
+      if (item.id === id) {
+        console.log({ ...item, size: e.target.value });
+        return { ...item, size: e.target.value };
+      }
+      return item;
+    });
+    console.log(cart_);
+
+    setCart({ cart: cart_ });
+
+    Cookies.set("cart", { cart: cart_ });
+  };
   const remove = (e) => {
     e.preventDefault();
     const { id } = e.target.elements;
@@ -99,151 +109,164 @@ export default function Cart() {
         <Header />
         <div id="cart">
           <Card>
-          <TableContainer>
-            <Table
-              style={{
-                textAlign: "center",
-              }}
-            >
-              <TableHead>
-                <TableRow>
-                  <TableCell style={{ width: "16%", textAlign: "center" }}>
-                    Image
-                  </TableCell>
-                  <TableCell style={{ width: "16%", textAlign: "center" }}>
-                    ProductID
-                  </TableCell>
-                  <TableCell style={{ width: "16%", textAlign: "center" }}>
-                    Shop
-                  </TableCell>
-                  <TableCell style={{ width: "16%", textAlign: "center" }}>
-                    Size
-                  </TableCell>
-                  <TableCell style={{ width: "16%", textAlign: "center" }}>
-                    Price
-                  </TableCell>
-                  <TableCell style={{ width: "16%", textAlign: "center" }}>
-                    Quantity
-                  </TableCell>
-                  <TableCell style={{ width: "16%", textAlign: "center" }}>
-                    Remove
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {cart.cart.map((item) => {
-                  return (
-                    <TableRow>
-                      <TableCell style={{ width: "16%", textAlign: "center" }}>
-                        <img
-                          height="150px"
-                          width="150px"
-                          className="ml-8"
-                          alt={item.name}
-                          src={item.image_link}
-                        />
-                      </TableCell>
-                      <TableCell style={{ width: "16%", textAlign: "center" }}>
-                        {item.id}
-                      </TableCell>
-                      <TableCell style={{ width: "16%", textAlign: "center" }}>
-                        {" "}
-                        {item.name}{" "}
-                      </TableCell>
-                      <TableCell style={{ width: "16%", textAlign: "center" }}>
-                        {" "}
-                        <FormControl className={classes.formControl}>
-                      <InputLabel
-                        style={{ color: "black" }}
-                        id="demo-simple-select-label"
-                      >
-                        Size
-                      </InputLabel>
-                      <Select
-                        color="secondary"
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
-                        // value={size}
-                        onChange={handleChange}
-                        className="text-2xl text-black font-black"
-                      >
-                        {/* {prod.sizes.map((size) => {
-                          return (
-                            <MenuItem
-                              className="text-2xl text-black font-black"
-                              value={size}
+            <TableContainer>
+              <Table
+                style={{
+                  textAlign: "center",
+                }}
+              >
+                <TableHead>
+                  <TableRow>
+                    <TableCell style={{ width: "16%", textAlign: "center" }}>
+                      Image
+                    </TableCell>
+                    <TableCell style={{ width: "16%", textAlign: "center" }}>
+                      ProductID
+                    </TableCell>
+                    <TableCell style={{ width: "16%", textAlign: "center" }}>
+                      Shop
+                    </TableCell>
+                    <TableCell style={{ width: "16%", textAlign: "center" }}>
+                      Size
+                    </TableCell>
+                    <TableCell style={{ width: "16%", textAlign: "center" }}>
+                      Price
+                    </TableCell>
+                    <TableCell style={{ width: "16%", textAlign: "center" }}>
+                      Quantity
+                    </TableCell>
+                    <TableCell style={{ width: "16%", textAlign: "center" }}>
+                      Remove
+                    </TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {cart.cart.map((item) => {
+                    return (
+                      <TableRow>
+                        <TableCell
+                          style={{ width: "16%", textAlign: "center" }}
+                        >
+                          <img
+                            height="150px"
+                            width="150px"
+                            className="ml-8"
+                            alt={item.name}
+                            src={item.image_link}
+                          />
+                        </TableCell>
+                        <TableCell
+                          style={{ width: "16%", textAlign: "center" }}
+                        >
+                          {item.id}
+                        </TableCell>
+                        <TableCell
+                          style={{ width: "16%", textAlign: "center" }}
+                        >
+                          {" "}
+                          {item.name}{" "}
+                        </TableCell>
+                        <TableCell
+                          style={{ width: "16%", textAlign: "center" }}
+                        >
+                          {" "}
+                          <FormControl className={classes.formControl}>
+                            <InputLabel
+                              style={{ color: "black" }}
+                              id="demo-simple-select-label"
                             >
-                              <p className="text-lg m-0 text-black font-bold">
-                                {size}
-                              </p>
-                            </MenuItem>
-                          );
-                        })} */}
-                      </Select>
-                    </FormControl>
-                      </TableCell>
-                      <TableCell style={{ width: "16%", textAlign: "center" }}>
-                        {" "}
-                        {item.price}{" "}
-                      </TableCell>
-                      
-                      <TableCell style={{ width: "16%", textAlign: "center" }}>
-                        <div className="flex md:flex-row flex-col justify-evenly">
-                          <Button
-                            style={{
-                              // marginRight: -40,
-                              backgroundColor: "#ff084e",
-                              color: "white",
-                            }}
-                            onClick={() => quan("+", item.id)}
-                          >
-                            +
-                          </Button>
-                          <Typography>{item.quantity}</Typography>
-                          <Button
-                            style={{
-                              // marginLeft: -40,
-                              backgroundColor: "#ff084e",
-                              color: "white",
-                            }}
-                            onClick={() => quan("-", item.id)}
-                          >
-                            -
-                          </Button>
-                        </div>
-                      </TableCell>
-                      <TableCell style={{ width: "16%", textAlign: "center" }}>
-                        <form onSubmit={remove}>
-                          <input name="id" hidden value={item.id} />
-                          <Button
-                            style={{
-                              marginTop: 25,
-                              backgroundColor: "#ff084e",
-                              color: "white",
-                            }}
-                            type="submit"
-                          >
-                            Remove
-                          </Button>
-                        </form>
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
-                <TableRow>
-                  <TableCell style={{ width: "16%", textAlign: "center" }}>
-                    Total Cart Value:{" "}
-                  </TableCell>
-                  <TableCell />
-                  <TableCell />
-                  <TableCell style={{ width: "16%", textAlign: "center" }}>
-                    {totalAmount}
-                  </TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>
-          </TableContainer>
-          
+                              Size
+                            </InputLabel>
+                            <Select
+                              color="secondary"
+                              labelId="demo-simple-select-label"
+                              id={item.id}
+                              defaultValue={item.size}
+                              onChange={(e) => handleChange(e, item.id)}
+                              className="text-2xl text-black font-black"
+                            >
+                              {item.availSize.map((size) => {
+                                return (
+                                  <MenuItem
+                                    className="text-2xl text-black font-black"
+                                    value={size}
+                                  >
+                                    <p className="text-lg m-0 text-black font-bold">
+                                      {size}
+                                    </p>
+                                  </MenuItem>
+                                );
+                              })}
+                            </Select>
+                          </FormControl>
+                        </TableCell>
+                        <TableCell
+                          style={{ width: "16%", textAlign: "center" }}
+                        >
+                          {" "}
+                          {item.price}{" "}
+                        </TableCell>
+
+                        <TableCell
+                          style={{ width: "16%", textAlign: "center" }}
+                        >
+                          <div className="flex md:flex-row flex-col justify-evenly">
+                            <Button
+                              style={{
+                                // marginRight: -40,
+                                backgroundColor: "#ff084e",
+                                color: "white",
+                              }}
+                              onClick={() => quan("+", item.id)}
+                            >
+                              +
+                            </Button>
+                            <Typography>{item.quantity}</Typography>
+                            <Button
+                              style={{
+                                // marginLeft: -40,
+                                backgroundColor: "#ff084e",
+                                color: "white",
+                              }}
+                              onClick={() => quan("-", item.id)}
+                            >
+                              -
+                            </Button>
+                          </div>
+                        </TableCell>
+                        <TableCell
+                          style={{ width: "16%", textAlign: "center" }}
+                        >
+                          <form onSubmit={remove}>
+                            <input name="id" hidden value={item.id} />
+                            <Button
+                              style={{
+                                marginTop: 25,
+                                backgroundColor: "#ff084e",
+                                color: "white",
+                              }}
+                              type="submit"
+                            >
+                              Remove
+                            </Button>
+                          </form>
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
+                  <TableRow>
+                    <TableCell style={{ width: "16%", textAlign: "center" }}>
+                      Total Cart Value:{" "}
+                    </TableCell>
+                    <TableCell />
+                    <TableCell />
+                    <TableCell style={{ width: "16%", textAlign: "center" }}>
+                      {totalAmount}
+                    </TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
+            </TableContainer>
           </Card>
           <div className="flex flex-row">
             <div className="flex-1" />
