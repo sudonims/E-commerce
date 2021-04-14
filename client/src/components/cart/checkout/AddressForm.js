@@ -211,6 +211,7 @@ export default function AddressForm({ classes }) {
         enqueueSnackbar("An unknown error occurred", {
           variant: "error",
         });
+        break;
       default:
         enqueueSnackbar("Something went wrong", {
           variant: "error",

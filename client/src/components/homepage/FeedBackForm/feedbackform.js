@@ -45,7 +45,7 @@ export default function Feedback({ open, setOpen }) {
             }
           })
           .catch((err) => {
-            console.log(err);
+          
             enqueueSnackbar("Error Occured\nTry after some time", {
               variant: "error",
             });

@@ -16,7 +16,6 @@ const createCard = (info) => {
 };
 
 const ContactUs = () => {
-  console.log(Info);
   return (
     <>
       <Head />

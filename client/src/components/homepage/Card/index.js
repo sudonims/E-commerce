@@ -31,7 +31,6 @@ export default function HomePage() {
 
   const updateSize = (size) => {
     setSize(size);
-    console.log(size);
   };
 
   return (

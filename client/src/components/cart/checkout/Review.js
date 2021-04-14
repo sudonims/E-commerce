@@ -1,7 +1,6 @@
 import React from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
-import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -37,13 +36,9 @@ export default function Review({ classes1, buyNow }) {
   console.log(cart);
   const amount = cart.cart.reduce((a, b) => a + (b["effectivePrice"] || 0), 0);
   const { currentUser } = React.useContext(AuthContext);
-  const {
-    activeStep,
-    setActiveStep,
-    orderId,
-    setOrderId,
-    address,
-  } = React.useContext(StepOrderContext);
+  const { activeStep, setActiveStep, address } = React.useContext(
+    StepOrderContext
+  );
 
   const placeOrder = async (id) => {
     APP.auth()
@@ -54,11 +49,10 @@ export default function Review({ classes1, buyNow }) {
         );
 
         if (!res) {
-          {
-            enqueueSnackbar("Razorpay SDK failed to load. Are you online?", {
-              variant: "warning",
-            });
-          }
+          enqueueSnackbar("Razorpay SDK failed to load. Are you online?", {
+            variant: "warning",
+          });
+
           return;
         }
 
@@ -89,11 +83,9 @@ export default function Review({ classes1, buyNow }) {
               .then((res) => {
                 if (res.status === 200) {
                   if (res.data === "success") {
-                    {
-                      enqueueSnackbar("Payment Success!!", {
-                        variant: "success",
-                      });
-                    }
+                    enqueueSnackbar("Payment Success!!", {
+                      variant: "success",
+                    });
                   }
                 }
               });

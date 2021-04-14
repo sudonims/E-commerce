@@ -41,37 +41,67 @@ export default function SizeUL() {
   return (
     <ul className="d-flex justify-content-between">
       <li>
-        <a id="XS" className={"custom-color"} onClick={updateSizeColor}>
+        <button
+          style={{ width: 30 }}
+          id="XS"
+          className={"custom-color"}
+          onClick={updateSizeColor}
+        >
           XS
-        </a>
+        </button>
       </li>
       <li>
-        <a id="S" className={"custom-color"} onClick={updateSizeColor}>
+        <button
+          style={{ width: 30 }}
+          id="S"
+          className={"custom-color"}
+          onClick={updateSizeColor}
+        >
           {" "}
           S
-        </a>
+        </button>
       </li>
       <li>
-        <a id="M" className={"custom-color"} onClick={updateSizeColor}>
+        <button
+          style={{ width: 30 }}
+          id="M"
+          className={"custom-color"}
+          onClick={updateSizeColor}
+        >
           {" "}
           M
-        </a>
+        </button>
       </li>
       <li>
-        <a id="L" className={"custom-color"} onClick={updateSizeColor}>
+        <button
+          style={{ width: 30 }}
+          id="L"
+          className={"custom-color"}
+          onClick={updateSizeColor}
+        >
           {" "}
           L
-        </a>
+        </button>
       </li>
       <li>
-        <a id="XL" className={"custom-color"} onClick={updateSizeColor}>
+        <button
+          style={{ width: 30 }}
+          id="XL"
+          className={"custom-color"}
+          onClick={updateSizeColor}
+        >
           XL
-        </a>
+        </button>
       </li>
       <li>
-        <a id="XXL" className={"custom-color"} onClick={updateSizeColor}>
+        <button
+          style={{ width: 30 }}
+          id="XXL"
+          className={"custom-color"}
+          onClick={updateSizeColor}
+        >
           XXL
-        </a>
+        </button>
       </li>
     </ul>
   );

@@ -36,7 +36,6 @@ const Profile = () => {
     var a = 0,
       b = 0,
       c = 0;
-    var message = "";
     try {
       if (email.value !== currentUser.email) {
         APP.auth()
@@ -44,19 +43,19 @@ const Profile = () => {
           .then(() => {
             a = 1;
             // alert("Email will change once you verify");
-            {
+            
               enqueueSnackbar("Email will change once you verify", {
                 variant: "warning",
               });
-            }
+            
           })
           .catch((err) => {
             console.log(err);
-            {
+            
               enqueueSnackbar("Check new email and try again after sign in", {
                 variant: "warning",
               });
-            }
+            
           });
       }
 
@@ -67,11 +66,11 @@ const Profile = () => {
           })
           .then(() => {
             b = 1;
-            {
+            
               enqueueSnackbar("Name Updated", {
                 variant: "success",
               });
-            }
+            
           })
           .catch((err) => {
             alert("There is something error while updating name");
@@ -100,21 +99,21 @@ const Profile = () => {
               .currentUser.updatePhoneNumber(cred)
               .then(() => {
                 c = 1;
-                {
+                
                   enqueueSnackbar("Phone Numeber Verified and changed!!", {
                     variant: "success",
                   });
-                }
+                
                 (a || b || c) && window.location.reload();
               });
           })
           .catch((err) => {
             if (err.code === "auth/invalid-phone-number") {
-              {
+              
                 enqueueSnackbar("Check phone Number Again!!", {
                   variant: "warning",
                 });
-              }
+              
             }
           });
       }
@@ -239,6 +238,7 @@ const Profile = () => {
                   }}
                 >
                   <img
+                    alt="your_img"
                     className="object-cover"
                     src={currentUser.photoURL}
                     height="100%"
@@ -342,14 +342,14 @@ const Profile = () => {
                             .currentUser.sendEmailVerification()
                             .then(() => {
                               // alert();
-                              {
+                              
                                 enqueueSnackbar(
                                   "Email was sent to your registered emailid for verification",
                                   {
                                     variant: "info",
                                   }
                                 );
-                              }
+                              
                             })
                         }
                         style={{ backgroundColor: "#ff084e", color: "white" }}
@@ -435,11 +435,11 @@ export default function Header({ rightlinks, leftlinks }) {
                     APP.auth()
                       .signOut()
                       .then(() => {
-                        {
+                        
                           enqueueSnackbar("SignOut Successfull", {
                             variant: "success",
                           });
-                        }
+                        
                         window.location.href = "/";
                       });
                   }}
@@ -485,7 +485,7 @@ export default function Header({ rightlinks, leftlinks }) {
       <header className="header_area bg-img background-overlay-white">
         <div className="top_header_area flex flex-row m-2 justify-between">
           <div className="">
-            <a href="#">
+            <a href="/">
               <img
                 src={Logo}
                 alt=""
@@ -560,11 +560,11 @@ export default function Header({ rightlinks, leftlinks }) {
                             .signOut()
                             .then(() => {
                               // alert("SignOut Successfull");
-                              {
+                              
                                 enqueueSnackbar("SignOut Successfull", {
                                   variant: "success",
                                 });
-                              }
+                              
                             });
                         }}
                         style={{
@@ -590,11 +590,11 @@ export default function Header({ rightlinks, leftlinks }) {
                         onClick={() => {
                           if (!currentUser.emailVerified) {
                             // alert("Please Verify Your Email");
-                            {
+                            
                               enqueueSnackbar("Please Verify Your Email", {
                                 variant: "info",
                               });
-                            }
+                            
                           } else {
                             window.location.href = "/cart";
                           }
