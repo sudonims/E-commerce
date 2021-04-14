@@ -12,6 +12,7 @@ import Review from "./Review";
 import Header from "../../starters/header";
 import Footer from "../../starters/footer";
 import StepOrderContext from "./stepOrderContext";
+import AddressContext from "./addressContext";
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -52,7 +53,6 @@ const useStyles = makeStyles((theme) => ({
 
 const steps = ["Shipping address", "Review your order"];
 
-
 export default function Checkout({ buyNow }) {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
@@ -82,58 +82,58 @@ export default function Checkout({ buyNow }) {
         setActiveStep,
         orderId,
         setOrderId,
-        address,
-        updateAddress,
       }}
     >
-      <CssBaseline />
-      <AppBar position="absolute" color="default" className={classes.appBar}>
-        <Header />
-      </AppBar>
-      <main className={classes.layout}>
-        <Paper className={classes.paper}>
-          <Typography
-            style={{
-              padding: "10px 0px 10px 0px",
-              borderRadius: 10,
-              backgroundColor: "#ff084e",
-              color: "white",
-              fontWeight: 900,
-            }}
-            component="h1"
-            variant="h4"
-            align="center"
-          >
-            Checkout with DNA Match
-          </Typography>
-          <Stepper activeStep={activeStep} className={classes.stepper}>
-            {steps.map((label) => (
-              <Step key={label}>
-                <StepLabel>{label}</StepLabel>
-              </Step>
-            ))}
-          </Stepper>
-          <React.Fragment>
-            {activeStep === steps.length ? (
-              <React.Fragment>
-                <Typography variant="h5" gutterBottom>
-                  Thank you for your order.
-                </Typography>
-                <Typography variant="subtitle1">
-                  Your order number is {orderId}. We have emailed your order
-                  confirmation, and will send you an update when your order has
-                  shipped.
-                </Typography>
-              </React.Fragment>
-            ) : (
-              <React.Fragment>
-                {getStepContent(activeStep, classes, buyNow)}
-              </React.Fragment>
-            )}
-          </React.Fragment>
-        </Paper>
-        <Footer />
-      </main>
+      <AddressContext.Provider value={{ address, updateAddress }}>
+        <CssBaseline />
+        <AppBar position="absolute" color="default" className={classes.appBar}>
+          <Header />
+        </AppBar>
+        <main className={classes.layout}>
+          <Paper className={classes.paper}>
+            <Typography
+              style={{
+                padding: "10px 0px 10px 0px",
+                borderRadius: 10,
+                backgroundColor: "#ff084e",
+                color: "white",
+                fontWeight: 900,
+              }}
+              component="h1"
+              variant="h4"
+              align="center"
+            >
+              Checkout with DNA Match
+            </Typography>
+            <Stepper activeStep={activeStep} className={classes.stepper}>
+              {steps.map((label) => (
+                <Step key={label}>
+                  <StepLabel>{label}</StepLabel>
+                </Step>
+              ))}
+            </Stepper>
+            <React.Fragment>
+              {activeStep === steps.length ? (
+                <React.Fragment>
+                  <Typography variant="h5" gutterBottom>
+                    Thank you for your order.
+                  </Typography>
+                  <Typography variant="subtitle1">
+                    Your order number is {orderId}. We have emailed your order
+                    confirmation, and will send you an update when your order
+                    has shipped.
+                  </Typography>
+                </React.Fragment>
+              ) : (
+                <React.Fragment>
+                  {getStepContent(activeStep, classes, buyNow)}
+                </React.Fragment>
+              )}
+            </React.Fragment>
+          </Paper>
+          <Footer />
+        </main>
+      </AddressContext.Provider>
     </StepOrderContext.Provider>
   );
 }
