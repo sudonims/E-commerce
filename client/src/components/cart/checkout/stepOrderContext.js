@@ -5,8 +5,6 @@ const StepOrderContext = React.createContext({
   setActiveStep: () => {},
   orderId: "",
   setOrderId: () => {},
-  address: {},
-  updateAddress: () => {},
 });
 
 export default StepOrderContext;
