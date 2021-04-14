@@ -64,11 +64,11 @@ function FormDialog({ open, setOpen }) {
     APP.auth()
       .sendPasswordResetEmail(a)
       .then(() => {
-        {
+        
           enqueueSnackbar("Email sent. Check your Email for reset!!", {
             variant: "success",
           });
-        }
+        
       });
 
     setOpen();
@@ -147,21 +147,21 @@ export default function SignIn() {
     APP.auth()
       .signInWithPopup(provider)
       .then((res) => {
-        {
+        
           enqueueSnackbar("Signed IN!!", {
             variant: "success",
           });
-        }
+        
         window.location.href = "/";
       })
       .catch((err) => {
         console.log(err);
-        if (err.code == "auth/user-not-found") {
-          {
+        if (err.code === "auth/user-not-found") {
+          
             enqueueSnackbar("Oops!! User not found!!", {
               variant: "warning",
             });
-          }
+          
           window.location.reload();
         }
       });
@@ -183,21 +183,21 @@ export default function SignIn() {
         APP.auth()
           .signInWithEmailAndPassword(email.value, password.value)
           .then((res) => {
-            {
+            
               enqueueSnackbar("Signed IN!!", {
                 variant: "success",
               });
-            }
+            
             window.location.href = "/";
           })
           .catch((err) => {
             console.log(err);
-            if (err.code == "auth/user-not-found") {
-              {
+            if (err.code === "auth/user-not-found") {
+              
                 enqueueSnackbar("Oops user not found!!", {
                   variant: "info",
                 });
-              }
+              
               window.location.reload();
             }
           });
@@ -209,7 +209,7 @@ export default function SignIn() {
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <div className={classes.paper}>
-          <img width={100} height={100} src={logo} />
+          <img alt="img_logo" width={100} height={100} src={logo} />
 
           <Typography component="h1" variant="h5">
             Sign in
@@ -288,7 +288,7 @@ export default function SignIn() {
             onClick={handleGoogleSignIN}
           >
             <Avatar style={{ backgroundColor: "rgba(0, 0, 0, 0)" }}>
-              <img height={24} width={24} src={Google} />
+              <img alt="img_google" height={24} width={24} src={Google} />
             </Avatar>
             <p className="mt-2 content-center">Google</p>
           </button>

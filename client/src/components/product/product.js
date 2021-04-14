@@ -1,14 +1,4 @@
-import {
-  Avatar,
-  Button,
-  Card,
-  Container,
-  FormControlLabel,
-  Grid,
-  Radio,
-  RadioGroup,
-  Typography,
-} from "@material-ui/core";
+import { Button, Card, Container, Grid, Typography } from "@material-ui/core";
 import React from "react";
 import { AuthContext } from "../firebase/firebase";
 import Footer from "../starters/footer";
@@ -16,12 +6,9 @@ import Header from "../starters/header";
 import Cookies from "js-cookie";
 import Info from "../homepage/Card/infoforcard.js";
 import { useSnackbar } from "notistack";
-import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
-import PopupState, { bindTrigger, bindMenu } from "material-ui-popup-state";
 import { makeStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
-import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 
@@ -70,19 +57,17 @@ export default function Product({ prodId }) {
 
   const buyNow = () => {
     if (!currentUser) {
-      {
-        enqueueSnackbar("Please Join us", {
-          variant: "info",
-        });
-      }
+      enqueueSnackbar("Please Join us", {
+        variant: "info",
+      });
+
       return;
     }
     if (!currentUser.emailVerified) {
-      {
-        enqueueSnackbar("Your email is not verified!!", {
-          variant: "info",
-        });
-      }
+      enqueueSnackbar("Your email is not verified!!", {
+        variant: "info",
+      });
+
       return;
     }
 
@@ -109,19 +94,17 @@ export default function Product({ prodId }) {
     var cart = Cookies.getJSON("cart");
     e.preventDefault();
     if (!currentUser) {
-      {
-        enqueueSnackbar("Please Join us", {
-          variant: "info",
-        });
-      }
+      enqueueSnackbar("Please Join us", {
+        variant: "info",
+      });
+
       return;
     }
     if (!currentUser.emailVerified) {
-      {
-        enqueueSnackbar("Your email is not verified!!", {
-          variant: "info",
-        });
-      }
+      enqueueSnackbar("Your email is not verified!!", {
+        variant: "info",
+      });
+
       return;
     }
 
@@ -138,17 +121,16 @@ export default function Product({ prodId }) {
         effectivePrice: parseFloat(prod.price),
         size,
       });
-      {
-        enqueueSnackbar("Added to cart!!", {
-          variant: "success",
-        });
-      }
+
+      enqueueSnackbar("Added to cart!!", {
+        variant: "success",
+      });
     } else {
-      {
+      
         enqueueSnackbar("The item is already added to the cart", {
           variant: "info",
         });
-      }
+      
     }
 
     console.log(cart);
@@ -172,7 +154,7 @@ export default function Product({ prodId }) {
           >
             <Grid container>
               <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
-                <img src={prod.img} alt="image" />
+                <img src={prod.img} alt="img" />
               </Grid>
               <Grid md={1} />
               <Grid item xs={12} sm={12} md={7} lg={7} xl={7}>

@@ -13,18 +13,12 @@ import StepOrderContext from "./stepOrderContext";
 
 export default function AddressForm({ classes }) {
   const { enqueueSnackbar } = useSnackbar();
-<<<<<<< HEAD
-  const { activeStep, setActiveStep, address, updateAddress } = React.useContext(
-    StepOrderContext
-  );
-=======
   const {
     activeStep,
     setActiveStep,
     address,
     updateAddress,
   } = React.useContext(StepOrderContext);
->>>>>>> c83f40e14be4e8a5f0d3ba8df72c513b9108fbb5
 
   const [open, setOpen] = React.useState(false);
   const [position, setPosition] = React.useState(null);
@@ -114,6 +108,7 @@ export default function AddressForm({ classes }) {
         enqueueSnackbar("An unknown error occurred", {
           variant: "error",
         });
+        break;
       default:
         enqueueSnackbar("Something went wrong", {
           variant: "error",
