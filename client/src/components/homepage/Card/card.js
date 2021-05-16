@@ -73,8 +73,8 @@ const Card = (props) => {
           </div>
         </div>
         <div className="product-description">
+          <h1 className="text-xl font-black">{props.info.name}</h1>
           <h4 className="product-price">&#8377; {props.info.price}</h4>
-          <p>{props.info.description}</p>
           <form onSubmit={addToCart}>
             <Button
               type="submit"

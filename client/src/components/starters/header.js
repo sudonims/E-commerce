@@ -43,19 +43,17 @@ const Profile = () => {
           .then(() => {
             a = 1;
             // alert("Email will change once you verify");
-            
-              enqueueSnackbar("Email will change once you verify", {
-                variant: "warning",
-              });
-            
+
+            enqueueSnackbar("Email will change once you verify", {
+              variant: "warning",
+            });
           })
           .catch((err) => {
             console.log(err);
-            
-              enqueueSnackbar("Check new email and try again after sign in", {
-                variant: "warning",
-              });
-            
+
+            enqueueSnackbar("Check new email and try again after sign in", {
+              variant: "warning",
+            });
           });
       }
 
@@ -66,11 +64,10 @@ const Profile = () => {
           })
           .then(() => {
             b = 1;
-            
-              enqueueSnackbar("Name Updated", {
-                variant: "success",
-              });
-            
+
+            enqueueSnackbar("Name Updated", {
+              variant: "success",
+            });
           })
           .catch((err) => {
             alert("There is something error while updating name");
@@ -99,21 +96,19 @@ const Profile = () => {
               .currentUser.updatePhoneNumber(cred)
               .then(() => {
                 c = 1;
-                
-                  enqueueSnackbar("Phone Numeber Verified and changed!!", {
-                    variant: "success",
-                  });
-                
+
+                enqueueSnackbar("Phone Numeber Verified and changed!!", {
+                  variant: "success",
+                });
+
                 (a || b || c) && window.location.reload();
               });
           })
           .catch((err) => {
             if (err.code === "auth/invalid-phone-number") {
-              
-                enqueueSnackbar("Check phone Number Again!!", {
-                  variant: "warning",
-                });
-              
+              enqueueSnackbar("Check phone Number Again!!", {
+                variant: "warning",
+              });
             }
           });
       }
@@ -152,7 +147,6 @@ const Profile = () => {
         var old_ref = storage.refFromURL(currentUser.photoURL);
         old_ref.delete().then(() => {
           // alert("Photo updated successfully");
-         
           // window.location.reload();
         });
       }
@@ -342,14 +336,13 @@ const Profile = () => {
                             .currentUser.sendEmailVerification()
                             .then(() => {
                               // alert();
-                              
-                                enqueueSnackbar(
-                                  "Email was sent to your registered emailid for verification",
-                                  {
-                                    variant: "info",
-                                  }
-                                );
-                              
+
+                              enqueueSnackbar(
+                                "Email was sent to your registered emailid for verification",
+                                {
+                                  variant: "info",
+                                }
+                              );
                             })
                         }
                         style={{ backgroundColor: "#ff084e", color: "white" }}
@@ -435,11 +428,10 @@ export default function Header({ rightlinks, leftlinks }) {
                     APP.auth()
                       .signOut()
                       .then(() => {
-                        
-                          enqueueSnackbar("SignOut Successfull", {
-                            variant: "success",
-                          });
-                        
+                        enqueueSnackbar("SignOut Successfull", {
+                          variant: "success",
+                        });
+
                         window.location.href = "/";
                       });
                   }}
@@ -488,10 +480,9 @@ export default function Header({ rightlinks, leftlinks }) {
             <a href="/">
               <img
                 src={Logo}
-                alt=""
-                height={width > 1200 ? width * 0.1 : "100"}
-                width={width > 1200 ? width * 0.1 : "100"}
-                style={{}}
+                alt="Logo"
+                height={width > 1200 ? width * 0.075 : "100"}
+                width={width > 1200 ? width * 0.075 : "100"}
               />
             </a>
           </div>
@@ -560,11 +551,10 @@ export default function Header({ rightlinks, leftlinks }) {
                             .signOut()
                             .then(() => {
                               // alert("SignOut Successfull");
-                              
-                                enqueueSnackbar("SignOut Successfull", {
-                                  variant: "success",
-                                });
-                              
+
+                              enqueueSnackbar("SignOut Successfull", {
+                                variant: "success",
+                              });
                             });
                         }}
                         style={{
@@ -590,11 +580,10 @@ export default function Header({ rightlinks, leftlinks }) {
                         onClick={() => {
                           if (!currentUser.emailVerified) {
                             // alert("Please Verify Your Email");
-                            
-                              enqueueSnackbar("Please Verify Your Email", {
-                                variant: "info",
-                              });
-                            
+
+                            enqueueSnackbar("Please Verify Your Email", {
+                              variant: "info",
+                            });
                           } else {
                             window.location.href = "/cart";
                           }

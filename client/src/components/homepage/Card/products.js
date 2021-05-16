@@ -7,9 +7,9 @@ export default function Products() {
   console.log(products);
   return (
     <div className="flex flex-row flex-wrap">
-      {products.map((prod) => {
+      {products.map((prod, i) => {
         return (
-          <div style={{ width: 350 }}>
+          <div key={i} style={{ width: 350 }}>
             <Card info={prod} />
           </div>
         );

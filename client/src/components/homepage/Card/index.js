@@ -14,6 +14,7 @@ export default function HomePage() {
 
   React.useEffect(() => {
     axios.get(server + "homeprods").then((res) => {
+      console.log(res.data);
       setProducts((products) => products.concat(res.data));
     });
   }, []);

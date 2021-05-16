@@ -1,31 +1,31 @@
 import React from "react";
 import Cookies from "js-cookie";
 import "jspdf-autotable";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import Header from "../starters/header.js";
-import Checkout from "./checkout/Checkout.js";
 import Card from "@material-ui/core/Card";
-
-import { Button, Typography } from "@material-ui/core";
+import Button from "@material-ui/core/Button";
 import { Route, Switch, useRouteMatch } from "react-router";
 import { makeStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
+import CardActionArea from "@material-ui/core/CardActionArea";
+import CardActions from "@material-ui/core/CardActions";
+import CardContent from "@material-ui/core/CardContent";
+import CardMedia from "@material-ui/core/CardMedia";
+import RemoveIcon from "@material-ui/icons/Remove";
+import AddIcon from "@material-ui/icons/Add";
+
+import Header from "../starters/header.js";
+import Checkout from "./checkout/Checkout.js";
+import { Avatar, IconButton } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
-    margin: theme.spacing(1),
     minWidth: 120,
   },
-  selectEmpty: {
-    marginTop: theme.spacing(2),
+  cardRoot: {
+    maxWidth: 345,
   },
 }));
 
@@ -106,180 +106,127 @@ export default function Cart() {
     <Switch>
       <Route exact path={`${url}`}>
         <Header />
-        <div id="cart">
-          <Card>
-            <TableContainer>
-              <Table
-                style={{
-                  textAlign: "center",
-                }}
-              >
-                <TableHead>
-                  <TableRow>
-                    <TableCell style={{ width: "16%", textAlign: "center" }}>
-                      Image
-                    </TableCell>
-                    <TableCell style={{ width: "16%", textAlign: "center" }}>
-                      ProductID
-                    </TableCell>
-                    <TableCell style={{ width: "16%", textAlign: "center" }}>
-                      Shop
-                    </TableCell>
-                    <TableCell style={{ width: "16%", textAlign: "center" }}>
-                      Size
-                    </TableCell>
-                    <TableCell style={{ width: "16%", textAlign: "center" }}>
-                      Price
-                    </TableCell>
-                    <TableCell style={{ width: "16%", textAlign: "center" }}>
-                      Quantity
-                    </TableCell>
-                    <TableCell style={{ width: "16%", textAlign: "center" }}>
-                      Remove
-                    </TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {cart.cart.map((item) => {
-                    return (
-                      <TableRow>
-                        <TableCell
-                          style={{ width: "16%", textAlign: "center" }}
-                        >
-                          <img
-                            height="150px"
-                            width="150px"
-                            className="ml-8"
-                            alt={item.name}
-                            src={item.image_link}
-                          />
-                        </TableCell>
-                        <TableCell
-                          style={{ width: "16%", textAlign: "center" }}
-                        >
-                          {item.id}
-                        </TableCell>
-                        <TableCell
-                          style={{ width: "16%", textAlign: "center" }}
-                        >
-                          {" "}
-                          {item.name}{" "}
-                        </TableCell>
-                        <TableCell
-                          style={{ width: "16%", textAlign: "center" }}
-                        >
-                          {" "}
-                          <FormControl className={classes.formControl}>
-                            <InputLabel
-                              style={{ color: "black" }}
-                              id="demo-simple-select-label"
-                            >
-                              Size
-                            </InputLabel>
-                            <Select
-                              color="secondary"
-                              labelId="demo-simple-select-label"
-                              id={item.id}
-                              defaultValue={item.size}
-                              onChange={(e) => handleChange(e, item.id)}
-                              className="text-2xl text-black font-black"
-                            >
-                              {item.availSize.map((size) => {
-                                return (
-                                  <MenuItem
-                                    className="text-2xl text-black font-black"
-                                    value={size}
-                                  >
-                                    <p className="text-lg m-0 text-black font-bold">
-                                      {size}
-                                    </p>
-                                  </MenuItem>
-                                );
-                              })}
-                            </Select>
-                          </FormControl>
-                        </TableCell>
-                        <TableCell
-                          style={{ width: "16%", textAlign: "center" }}
-                        >
-                          {" "}
-                          {item.price}{" "}
-                        </TableCell>
-
-                        <TableCell
-                          style={{ width: "16%", textAlign: "center" }}
-                        >
-                          <div className="flex md:flex-row flex-col justify-evenly">
-                            <Button
-                              style={{
-                                // marginRight: -40,
-                                backgroundColor: "#ff084e",
-                                color: "white",
-                              }}
-                              onClick={() => quan("+", item.id)}
-                            >
-                              +
-                            </Button>
-                            <Typography>{item.quantity}</Typography>
-                            <Button
-                              style={{
-                                // marginLeft: -40,
-                                backgroundColor: "#ff084e",
-                                color: "white",
-                              }}
-                              onClick={() => quan("-", item.id)}
-                            >
-                              -
-                            </Button>
+        <div className="flex">
+          <div className="flex-1" />
+          <div
+            id="cart"
+            className="w-2/4 flex flex-row flex-wrap justify-between"
+          >
+            {cart.cart.map((item) => {
+              return (
+                <div className="mb-4">
+                  <Card className={classes.cardRoot}>
+                    <CardActionArea>
+                      <CardMedia
+                        component="img"
+                        alt="Contemplative Reptile"
+                        height="100px"
+                        width="50vw"
+                        image={item.image_link}
+                        title="Contemplative Reptile"
+                      />
+                      <CardContent>
+                        <div className="flex flex-col">
+                          <div className="flex flex-row">
+                            <p className="font-black text-3xl mb-2">
+                              {item.name}
+                            </p>
+                            <p className="font-black text-3xl mb-2">
+                              &#8377; {item.price}
+                            </p>
                           </div>
-                        </TableCell>
-                        <TableCell
-                          style={{ width: "16%", textAlign: "center" }}
+                          <div className="flex flex-row">
+                            <div className="flex flex-row">
+                              <IconButton onClick={() => quan("+", item.id)}>
+                                <AddIcon />
+                              </IconButton>
+                              <Avatar
+                                style={{
+                                  background: "none",
+                                  color: "black",
+                                  fontWeight: 500,
+                                  paddingTop: 10,
+                                }}
+                              >
+                                {item.quantity}
+                              </Avatar>
+                              <IconButton onClick={() => quan("-", item.id)}>
+                                <RemoveIcon />
+                              </IconButton>
+                            </div>
+                            <div>
+                              <FormControl className={classes.formControl}>
+                                <InputLabel id="demo-simple-select-label">
+                                  <p className="font-black text-2xl">Size</p>
+                                </InputLabel>
+                                <Select
+                                  color="secondary"
+                                  labelId="demo-simple-select-label"
+                                  id={item.id}
+                                  defaultValue={item.size}
+                                  onChange={(e) => handleChange(e, item.id)}
+                                  className="text-2xl text-black font-black"
+                                >
+                                  {item.availSize.map((size) => {
+                                    return (
+                                      <MenuItem
+                                        className="text-2xl text-black font-black"
+                                        value={size}
+                                      >
+                                        <p className="mt-1 m-0 text-black font-bold">
+                                          {size}
+                                        </p>
+                                      </MenuItem>
+                                    );
+                                  })}
+                                </Select>
+                              </FormControl>
+                            </div>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </CardActionArea>
+                    <CardActions>
+                      <form className="m-0 w-full" onSubmit={remove}>
+                        <input name="id" hidden value={item.id} />
+                        <Button
+                          style={{
+                            backgroundColor: "#ff084e",
+                            color: "white",
+                            width: "100%",
+                          }}
+                          type="submit"
                         >
-                          <form onSubmit={remove}>
-                            <input name="id" hidden value={item.id} />
-                            <Button
-                              style={{
-                                marginTop: 25,
-                                backgroundColor: "#ff084e",
-                                color: "white",
-                              }}
-                              type="submit"
-                            >
-                              Remove
-                            </Button>
-                          </form>
-                        </TableCell>
-                      </TableRow>
-                    );
-                  })}
-                  <TableRow>
-                    <TableCell style={{ width: "16%", textAlign: "center" }}>
-                      Total Cart Value:{" "}
-                    </TableCell>
-                    <TableCell />
-                    <TableCell />
-                    <TableCell style={{ width: "16%", textAlign: "center" }}>
-                      {totalAmount}
-                    </TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </Card>
-          <div className="flex flex-row">
-            <div className="flex-1" />
-            <Button
-              onClick={() => {
-                window.location.href = "/cart/checkout";
-              }}
-              style={{ backgroundColor: "#ff084e", color: "white" }}
-              disabled={cart.cart.length == 0}
-            >
-              Pay
-            </Button>
-            <div className="flex-1" />
+                          Remove
+                        </Button>
+                      </form>
+                    </CardActions>
+                  </Card>
+                </div>
+              );
+            })}
           </div>
+          <div className="flex-1" />
+        </div>
+        <div className="flex flex-row m-4">
+          <div className="flex-1" />
+          <Button
+            onClick={() => {
+              window.location.href = "/cart/checkout";
+            }}
+            style={{
+              backgroundColor: "#ff084e",
+              width: "12.5%",
+              height: 50,
+              color: "white",
+              fontWeight: 900,
+              fontSize: 20,
+            }}
+            disabled={cart.cart.length == 0}
+          >
+            Pay {totalAmount} &#8377;
+          </Button>
+          <div className="flex-1" />
         </div>
       </Route>
       <Route exact path={`${url}/checkout`}>

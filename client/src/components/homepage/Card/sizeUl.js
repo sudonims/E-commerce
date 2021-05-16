@@ -9,6 +9,14 @@ export default function SizeUL() {
   const { size, updateSize } = React.useContext(SizeContext);
   const { updateProducts } = React.useContext(ProdsContext);
   const { enqueueSnackbar } = useSnackbar();
+
+  React.useEffect(() => {
+    updateSizeColor({
+      target: {
+        id: size,
+      },
+    });
+  }, []);
   const updateSizeColor = (e) => {
     var id = e.target.id;
     updateSize(id);
