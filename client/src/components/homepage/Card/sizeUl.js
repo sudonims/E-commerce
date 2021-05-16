@@ -22,8 +22,10 @@ export default function SizeUL() {
     updateSize(id);
     ["XS", "S", "M", "L", "XL", "XXL"].forEach((sz) => {
       document.getElementById(sz).style.background = "none";
+      document.getElementById(sz).style.color = "black";
     });
-    document.getElementById(id).style.backgroundColor = "black";
+    document.getElementById(id).style.backgroundColor = "rgb(255, 8, 78)";
+    document.getElementById(id).style.color = "white";
     axios
       .post(server + "product-by-filter", {
         size: id,

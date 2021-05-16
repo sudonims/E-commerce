@@ -18,6 +18,13 @@ app.use(
   morgan(":method :url :status :res[content-length] - :response-time ms")
 );
 
+if (process.env.NODE_ENV == "production") {
+  app.use(express.static("../client/build"));
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "../client", "build", "index.html"));
+  });
+}
+
 app.use("/", index);
 app.use("/api", verifyToken, securedRoutes);
 
