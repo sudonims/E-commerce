@@ -1,5 +1,6 @@
 const express = require("express");
 const morgan = require("morgan");
+const path = require("path");
 var cors = require("cors");
 const app = express();
 
@@ -25,8 +26,8 @@ if (process.env.NODE_ENV == "production") {
   });
 }
 
-app.use("/", index);
-app.use("/api", verifyToken, securedRoutes);
+app.use("/server", index);
+app.use("/server/api", verifyToken, securedRoutes);
 
 const PORT = process.env.PORT || 5000;
 
