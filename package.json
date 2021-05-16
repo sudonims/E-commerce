@@ -6,9 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server/server.js",
-    "setup": "npm install --prefix server; npm install --prefix client",
+    "setup": "npm install --prefix client && npm install --prefix server",
     "build": "npm run build --prefix client",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm run setup; npm run build"
+    "heroku-postbuild": "NODE_ENV=false npm run setup && npm install --prefix client -D tailwindcss@npm:@tailwindcss/postcss7-compat postcss@^7 autoprefixer@^9 && npm run build"
   },
   "keywords": [],
   "author": "",
