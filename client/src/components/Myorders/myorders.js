@@ -128,7 +128,7 @@ export default function Myorders() {
       .currentUser.getIdToken()
       .then((token) => {
         axios
-          .get(server + "api/myorders", {
+          .get(server + "api/myord", {
             headers: {
               authorization: token,
             },

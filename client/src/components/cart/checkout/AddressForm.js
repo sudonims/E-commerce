@@ -42,7 +42,6 @@ const FormCust = ({ address, classes, getAddres, setOpen }) => {
     setOpen();
   };
 
-  console.log(address);
   return (
     <form onSubmit={addressSubmit}>
       <Grid container spacing={3}>
@@ -53,8 +52,8 @@ const FormCust = ({ address, classes, getAddres, setOpen }) => {
             name="firstName"
             label="First name"
             fullWidth
-            // autoComplete="given-name"
-            value={address ? address.firstName : ""}
+            autoComplete="given-name"
+            defaultValue={address ? address.firstName : ""}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -64,8 +63,8 @@ const FormCust = ({ address, classes, getAddres, setOpen }) => {
             name="lastName"
             label="Last name"
             fullWidth
-            // autoComplete="family-name"
-            value={address ? address.lastName : ""}
+            autoComplete="family-name"
+            defaultValue={address ? address.lastName : ""}
           />
         </Grid>
         <Grid item xs={12}>
@@ -75,8 +74,8 @@ const FormCust = ({ address, classes, getAddres, setOpen }) => {
             name="address1"
             label="Address line 1"
             fullWidth
-            // autoComplete="shipping address-line1"
-            value={address ? address.house_number : ""}
+            autoComplete="shipping address-line1"
+            defaultValue={address ? address.house_number : ""}
           />
         </Grid>
         <Grid item xs={12}>
@@ -85,8 +84,8 @@ const FormCust = ({ address, classes, getAddres, setOpen }) => {
             name="address2"
             label="Address line 2"
             fullWidth
-            // autoComplete="shipping address-line2"
-            value={address ? address.address2 : ""}
+            autoComplete="shipping address-line2"
+            defaultValue={address ? address.address2 : ""}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -96,8 +95,8 @@ const FormCust = ({ address, classes, getAddres, setOpen }) => {
             name="city"
             label="City"
             fullWidth
-            // autoComplete="shipping address-level2"
-            value={address ? address.town : ""}
+            autoComplete="shipping address-level2"
+            defaultValue={address ? address.town : ""}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -106,7 +105,7 @@ const FormCust = ({ address, classes, getAddres, setOpen }) => {
             name="state"
             label="State/Province/Region"
             fullWidth
-            value={address ? address.state : ""}
+            defaultValue={address ? address.state : ""}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -116,8 +115,8 @@ const FormCust = ({ address, classes, getAddres, setOpen }) => {
             name="zip"
             label="Zip / Postal code"
             fullWidth
-            // autoComplete="shipping postal-code"
-            value={address ? address.postcode : ""}
+            autoComplete="shipping postal-code"
+            defaultValue={address ? address.postcode : ""}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -127,8 +126,8 @@ const FormCust = ({ address, classes, getAddres, setOpen }) => {
             name="country"
             label="Country"
             fullWidth
-            // autoComplete="shipping country"
-            value={address ? address.country : ""}
+            autoComplete="shipping country"
+            defaultValue={address ? address.country : ""}
           />
         </Grid>
       </Grid>
@@ -161,91 +160,13 @@ const FormCust = ({ address, classes, getAddres, setOpen }) => {
 };
 
 export default function AddressForm({ classes }) {
-  const { enqueueSnackbar } = useSnackbar();
   const { activeStep, setActiveStep } = React.useContext(StepOrderContext);
   const { address, updateAddress } = React.useContext(AddressContext);
-
   const [open, setOpen] = React.useState(false);
-  const [position, setPosition] = React.useState(null);
-
-  React.useEffect(getLocation, []);
 
   const confirmAdress = () => {
     setActiveStep(activeStep + 1);
   };
-
-  function getLocation() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        console.log(position);
-        setPosition({
-          latitute: position.coords.latitude,
-          longitude: position.coords.longitude,
-        });
-      }, showError);
-    } else {
-      enqueueSnackbar("Geolocation is not supported by this browser!!", {
-        variant: "error",
-      });
-    }
-  }
-
-  function showError(error) {
-    switch (error.code) {
-      case error.PERMISSION_DENIED:
-        enqueueSnackbar("User denied the request for Geolocation.", {
-          variant: "error",
-        });
-        break;
-      case error.POSITION_UNAVAILABLE:
-        enqueueSnackbar("Location information is unavailable", {
-          variant: "error",
-        });
-        break;
-      case error.TIMEOUT:
-        enqueueSnackbar("The request to get user location timed out.", {
-          variant: "error",
-        });
-        break;
-      case error.UNKNOWN_ERROR:
-        enqueueSnackbar("An unknown error occurred", {
-          variant: "error",
-        });
-        break;
-      default:
-        enqueueSnackbar("Something went wrong", {
-          variant: "error",
-        });
-    }
-  }
-
-  async function getAddres() {
-    await fetch(
-      `https://api.opencagedata.com/geocode/v1/json?q=${position.latitute}+${position.longitude}&key=79b83f97c27a423c9d683d449ef7fe46`
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        // console.log(data);
-        //   {
-        //     "ISO_3166-1_alpha-2": "IN",
-        //     "ISO_3166-1_alpha-3": "IND",
-        //     "_category": "commerce",
-        //     "_type": "restaurant",
-        //     "continent": "Asia",
-        //     "country": "India",
-        //     "country_code": "in",
-        //     "house_number": "15 New Subhedar lay out nashik nagar",
-        //     "postcode": "440024",
-        //     "restaurant": "Savis Kitchen",
-        //     "state": "Maharashtra",
-        //     "state_code": "MH",
-        //     "state_district": "Jalna",
-        //     "town": "Ambad"
-        // }
-        updateAddress(data.results[0].components);
-      })
-      .catch((err) => alert(err));
-  }
 
   console.log("a", address);
   return (
@@ -253,7 +174,6 @@ export default function AddressForm({ classes }) {
       <Typography variant="h6" gutterBottom>
         Shipping address
       </Typography>
-      {address && JSON.stringify(address)}
       <Dialog open={open} onClose={() => setOpen(!open)}>
         <DialogContent>
           <Grid container spacing={3}>
@@ -264,7 +184,7 @@ export default function AddressForm({ classes }) {
                 name="firstName"
                 label="First name"
                 fullWidth
-                // autoComplete="given-name"
+                autoComplete="given-name"
                 defaultValue={address ? address.firstName : ""}
               />
             </Grid>
@@ -275,7 +195,7 @@ export default function AddressForm({ classes }) {
                 name="lastName"
                 label="Last name"
                 fullWidth
-                // autoComplete="family-name"
+                autoComplete="family-name"
                 defaultValue={address ? address.lastName : ""}
               />
             </Grid>
@@ -286,7 +206,7 @@ export default function AddressForm({ classes }) {
                 name="address1"
                 label="Address line 1"
                 fullWidth
-                // autoComplete="shipping address-line1"
+                autoComplete="shipping address-line1"
                 defaultValue={address ? address.house_number : ""}
               />
             </Grid>
@@ -296,7 +216,7 @@ export default function AddressForm({ classes }) {
                 name="address2"
                 label="Address line 2"
                 fullWidth
-                // autoComplete="shipping address-line2"
+                autoComplete="shipping address-line2"
                 defaultValue={address ? address.address2 : ""}
               />
             </Grid>
@@ -307,7 +227,7 @@ export default function AddressForm({ classes }) {
                 name="city"
                 label="City"
                 fullWidth
-                // autoComplete="shipping address-level2"
+                autoComplete="shipping address-level2"
                 defaultValue={address ? address.town : ""}
               />
             </Grid>
@@ -327,7 +247,7 @@ export default function AddressForm({ classes }) {
                 name="zip"
                 label="Zip / Postal code"
                 fullWidth
-                // autoComplete="shipping postal-code"
+                autoComplete="shipping postal-code"
                 defaultValue={address ? address.postcode : ""}
               />
             </Grid>
@@ -338,21 +258,34 @@ export default function AddressForm({ classes }) {
                 name="country"
                 label="Country"
                 fullWidth
-                // autoComplete="shipping country"
+                autoComplete="shipping country"
                 defaultValue={address ? address.country : ""}
               />
             </Grid>
           </Grid>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setOpen(!open)}>Cancel</Button>
-          <Button onClick={confirmAdress}>Confirm</Button>
+          <Button
+            style={{
+              backgroundColor: "rgb(255, 8, 78)",
+            }}
+            onClick={() => setOpen(!open)}
+          >
+            Cancel
+          </Button>
+          <Button
+            style={{
+              backgroundColor: "rgb(255, 8, 78)",
+            }}
+            onClick={confirmAdress}
+          >
+            Confirm
+          </Button>
         </DialogActions>
       </Dialog>
       <FormCust
         address={address}
         classes={classes}
-        getAddres={() => getAddres()}
         setOpen={() => setOpen(!open)}
       />
     </React.Fragment>

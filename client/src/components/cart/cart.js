@@ -108,15 +108,12 @@ export default function Cart() {
         <Header />
         <div className="flex">
           <div className="flex-1" />
-          <div
-            id="cart"
-            className="w-2/4 flex flex-row flex-wrap justify-between"
-          >
+          <div className="w-2/4 flex flex-row flex-wrap justify-between">
             {cart.cart.map((item) => {
               return (
                 <div className="mb-4">
                   <Card className={classes.cardRoot}>
-                    <CardActionArea>
+                    <CardContent>
                       <CardMedia
                         component="img"
                         alt="Contemplative Reptile"
@@ -137,7 +134,16 @@ export default function Cart() {
                           </div>
                           <div className="flex flex-row">
                             <div className="flex flex-row">
-                              <IconButton onClick={() => quan("+", item.id)}>
+                              <IconButton
+                                style={{
+                                  color: "black",
+                                  borderRadius: "50%",
+                                  height: 50,
+                                  width: 50,
+                                  backgroundColor: "rgb(255, 8, 78)",
+                                }}
+                                onClick={() => quan("+", item.id)}
+                              >
                                 <AddIcon />
                               </IconButton>
                               <Avatar
@@ -150,7 +156,16 @@ export default function Cart() {
                               >
                                 {item.quantity}
                               </Avatar>
-                              <IconButton onClick={() => quan("-", item.id)}>
+                              <IconButton
+                                style={{
+                                  color: "black",
+                                  borderRadius: "50%",
+                                  height: 50,
+                                  width: 50,
+                                  backgroundColor: "rgb(255, 8, 78)",
+                                }}
+                                onClick={() => quan("-", item.id)}
+                              >
                                 <RemoveIcon />
                               </IconButton>
                             </div>
@@ -185,7 +200,7 @@ export default function Cart() {
                           </div>
                         </div>
                       </CardContent>
-                    </CardActionArea>
+                    </CardContent>
                     <CardActions>
                       <form className="m-0 w-full" onSubmit={remove}>
                         <input name="id" hidden value={item.id} />

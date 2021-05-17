@@ -18,7 +18,7 @@ import "./components/css/owl.carousel.css";
 import "./components/css/responsive.css";
 import "./components/css/themify-icons.css";
 import "./components/css/styles.css";
-// import "./components/css/main1.css";
+import "./components/css/main1.css";
 import "./components/css/form.css";
 import Cart from "./components/cart/cart.js";
 import ContactUs from "./components/homepage/Contact/contactus.js";

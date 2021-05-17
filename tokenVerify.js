@@ -9,6 +9,7 @@ module.exports = {
         .verifyIdToken(tkn)
         .then((decoded) => {
           req.uid = decoded["uid"];
+          console.log("jwt", req.uid);
           next();
         })
         .catch((err) => {

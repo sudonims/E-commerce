@@ -11,6 +11,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
+import axios from "axios";
+import server from "../starters/serverChoose";
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -35,24 +37,29 @@ export default function Product({ prodId }) {
 
   React.useEffect(() => {
     // GET from backend
-    // setProd({
-    //   image: "",
-    //   name: "demo",
-    //   description: "",
-    //   sizes: ["XS", "S", "M", "L", "XL"],
-    //   price: 549.99,
-    //   reviews: [{}, {}, {}],
-    // });
-    console.log(Info);
-    var a = Info.filter((a) => {
-      console.log(prodId, a, typeof prodId);
-      return parseInt(prodId) === a.id;
+
+    axios.get(`${server}getprod/${prodId}`).then((res_) => {
+      console.log(res_.data);
+      setProd({
+        img: res_.data.img,
+        name: res_.data.name,
+        description: "",
+        sizes: res_.data.sizes,
+        price: res_.data.price,
+        reviews: [{}, {}, {}],
+      });
     });
-    console.log(a);
-    if (a.length > 0) {
-      setSize(a[0].sizes[0]);
-      setProd(a.pop());
-    }
+
+    // console.log(Info);
+    // var a = Info.filter((a) => {
+    //   console.log(prodId, a, typeof prodId);
+    //   return parseInt(prodId) === a.id;
+    // });
+    // console.log(a);
+    // if (a.length > 0) {
+    //   setSize(a[0].sizes[0]);
+    //   setProd(a.pop());
+    // }
   }, []);
 
   const buyNow = () => {
@@ -126,11 +133,9 @@ export default function Product({ prodId }) {
         variant: "success",
       });
     } else {
-      
-        enqueueSnackbar("The item is already added to the cart", {
-          variant: "info",
-        });
-      
+      enqueueSnackbar("The item is already added to the cart", {
+        variant: "info",
+      });
     }
 
     console.log(cart);

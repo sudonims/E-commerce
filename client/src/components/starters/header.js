@@ -8,7 +8,15 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import { Avatar, Button, Drawer, Grid, Hidden, Paper } from "@material-ui/core";
+import {
+  Avatar,
+  Button,
+  ButtonBase,
+  Drawer,
+  Grid,
+  Hidden,
+  Paper,
+} from "@material-ui/core";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import { AuthContext } from "../firebase/firebase";
 import { APP } from "../firebase/firebaseConfig";
@@ -568,19 +576,16 @@ export default function Header({ rightlinks, leftlinks }) {
                       </Button>,
                       <Profile />,
                       <IconButton
-                        // href="/cart"
                         style={{
                           backgroundColor: "#ff084e",
                           color: "white",
                           fontWeight: 900,
-                          marginTop: -10,
                           marginLeft: 10,
+                          height: "50px",
+                          width: "50px",
                         }}
-                        // disabled={!currentUser.emailVerified}
                         onClick={() => {
                           if (!currentUser.emailVerified) {
-                            // alert("Please Verify Your Email");
-
                             enqueueSnackbar("Please Verify Your Email", {
                               variant: "info",
                             });

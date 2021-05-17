@@ -37,4 +37,20 @@ module.exports = {
       res.status(503).send("Error");
     }
   },
+  getProdId: async (req, res) => {
+    try {
+      const id = req.params.id;
+      const snapShot = await db
+        .collection("products")
+        .doc("all")
+        .collection("products")
+        .doc(id)
+        .get();
+
+      res.status(200).send(snapShot.data());
+    } catch (err) {
+      console.log(err);
+      res.status(503).send("Error");
+    }
+  },
 };

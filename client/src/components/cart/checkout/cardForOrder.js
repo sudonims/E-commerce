@@ -15,7 +15,7 @@ const useStyles = makeStyles({
     margin: 10,
   },
   media: {
-    height: 250,
+    height: 350,
   },
 });
 
@@ -24,7 +24,7 @@ export default function MediaCard(props) {
 
   return (
     <Card className={classes.root}>
-      <CardActionArea
+      <CardContent
         onClick={() => (window.location.href = "/product/" + props.product.id)}
       >
         <CardMedia className={classes.media} image={props.product.image_link} />
@@ -42,15 +42,7 @@ export default function MediaCard(props) {
             Qty:- {props.product.quantity}
           </Typography>
         </CardContent>
-      </CardActionArea>
-      <CardActions>
-        <Button size="small" color="primary">
-          Share
-        </Button>
-        <Button size="small" color="primary">
-          Learn More
-        </Button>
-      </CardActions>
+      </CardContent>
     </Card>
   );
 }

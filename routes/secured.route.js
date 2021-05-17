@@ -13,7 +13,7 @@ router.post("/verifyPayment", verifyPayment);
 
 router.post("/feedback", feedback);
 
-router.get("/myorders", myOrders);
+router.get("/myord", myOrders);
 // router.post("/update-profile", )
 
 router.post("/getorderdetails", getOrderDetailse);

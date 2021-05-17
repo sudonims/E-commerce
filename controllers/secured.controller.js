@@ -25,15 +25,10 @@ module.exports = {
             .doc(req.uid)
             .collection("order")
             .doc(recipt_id)
-            .set(
-              {
-                details: orderDetails,
-                address: address,
-              },
-              {
-                merge: true,
-              }
-            )
+            .set({
+              details: orderDetails,
+              address: address,
+            })
             .catch((err) => {
               console.log(err);
               throw new Error("Error OCcured. Check logs");
@@ -90,6 +85,7 @@ module.exports = {
   myOrders: (req, res) => {
     try {
       const uid = req.uid;
+      console.log(uid);
       const orderSnap = db.collection("users").doc(uid).collection("order");
 
       orderSnap.listDocuments().then((data) => {

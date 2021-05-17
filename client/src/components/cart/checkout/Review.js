@@ -13,6 +13,7 @@ import DNA from "../../assets/logo.png";
 import { AuthContext } from "../../firebase/firebase";
 import Card from "./cardForOrder.js";
 import { useSnackbar } from "notistack";
+import AddressContext from "./addressContext";
 
 function loadScript(src) {
   return new Promise((resolve) => {
@@ -33,13 +34,12 @@ export default function Review({ classes1, buyNow }) {
   const cart = buyNow
     ? { cart: [Cookies.getJSON("buynow")] }
     : Cookies.getJSON("cart");
-  console.log(cart);
   const amount = cart.cart.reduce((a, b) => a + (b["effectivePrice"] || 0), 0);
   const { currentUser } = React.useContext(AuthContext);
-  const { activeStep, setActiveStep, address } = React.useContext(
-    StepOrderContext
-  );
+  const { activeStep, setActiveStep } = React.useContext(StepOrderContext);
+  const { address } = React.useContext(AddressContext);
 
+  console.log(address);
   const placeOrder = async (id) => {
     APP.auth()
       .currentUser.getIdToken()
