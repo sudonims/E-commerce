@@ -131,7 +131,7 @@ const FormCust = ({ address, classes, getAddres, setOpen }) => {
           />
         </Grid>
       </Grid>
-      <div className={classes.buttons}>
+      <div className="flex flex-row flex-wrap md:justify-end">
         <Button
           style={{
             backgroundColor: "#ff084e",
@@ -161,14 +161,13 @@ const FormCust = ({ address, classes, getAddres, setOpen }) => {
 
 export default function AddressForm({ classes }) {
   const { activeStep, setActiveStep } = React.useContext(StepOrderContext);
-  const { address, updateAddress } = React.useContext(AddressContext);
+  const { address } = React.useContext(AddressContext);
   const [open, setOpen] = React.useState(false);
 
   const confirmAdress = () => {
     setActiveStep(activeStep + 1);
   };
 
-  console.log("a", address);
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>

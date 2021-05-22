@@ -39,7 +39,6 @@ export default function Product({ prodId }) {
     // GET from backend
 
     axios.get(`${server}getprod/${prodId}`).then((res_) => {
-      console.log(res_.data);
       setProd({
         img: res_.data.img,
         name: res_.data.name,
@@ -81,7 +80,7 @@ export default function Product({ prodId }) {
     Cookies.set(
       "buynow",
       JSON.stringify({
-        id: prod.id,
+        id: prodId,
         name: prod.name,
         description: prod.description,
         price: prod.price,
@@ -115,17 +114,18 @@ export default function Product({ prodId }) {
       return;
     }
 
-    var a = cart.cart.find((o) => o.id === prod.id);
+    var a = cart.cart.find((o) => o.id === prodId);
 
     if (!a) {
       cart.cart.push({
-        id: prod.id,
+        id: prodId,
         name: prod.name,
         description: prod.description,
         price: prod.price,
         quantity: 1,
         image_link: prod.img,
         effectivePrice: parseFloat(prod.price),
+        availSize: prod.sizes,
         size,
       });
 
@@ -138,10 +138,10 @@ export default function Product({ prodId }) {
       });
     }
 
-    console.log(cart);
     Cookies.set("cart", cart);
   };
-  console.log(prod);
+
+  // console.log(prod, cart);
   return (
     prod && (
       <div className="flex flex-col">
@@ -161,16 +161,23 @@ export default function Product({ prodId }) {
               <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
                 <img src={prod.img} alt="img" />
               </Grid>
-              <Grid md={1} />
+              <Grid item md={1} />
               <Grid item xs={12} sm={12} md={7} lg={7} xl={7}>
                 <form onSubmit={submit}>
                   <input
+                    readOnly
                     hidden
                     type="text"
                     value={currentUser ? currentUser.uid : ""}
                     name="user"
                   />
-                  <input hidden type="text" value={prodId} name="prodid" />
+                  <input
+                    readOnly
+                    hidden
+                    type="text"
+                    value={prodId}
+                    name="prodid"
+                  />
 
                   <div className="flex flex-col">
                     <Typography variant="h2" className="font-black">
@@ -192,9 +199,10 @@ export default function Product({ prodId }) {
                         onChange={handleChange}
                         className="text-2xl text-black font-black"
                       >
-                        {prod.sizes.map((size) => {
+                        {prod.sizes.map((size, i) => {
                           return (
                             <MenuItem
+                              key={i}
                               className="text-2xl text-black font-black"
                               value={size}
                             >
@@ -209,6 +217,7 @@ export default function Product({ prodId }) {
                     <div className="flex flex-row mt-8">
                       <input
                         hidden
+                        readOnly
                         type="number"
                         value={prod.price}
                         name="price"
@@ -224,8 +233,9 @@ export default function Product({ prodId }) {
                       <Button
                         style={{
                           backgroundColor: "rgb(255, 8, 78)",
-                          marginRight: 10,
                           color: "white",
+                          marginRight: 10,
+                          marginBottom: 10,
                         }}
                         onClick={buyNow}
                         // disabled={!(currentUser && currentUser.emailVerified)}
@@ -236,6 +246,7 @@ export default function Product({ prodId }) {
                         style={{
                           backgroundColor: "rgb(255, 8, 78)",
                           color: "white",
+                          marginRight: 10,
                         }}
                         onClick={addCart}
                         // disabled={!(currentUser && currentUser.emailVerified)}
@@ -248,10 +259,10 @@ export default function Product({ prodId }) {
                       <Typography variant="h4">
                         Try the product virtually!!!
                       </Typography>
-                      <div>
-                        <form>
-                          <input type="file" />
-                        </form>
+                      <div className="mt-4">
+                        {/* <form> */}
+                        <input type="file" />
+                        {/* </form> */}
                       </div>
                     </div>
                   </div>

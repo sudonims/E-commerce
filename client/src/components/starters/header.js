@@ -360,17 +360,19 @@ const Profile = () => {
                     )}
                   </Grid>
                   <div id="recaptcha-container"></div>
-                  <Button
-                    hidden={!currentUser.emailVerified}
-                    style={{
-                      margin: 15,
-                      backgroundColor: "#ff084e",
-                      color: "white",
-                    }}
-                    type="submit"
-                  >
-                    Update
-                  </Button>
+                  <Grid style={{ margin: 15 }} item xs={12}>
+                    <Button
+                      hidden={!currentUser.emailVerified}
+                      style={{
+                        margin: 15,
+                        backgroundColor: "#ff084e",
+                        color: "white",
+                      }}
+                      type="submit"
+                    >
+                      Update
+                    </Button>
+                  </Grid>
                 </Grid>
               </form>
             </Grid>
@@ -412,7 +414,7 @@ export default function Header({ rightlinks, leftlinks }) {
         open={open}
         onClose={() => setOpen(!open)}
       >
-        <Paper style={{ width: 280 }}>
+        <Paper style={{ width: "70vw" }}>
           <ul className="navbar-nav animated" id="nav">
             <li className="nav-item">
               <Button href="/">Home</Button>
@@ -424,13 +426,34 @@ export default function Header({ rightlinks, leftlinks }) {
               <Button href="/contactus">Contact Us</Button>
             </li>
             <li className="nav-item">
-              <Button onClick={feedChange}>Feed Back Form</Button>
+              <Button
+                disabled={!(currentUser && currentUser.emailVerified)}
+                href="#"
+                onClick={feedChange}
+              >
+                Feed Back Form
+              </Button>
               <Feedback open={openFeed} setOpen={feedChange} />
             </li>
           </ul>
-          <div className="absolute bottom-2 m-2">
+          <div className="absolute m-2">
             {currentUser ? (
               [
+                <IconButton
+                  key={2}
+                  href="/cart"
+                  style={{
+                    backgroundColor: "#ff084e",
+                    color: "white",
+                    fontWeight: 900,
+                    marginBottom: 10,
+                    marginTop: 10,
+                  }}
+                  disabled={!currentUser.emailVerified}
+                >
+                  <ShoppingCartIcon />
+                </IconButton>,
+                <Profile key={1} />,
                 <Button
                   onClick={() => {
                     APP.auth()
@@ -447,25 +470,12 @@ export default function Header({ rightlinks, leftlinks }) {
                     backgroundColor: "#ff084e",
                     color: "white",
                     fontWeight: 900,
-                    marginRight: 10,
+                    marginTop: 10,
                   }}
+                  key={0}
                 >
                   SignOut
                 </Button>,
-                <Profile />,
-                <IconButton
-                  href="/cart"
-                  style={{
-                    backgroundColor: "#ff084e",
-                    color: "white",
-                    fontWeight: 900,
-                    marginTop: -10,
-                    marginLeft: 10,
-                  }}
-                  disabled={!currentUser.emailVerified}
-                >
-                  <ShoppingCartIcon />
-                </IconButton>,
               ]
             ) : (
               <Button
@@ -554,6 +564,7 @@ export default function Header({ rightlinks, leftlinks }) {
                   {currentUser ? (
                     [
                       <Button
+                        key={0}
                         onClick={() => {
                           APP.auth()
                             .signOut()
@@ -574,8 +585,9 @@ export default function Header({ rightlinks, leftlinks }) {
                       >
                         SignOut
                       </Button>,
-                      <Profile />,
+                      <Profile key={1} />,
                       <IconButton
+                        key={2}
                         style={{
                           backgroundColor: "#ff084e",
                           color: "white",

@@ -39,7 +39,6 @@ export default function Review({ classes1, buyNow }) {
   const { activeStep, setActiveStep } = React.useContext(StepOrderContext);
   const { address } = React.useContext(AddressContext);
 
-  console.log(address);
   const placeOrder = async (id) => {
     APP.auth()
       .currentUser.getIdToken()
@@ -122,14 +121,11 @@ export default function Review({ classes1, buyNow }) {
           )
           .then((res) => {
             if (res.status === 200) {
-              console.log(res.data);
               placeOrder(res.data.id);
             }
           });
       });
   };
-
-  console.log(amount);
 
   return (
     <React.Fragment>
@@ -138,8 +134,8 @@ export default function Review({ classes1, buyNow }) {
       </Typography>
       <List disablePadding>
         <div className="flex flex-row overflow-auto flex-nowrap justify-around">
-          {cart.cart.map((product) => (
-            <Card product={product} />
+          {cart.cart.map((product, i) => (
+            <Card key={i} product={product} />
           ))}
         </div>
         <ListItem>

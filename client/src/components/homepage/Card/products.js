@@ -4,7 +4,6 @@ import Card from "./card.js";
 
 export default function Products() {
   const { products } = React.useContext(ProdsContext);
-  console.log(products);
   return (
     <div className="flex flex-row flex-wrap">
       {products.map((prod, i) => {

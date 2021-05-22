@@ -33,7 +33,6 @@ export default function SizeUL() {
     });
   }, []);
   const updateSizeColor = (id) => {
-    console.log(id);
     var sel = select;
     sel[size] = false;
     sel[id] = true;
@@ -45,7 +44,6 @@ export default function SizeUL() {
       })
       .then((res) => {
         if (res.status === 200) {
-          console.log(res.data);
           updateProducts(res.data);
         } else {
           enqueueSnackbar("Error Occured", {
@@ -62,21 +60,21 @@ export default function SizeUL() {
   };
 
   return (
-    <div className="flex flex-row">
+    <div className="grid grid-cols-3">
       <IconButton id="XS" onClick={() => updateSizeColor("XS")}>
-        <Avatar className={select["XS"] && classes.buttonSelect}>XS</Avatar>
+        <Avatar className={select["XS"] ? classes.buttonSelect : ""}>XS</Avatar>
       </IconButton>
       <IconButton id="S" onClick={() => updateSizeColor("S")}>
-        <Avatar className={select["S"] && classes.buttonSelect}>S</Avatar>
+        <Avatar className={select["S"] ? classes.buttonSelect : ""}>S</Avatar>
       </IconButton>
       <IconButton id="M" onClick={() => updateSizeColor("M")}>
-        <Avatar className={select["M"] && classes.buttonSelect}>M</Avatar>
+        <Avatar className={select["M"] ? classes.buttonSelect : ""}>M</Avatar>
       </IconButton>
       <IconButton id="L" onClick={() => updateSizeColor("L")}>
-        <Avatar className={select["L"] && classes.buttonSelect}>L</Avatar>
+        <Avatar className={select["L"] ? classes.buttonSelect : ""}>L</Avatar>
       </IconButton>
       <IconButton id="XL" onClick={() => updateSizeColor("XL")}>
-        <Avatar className={select["XL"] && classes.buttonSelect}>XL</Avatar>
+        <Avatar className={select["XL"] ? classes.buttonSelect : ""}>XL</Avatar>
       </IconButton>
     </div>
   );

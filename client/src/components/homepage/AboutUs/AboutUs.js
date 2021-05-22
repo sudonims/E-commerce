@@ -18,16 +18,18 @@ export default function AboutUs() {
               <h1>DNA Match</h1>
               <p>
                 <b style={{ color: "white" }}>DNA Match</b> platform is
-                dedicated to help people find their best clothes. Our vision
-                is to create a better everyday life for people. Our project idea
-                is to let people try clothes virtually before buying so they
-                would have a perfect idea of how the product would look on them.
-                Using industry standard ML algorithm, the tried on clothes look
-                like they are real. We hope that you like what we are trying to
+                dedicated to help people find their best clothes. Our vision is
+                to create a better everyday life for people. Our project idea is
+                to let people try clothes virtually before buying so they would
+                have a perfect idea of how the product would look on them. Using
+                industry standard ML algorithm, the tried on clothes look like
+                they are real. We hope that you like what we are trying to
                 achieve.
               </p>
 
-              <p><b style={{ color: "white" }}>Thank you for visiting!!</b></p>
+              <p>
+                <b style={{ color: "white" }}>Thank you for visiting!!</b>
+              </p>
             </header>
           </div>
         </section>
@@ -38,6 +40,7 @@ export default function AboutUs() {
               {/* 2 Columns */}
               <Grid container>
                 <Grid
+                  item
                   style={{ paddingLeft: 40 }}
                   xs={12}
                   sm={12}
@@ -49,7 +52,7 @@ export default function AboutUs() {
                     <img width={350} src={DNALogo} alt="" />
                   </a>
                 </Grid>
-                <Grid xs={12} sm={12} md={6} lg={6} xl={6}>
+                <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
                   <h2 className="font-black text-4xl md:mt-16 text-center md:text-left ">
                     Our Features
                   </h2>
@@ -65,7 +68,7 @@ export default function AboutUs() {
                   >
                     Mobile Compatibility
                   </p>
-                  
+
                   <p
                     className="text-lg md:text-xl font-bold text-center"
                     style={{ margin: 0 }}
@@ -103,7 +106,7 @@ export default function AboutUs() {
                 <h2>Meet our Leaders</h2>
               </header>
               <Grid container>
-                <Grid xs={12} sm={12} md={4} lg={4} xl={4}>
+                <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
                   <div className="col align-center">
                     <div className="image round fit">
                       <img src={DskImg} alt="" />
@@ -116,7 +119,7 @@ export default function AboutUs() {
                     </p>
                   </div>
                 </Grid>
-                <Grid xs={12} sm={12} md={4} lg={4} xl={4}>
+                <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
                   <div className="col align-center">
                     <div className="image round fit">
                       <img src={NimishImg} alt="" />
@@ -129,7 +132,7 @@ export default function AboutUs() {
                     </p>
                   </div>
                 </Grid>
-                <Grid xs={12} sm={12} md={4} lg={4} xl={4}>
+                <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
                   <div className="col align-center">
                     <div className="image round fit">
                       <img src={AbhijitImg} alt="" />

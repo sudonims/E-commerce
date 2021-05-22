@@ -25,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
     minWidth: 120,
   },
   cardRoot: {
+    minWidth: 300,
     maxWidth: 345,
   },
 }));
@@ -41,7 +42,6 @@ export default function Cart() {
     )
   );
   const handleChange = (e, id) => {
-    console.log(e.target.value);
     var cart_ = cart.cart.map((item) => {
       if (item.id === id) {
         console.log({ ...item, size: e.target.value });
@@ -49,7 +49,6 @@ export default function Cart() {
       }
       return item;
     });
-    console.log(cart_);
 
     setCart({ cart: cart_ });
 
@@ -88,7 +87,6 @@ export default function Cart() {
       return item;
     });
     cart_ = { cart: cart_ };
-    console.log(cart_);
     Cookies.set("cart", cart_);
     setCart(cart_);
   };
@@ -101,17 +99,16 @@ export default function Cart() {
     );
   }, [cart]);
 
-  console.log(url);
   return cart ? (
     <Switch>
       <Route exact path={`${url}`}>
         <Header />
         <div className="flex">
-          <div className="flex-1" />
-          <div className="w-2/4 flex flex-row flex-wrap justify-between">
-            {cart.cart.map((item) => {
+          <div className="md:flex-1" />
+          <div className="md:w-2/4 flex flex-row flex-wrap">
+            {cart.cart.map((item, i) => {
               return (
-                <div className="mb-4">
+                <div key={i} className="mb-4">
                   <Card className={classes.cardRoot}>
                     <CardContent>
                       <CardMedia
@@ -187,6 +184,7 @@ export default function Cart() {
                                       <MenuItem
                                         className="text-2xl text-black font-black"
                                         value={size}
+                                        key={size}
                                       >
                                         <p className="mt-1 m-0 text-black font-bold">
                                           {size}
@@ -203,7 +201,7 @@ export default function Cart() {
                     </CardContent>
                     <CardActions>
                       <form className="m-0 w-full" onSubmit={remove}>
-                        <input name="id" hidden value={item.id} />
+                        <input name="id" readOnly hidden value={item.id} />
                         <Button
                           style={{
                             backgroundColor: "#ff084e",
@@ -221,7 +219,7 @@ export default function Cart() {
               );
             })}
           </div>
-          <div className="flex-1" />
+          <div className="md:flex-1" />
         </div>
         <div className="flex flex-row m-4">
           <div className="flex-1" />
@@ -231,7 +229,7 @@ export default function Cart() {
             }}
             style={{
               backgroundColor: "#ff084e",
-              width: "12.5%",
+              width: 250,
               height: 50,
               color: "white",
               fontWeight: 900,

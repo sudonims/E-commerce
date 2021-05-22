@@ -60,7 +60,6 @@ export default function Checkout({ buyNow }) {
   const [address, setAddress] = React.useState(null);
 
   const updateAddress = (add) => {
-    console.log("updating", add);
     setAddress(add);
   };
 

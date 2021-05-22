@@ -72,15 +72,14 @@ const OrderDialog = ({ openid, setOpenId }) => {
       });
     }
   }, []);
-  console.log(data);
   return data ? (
     <Dialog open={openid.open} onClose={() => setOpenId(null)}>
       <DialogTitle>{openid.id}</DialogTitle>
       <DialogContent>
         <OwlCarousel items={2} className="owl-theme" nav>
-          {data.details.map((prod) => {
+          {data.details.map((prod, i) => {
             return (
-              <Card style={{ width: 250 }}>
+              <Card key={i} style={{ width: 250 }}>
                 <CardMedia
                   component="img"
                   image={prod.image_link}
@@ -155,10 +154,10 @@ export default function Myorders() {
       });
   }, []);
 
-  const handleClick = (e) => {
+  const handleClick = (id) => {
     setOpenId({
       open: true,
-      id: e.target.id,
+      id,
     });
   };
   return (
@@ -184,10 +183,18 @@ export default function Myorders() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {ids.length === 0 && <> You have no order </>}
+                {ids.length === 0 && (
+                  <TableRow>
+                    <TableCell>
+                      <p className="text-center text-black font-black">
+                        You have No Orders
+                      </p>
+                    </TableCell>
+                  </TableRow>
+                )}
                 {ids.map((id, i) => {
                   return (
-                    <TableRow>
+                    <TableRow key={i}>
                       <TableCell style={{ textAlign: "center" }}>
                         {i + 1}
                       </TableCell>
@@ -198,10 +205,10 @@ export default function Myorders() {
                             width: "100%",
                             textAlign: "center",
                           }}
-                          onClick={handleClick}
+                          onClick={() => handleClick(id)}
                           id={id}
                         >
-                          {id}
+                          <span className="text-black">{id}</span>
                         </ButtonBase>
                       </TableCell>
                       <TableCell style={{ textAlign: "center" }}>

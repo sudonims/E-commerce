@@ -45,7 +45,6 @@ export default function Feedback({ open, setOpen }) {
             }
           })
           .catch((err) => {
-          
             enqueueSnackbar("Error Occured\nTry after some time", {
               variant: "error",
             });
@@ -56,7 +55,7 @@ export default function Feedback({ open, setOpen }) {
     <div>
       <Dialog open={open} onClose={setOpen} aria-labelledby="form-dialog-title">
         <form onSubmit={submit}>
-          <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
+          <DialogTitle id="form-dialog-title">Feedback</DialogTitle>
           <DialogContent>
             <DialogContentText>
               Please provide feedback for DNA Match so that we can improve!!

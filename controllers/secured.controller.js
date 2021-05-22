@@ -102,6 +102,7 @@ module.exports = {
     try {
       const uid = req.uid;
       const { id } = req.body;
+      console.log(uid, id);
       const orderSnap = db
         .collection("users")
         .doc(uid)
