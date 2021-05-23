@@ -9,6 +9,7 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
+  FormControl,
 } from "@material-ui/core";
 import StepOrderContext from "./stepOrderContext";
 import AddressContext from "./addressContext";
@@ -96,7 +97,8 @@ const FormCust = ({ classes, setOpen }) => {
       )
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
+          var add_ = data.results[0].formatted.split(",").slice(0, -3);
+          console.log(add_);
           // console.log(data);
           //   {
           //     "ISO_3166-1_alpha-2": "IN",
@@ -117,14 +119,15 @@ const FormCust = ({ classes, setOpen }) => {
           updateAddress({
             firstName: "",
             lastName: "",
-            house_number: data.results[0].components.house_number,
+            house_number: add_.join(", "),
             address2: data.results[0].components.town,
-            town: data.results[0].components.town,
+            town:
+              data.results[0].components.town ||
+              data.results[0].components.village,
             postcode: data.results[0].components.postcode,
-            state: data.results[0].components.state_code,
+            state: data.results[0].components.state,
             country: data.results[0].components.country,
           });
-          setOpen();
           history.push("/cart/checkout");
         })
         .catch((err) => alert(err));
@@ -159,6 +162,15 @@ const FormCust = ({ classes, setOpen }) => {
     setOpen();
   };
 
+  const handleChange = (e) => {
+    var field = {};
+    field[e.target.name] = e.target.value;
+    const add_ = { ...address, ...field };
+    updateAddress(add_);
+  };
+
+  console.log("add", address);
+
   return (
     <form onSubmit={addressSubmit}>
       <Grid container spacing={3}>
@@ -170,7 +182,8 @@ const FormCust = ({ classes, setOpen }) => {
             label="First name"
             fullWidth
             autoComplete="given-name"
-            defaultValue={address ? address.firstName : ""}
+            onChange={handleChange}
+            value={address.firstName || ""}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -181,7 +194,8 @@ const FormCust = ({ classes, setOpen }) => {
             label="Last name"
             fullWidth
             autoComplete="family-name"
-            defaultValue={address ? address.lastName : ""}
+            onChange={handleChange}
+            value={address.lastName || ""}
           />
         </Grid>
         <Grid item xs={12}>
@@ -192,7 +206,8 @@ const FormCust = ({ classes, setOpen }) => {
             label="Address line 1"
             fullWidth
             autoComplete="shipping address-line1"
-            defaultValue={address ? address.house_number : ""}
+            onChange={handleChange}
+            value={address.house_number || ""}
           />
         </Grid>
         <Grid item xs={12}>
@@ -202,7 +217,8 @@ const FormCust = ({ classes, setOpen }) => {
             label="Address line 2"
             fullWidth
             autoComplete="shipping address-line2"
-            defaultValue={address ? address.address2 : ""}
+            onChange={handleChange}
+            value={address.address2 || ""}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -213,7 +229,8 @@ const FormCust = ({ classes, setOpen }) => {
             label="City"
             fullWidth
             autoComplete="shipping address-level2"
-            defaultValue={address ? address.town : ""}
+            onChange={handleChange}
+            value={address.town || ""}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -222,7 +239,8 @@ const FormCust = ({ classes, setOpen }) => {
             name="state"
             label="State/Province/Region"
             fullWidth
-            defaultValue={address ? address.state : ""}
+            onChange={handleChange}
+            value={address.state || ""}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -233,7 +251,8 @@ const FormCust = ({ classes, setOpen }) => {
             label="Zip / Postal code"
             fullWidth
             autoComplete="shipping postal-code"
-            defaultValue={address ? address.postcode : ""}
+            onChange={handleChange}
+            value={address.postcode || ""}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -244,33 +263,38 @@ const FormCust = ({ classes, setOpen }) => {
             label="Country"
             fullWidth
             autoComplete="shipping country"
-            defaultValue={address ? address.country : ""}
+            onChange={handleChange}
+            value={address.country || ""}
           />
         </Grid>
       </Grid>
-      <div className="flex flex-row flex-wrap md:justify-end">
-        <Button
-          style={{
-            backgroundColor: "#ff084e",
-            color: "white",
-            fontWeight: 900,
-          }}
-          className={classes.button}
-          onClick={getAddres}
-        >
-          My current location
-        </Button>
-        <Button
-          type="submit"
-          style={{
-            backgroundColor: "#ff084e",
-            color: "white",
-            fontWeight: 900,
-          }}
-          className={classes.button}
-        >
-          Next
-        </Button>
+      <div className="grid grid-cols-1 md:grid-cols-12">
+        <div className="md:col-start-6">
+          <Button
+            style={{
+              backgroundColor: "#ff084e",
+              color: "white",
+              fontWeight: 900,
+            }}
+            className={classes.button}
+            onClick={getAddres}
+          >
+            My current location
+          </Button>
+        </div>
+        <div className="md:col-start-11">
+          <Button
+            type="submit"
+            style={{
+              backgroundColor: "#ff084e",
+              color: "white",
+              fontWeight: 900,
+            }}
+            className={classes.button}
+          >
+            Next
+          </Button>
+        </div>
       </div>
     </form>
   );
@@ -301,7 +325,8 @@ export default function AddressForm({ classes }) {
                 label="First name"
                 fullWidth
                 autoComplete="given-name"
-                defaultValue={address ? address.firstName : ""}
+                value={address ? address.firstName : ""}
+                readOnly
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -312,7 +337,8 @@ export default function AddressForm({ classes }) {
                 label="Last name"
                 fullWidth
                 autoComplete="family-name"
-                defaultValue={address ? address.lastName : ""}
+                value={address ? address.lastName : ""}
+                readOnly
               />
             </Grid>
             <Grid item xs={12}>
@@ -323,7 +349,8 @@ export default function AddressForm({ classes }) {
                 label="Address line 1"
                 fullWidth
                 autoComplete="shipping address-line1"
-                defaultValue={address ? address.house_number : ""}
+                value={address ? address.house_number : ""}
+                readOnly
               />
             </Grid>
             <Grid item xs={12}>
@@ -333,7 +360,8 @@ export default function AddressForm({ classes }) {
                 label="Address line 2"
                 fullWidth
                 autoComplete="shipping address-line2"
-                defaultValue={address ? address.address2 : ""}
+                value={address ? address.address2 : ""}
+                readOnly
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -344,7 +372,8 @@ export default function AddressForm({ classes }) {
                 label="City"
                 fullWidth
                 autoComplete="shipping address-level2"
-                defaultValue={address ? address.town : ""}
+                value={address ? address.town : ""}
+                readOnly
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -353,7 +382,8 @@ export default function AddressForm({ classes }) {
                 name="state"
                 label="State/Province/Region"
                 fullWidth
-                defaultValue={address ? address.state : ""}
+                value={address ? address.state : ""}
+                readOnly
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -364,7 +394,8 @@ export default function AddressForm({ classes }) {
                 label="Zip / Postal code"
                 fullWidth
                 autoComplete="shipping postal-code"
-                defaultValue={address ? address.postcode : ""}
+                value={address ? address.postcode : ""}
+                readOnly
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -375,7 +406,8 @@ export default function AddressForm({ classes }) {
                 label="Country"
                 fullWidth
                 autoComplete="shipping country"
-                defaultValue={address ? address.country : ""}
+                value={address ? address.country : ""}
+                readOnly
               />
             </Grid>
           </Grid>

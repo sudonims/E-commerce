@@ -57,7 +57,7 @@ export default function Checkout({ buyNow }) {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
   const [orderId, setOrderId] = React.useState("");
-  const [address, setAddress] = React.useState(null);
+  const [address, setAddress] = React.useState({});
 
   const updateAddress = (add) => {
     setAddress(add);
