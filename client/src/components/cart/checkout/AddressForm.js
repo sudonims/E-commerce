@@ -14,20 +14,6 @@ import {
 import StepOrderContext from "./stepOrderContext";
 import AddressContext from "./addressContext";
 
-function loadScript(src) {
-  return new Promise((resolve) => {
-    const script = document.createElement("script");
-    script.src = src;
-    script.onload = () => {
-      resolve(true);
-    };
-    script.onerror = () => {
-      resolve(false);
-    };
-    document.body.appendChild(script);
-  });
-}
-
 const FormCust = ({ classes, setOpen }) => {
   const [position, setPosition] = React.useState(null);
   const { address, updateAddress } = React.useContext(AddressContext);
@@ -140,10 +126,10 @@ const FormCust = ({ classes, setOpen }) => {
     const {
       firstName,
       lastName,
-      address1,
+      house_number,
       address2,
-      city,
-      zip,
+      town,
+      postcode,
       state,
       country,
     } = e.target.elements;
@@ -151,10 +137,10 @@ const FormCust = ({ classes, setOpen }) => {
     updateAddress({
       firstName: firstName.value,
       lastName: lastName.value,
-      house_number: address1.value,
+      house_number: house_number.value,
       address2: address2.value,
-      town: city.value,
-      postcode: zip.value,
+      town: town.value,
+      postcode: postcode.value,
       state: state.value,
       country: country.value,
     });
@@ -166,10 +152,9 @@ const FormCust = ({ classes, setOpen }) => {
     var field = {};
     field[e.target.name] = e.target.value;
     const add_ = { ...address, ...field };
+    console.log(add_);
     updateAddress(add_);
   };
-
-  console.log("add", address);
 
   return (
     <form onSubmit={addressSubmit}>
@@ -202,7 +187,7 @@ const FormCust = ({ classes, setOpen }) => {
           <TextField
             required
             id="address1"
-            name="address1"
+            name="house_number"
             label="Address line 1"
             fullWidth
             autoComplete="shipping address-line1"
@@ -225,7 +210,7 @@ const FormCust = ({ classes, setOpen }) => {
           <TextField
             required
             id="city"
-            name="city"
+            name="town"
             label="City"
             fullWidth
             autoComplete="shipping address-level2"
@@ -247,7 +232,7 @@ const FormCust = ({ classes, setOpen }) => {
           <TextField
             required
             id="zip"
-            name="zip"
+            name="postcode"
             label="Zip / Postal code"
             fullWidth
             autoComplete="shipping postal-code"
@@ -325,7 +310,7 @@ export default function AddressForm({ classes }) {
                 label="First name"
                 fullWidth
                 autoComplete="given-name"
-                value={address ? address.firstName : ""}
+                value={address.firstName || ""}
                 readOnly
               />
             </Grid>
@@ -337,7 +322,7 @@ export default function AddressForm({ classes }) {
                 label="Last name"
                 fullWidth
                 autoComplete="family-name"
-                value={address ? address.lastName : ""}
+                value={address.lastName || ""}
                 readOnly
               />
             </Grid>
@@ -349,7 +334,7 @@ export default function AddressForm({ classes }) {
                 label="Address line 1"
                 fullWidth
                 autoComplete="shipping address-line1"
-                value={address ? address.house_number : ""}
+                value={address.house_number || ""}
                 readOnly
               />
             </Grid>
@@ -360,7 +345,7 @@ export default function AddressForm({ classes }) {
                 label="Address line 2"
                 fullWidth
                 autoComplete="shipping address-line2"
-                value={address ? address.address2 : ""}
+                value={address.address2 || ""}
                 readOnly
               />
             </Grid>
@@ -368,11 +353,11 @@ export default function AddressForm({ classes }) {
               <TextField
                 required
                 id="city"
-                name="city"
+                name="town"
                 label="City"
                 fullWidth
                 autoComplete="shipping address-level2"
-                value={address ? address.town : ""}
+                value={address.town || ""}
                 readOnly
               />
             </Grid>
@@ -382,7 +367,7 @@ export default function AddressForm({ classes }) {
                 name="state"
                 label="State/Province/Region"
                 fullWidth
-                value={address ? address.state : ""}
+                value={address.state || ""}
                 readOnly
               />
             </Grid>
@@ -390,11 +375,11 @@ export default function AddressForm({ classes }) {
               <TextField
                 required
                 id="zip"
-                name="zip"
+                name="postcode"
                 label="Zip / Postal code"
                 fullWidth
                 autoComplete="shipping postal-code"
-                value={address ? address.postcode : ""}
+                value={address.postcode || ""}
                 readOnly
               />
             </Grid>
@@ -406,7 +391,7 @@ export default function AddressForm({ classes }) {
                 label="Country"
                 fullWidth
                 autoComplete="shipping country"
-                value={address ? address.country : ""}
+                value={address.country || ""}
                 readOnly
               />
             </Grid>
