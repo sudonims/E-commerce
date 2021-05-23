@@ -38,7 +38,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Deploy
         run: |
-          sudo snap install --classic heroku
+          # sudo snap install --classic heroku
           cat >~/.netrc <<EOF
           machine api.heroku.com
             login ${{ secrets.EMAIL }}
@@ -53,3 +53,4 @@ jobs:
           git remote -v
           git fetch --unshallow origin
           git push heroku master
+          rm ~/.netrc
